@@ -1,25 +1,88 @@
-.Header {
-  height: 3rem;
-  width: 100%;
-  background-color: #8a2b06;
-  color: #ffffff !important;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 10;
+#SearchCategoryInput-dataResults {
+  visibility: hidden;
 }
 
 .site-title {
   color: #ffffff !important;
   font-weight: bold;
+  text-decoration: none;
   font-size: 25px;
+  margin-left: 10px;
 }
 
-.header a {
-  color: #ffffff;
-  font-weight: bold;
+/* button:hover {
+  cursor: pointer;
+} */
+
+.MyNavbar {
+  background-color: #8a2b06;
+  width: 100%;
+  height: 3.5rem;
+  display: flex;
+}
+
+.MyNavbar .left-side {
+  flex: 10%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.MyNavbar .right-side .links {
+  max-height: 80px;
+  display: flex;
+  flex-direction: row;
+}
+
+.MyNavbar .right-side .links a {
   text-decoration: none;
+  color: black;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.MyNavbar .right-side button {
+  /* display: none; */
+  margin-left: 20px;
+}
+
+.MyNavbar .right-side .Hamburger {
+  display: none;
+  margin-left: 20px;
+}
+
+.MyNavbar .right-side .Hamburger input {
+  display: none;
+  visibility: hidden;
+}
+
+.MyNavbar .right-side #hidden {
+  display: flex;
+}
+
+.MyNavbar .right-side {
+  flex: 90%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 25px;
+}
+
+.right-side input {
+  width: 90%;
+  height: 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  padding: 15px;
+  color: black;
+}
+
+.right-side button {
+  height: 32px;
+  width: 70px;
+  font-size: 16px;
 }
 
 .icons {
@@ -28,8 +91,52 @@
   flex-wrap: inherit;
   align-items: center;
   justify-content: space-between;
+  text-align-last: right;
 }
 
-.main {
-  margin-top: 4rem;
+@media only screen and (max-width: 800px) {
+  .MyNavbar .right-side .links a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-left: 15px;
+  }
+
+  .MyNavbar .right-side button {
+    display: flex;
+  }
+
+  .MyNavbar .right-side .Hamburger {
+    display: flex;
+  }
+
+  .MyNavbar .right-side .links {
+    display: none;
+  }
+
+  .MyNavbar .right-side #hidden {
+    position: absolute;
+    left: 0px;
+    top: 3.5rem;
+    height: auto;
+    max-height: 230px;
+    width: 100%;
+    background-color: #8a2b06;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding: 1rem;
+    gap: 10px;
+  }
+
+  .MyNavbar .right-side #hidden a {
+    margin: 10px;
+    font-size: 15px;
+  }
+
+  .MyNavbar .left-side {
+    margin-right: 0;
+  }
 }

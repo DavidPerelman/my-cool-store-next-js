@@ -1,21 +1,29 @@
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
+import Link from 'next/link';
+import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
 
 const Header = ({ children }) => {
   return (
-    <div>
-      {/* <header className={classes.Header}> */}
-      <Navbar className={classes.Header}>
-        <Container>
-          {/* <LinkContainer to='/'> */}
-          <Navbar.Brand className={classes['site-title']}>
+    <div className='d-flex flex-column site-container'>
+      <div className={classes.MyNavbar}>
+        <div className={classes['left-side']}>
+          <Link className={classes['site-title']} href='/'>
             MyCoolStore
-          </Navbar.Brand>
-          {/* </LinkContainer> */}
-        </Container>
-      </Navbar>
-      {/* </header> */}
+          </Link>
+        </div>
+        <div className={classes['right-side']}>
+          <div
+            className={classes.links}
+            // id={showLinks ? classes['hidden'] : ''}
+          ></div>
+          <div className={classes.icons}>
+            <Icon type={'user'} color='white' count={false} />
+          </div>
+          <div className={classes.Hamburger}>
+            {/* <Hamburger showLinks={showLinks} setShowLinks={setShowLinks} /> */}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

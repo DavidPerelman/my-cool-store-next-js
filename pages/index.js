@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
+import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
 export default function Home() {
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -10,8 +13,10 @@ export default function Home() {
   const getProducts = async () => {
     const url = 'http://localhost:3000/api/categories';
     const response = await axios.get(url);
-    console.log(response.data);
+    setCategories(response.data.categories);
   };
+
+  console.log(categories);
 
   return (
     <>
@@ -21,7 +26,9 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <h1>Home</h1>
+      {categories.map((category, i) => {
+        return <CategoryContainer key={i} category={category} />;
+      })}
     </>
   );
 }

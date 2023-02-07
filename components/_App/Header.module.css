@@ -97,7 +97,7 @@
 
 @media only screen and (max-width: 800px) {
   .MyNavbar .right-side {
-    padding-right: 0px;
+    padding-right: 25px;
   }
 
   .MyNavbar .right-side .links a {

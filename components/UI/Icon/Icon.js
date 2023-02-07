@@ -5,13 +5,12 @@ import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Icon.module.css';
 
-const Icon = ({ type, count, amount, onClick, isLoggedIn, size, color }) => {
-  console.log((amount = 0));
+const Icon = ({ type, amount, onClick, isLoggedIn, size, color }) => {
   return (
     <div className={classes.Icon} onClick={onClick}>
       {type === 'cart' && <span className={classes.count}>{amount}</span>}
       <FontAwesomeIcon
-        size='2xl'
+        size={size}
         icon={type === 'user' ? faUser : faCartShopping}
         style={{ color: `${color}` }}
       />

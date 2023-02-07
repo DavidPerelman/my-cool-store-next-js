@@ -1,15 +1,18 @@
+// import React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Icon.module.css';
 
 const Icon = ({ type, count, amount, onClick, isLoggedIn, size, color }) => {
+  console.log((amount = 0));
   return (
-    <div className={classes.cart} onClick={onClick}>
-      {count && <span className={classes.count}>{amount}</span>}
+    <div className={classes.Icon} onClick={onClick}>
+      {type === 'cart' && <span className={classes.count}>{amount}</span>}
       <FontAwesomeIcon
-        size='xl'
-        icon={type === 'user' ? faUser : ''}
+        size='2xl'
+        icon={type === 'user' ? faUser : faCartShopping}
         style={{ color: `${color}` }}
       />
 

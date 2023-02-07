@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
 
-const Header = ({ children }) => {
+const Header = () => {
   return (
     <div className='d-flex flex-column site-container'>
       <div className={classes.MyNavbar}>
@@ -17,7 +17,8 @@ const Header = ({ children }) => {
             // id={showLinks ? classes['hidden'] : ''}
           ></div>
           <div className={classes.icons}>
-            <Icon type={'user'} color='white' count={false} />
+            <Icon type={'cart'} color='white' count={false} />
+            <Icon type={'user'} color='white' count={false} amount={0} />
           </div>
           <div className={classes.Hamburger}>
             {/* <Hamburger showLinks={showLinks} setShowLinks={setShowLinks} /> */}

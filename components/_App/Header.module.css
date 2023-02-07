@@ -86,7 +86,8 @@
 }
 
 .icons {
-  justify-content: right;
+  gap: 15px;
+  /* justify-content: right; */
   display: flex;
   flex-wrap: inherit;
   align-items: center;
@@ -95,6 +96,10 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .MyNavbar .right-side {
+    padding-right: 0px;
+  }
+
   .MyNavbar .right-side .links a {
     text-decoration: none;
     color: black;

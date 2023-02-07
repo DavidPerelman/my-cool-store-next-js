@@ -7,10 +7,10 @@ export default function Home() {
     getProducts();
   }, []);
 
-  const getProducts = () => {
-    const url = 'http://localhost:3000/api/products';
-    axios.get(url);
-    console.log('getProducts');
+  const getProducts = async () => {
+    const url = 'http://localhost:3000/api/categories';
+    const response = await axios.get(url);
+    console.log(response.data);
   };
 
   return (

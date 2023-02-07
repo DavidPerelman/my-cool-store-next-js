@@ -1,5 +1,35 @@
 .Header {
   height: 3rem;
-  background-color: aqua;
   width: 100%;
+  background-color: #8a2b06;
+  color: #ffffff !important;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.site-title {
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.header a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.icons {
+  justify-content: right;
+  display: flex;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main {
+  margin-top: 4rem;
 }

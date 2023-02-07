@@ -45,12 +45,8 @@
   text-align-last: center;
 }
 
-.headerIcon {
-  margin-top: 20px;
-}
-
 .Icon .isLogin {
-  color: limegreen;
+  color: limegreen !important;
 }
 
 .Icon i {

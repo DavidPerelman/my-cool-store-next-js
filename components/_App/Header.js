@@ -1,8 +1,24 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import { useState } from 'react';
 import Hamburger from '../UI/Hamburger/Hamburger';
 import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
+import nProgress from 'nprogress';
+
+nProgress.configure({ showSpinner: false });
+
+Router.onRouteChangeStart = () => {
+  nProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  nProgress.done();
+};
+
+Router.onRouteChangeError = function () {
+  NProgress.done();
+};
 
 const Header = () => {
   const [showLinks, setShowLinks] = useState(false);

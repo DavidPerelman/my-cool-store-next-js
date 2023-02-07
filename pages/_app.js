@@ -1,7 +1,11 @@
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/styles/globals.css';
+// import '@/styles/nprogress.css';
 config.autoAddCss = false;
+
+import '/static/styles.css';
+import '/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
 

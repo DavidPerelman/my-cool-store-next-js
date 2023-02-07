@@ -11,7 +11,7 @@ export default function Home() {
   }, []);
 
   const getProducts = async () => {
-    const url = 'http://localhost:3000/api/categories';
+    const url = 'api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
   };

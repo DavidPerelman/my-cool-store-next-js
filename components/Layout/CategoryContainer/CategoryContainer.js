@@ -1,6 +1,14 @@
+import LoadingSpinner from '@/components/UI/LoadingSpinner/LoadingSpinner';
 import classes from './CategoryContainer.module.css';
 
 const CategoryContainer = ({ category }) => {
+  console.log(category);
+  let content;
+
+  if (!category) {
+    content = <LoadingSpinner key={'1'} />;
+  }
+
   return (
     <div className={classes.CategoryContainer} key={category.name}>
       <div className={classes['categories-button']}>
@@ -10,6 +18,7 @@ const CategoryContainer = ({ category }) => {
       </div>
       <div className={classes.products}>
         {/* <Row className={classes.Row}>{content}</Row> */}
+        {content}
       </div>
     </div>
   );

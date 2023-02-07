@@ -2,18 +2,36 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
+import LoadingSpinner from '@/components/UI/LoadingSpinner/LoadingSpinner';
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(categories.length === 0);
 
+  console.log(categories.length);
   useEffect(() => {
     getProducts();
   }, []);
+
+  console.log(isLoading);
+
+  let content;
+
+  if (isLoading) {
+    content = <LoadingSpinner key={'1'} />;
+  } else if (categories && categories.length > 0) {
+    content = categories.map((category, i) => {
+      return (
+        <CategoryContainer key={i} category={category} isLoading={isLoading} />
+      );
+    });
+  }
 
   const getProducts = async () => {
     const url = 'api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
+    setIsLoading(false);
   };
 
   console.log(categories);
@@ -26,9 +44,7 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      {categories.map((category, i) => {
-        return <CategoryContainer key={i} category={category} />;
-      })}
+      {content}
     </>
   );
 }

@@ -1,13 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react';
-// import {
-//   getAuth,
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   updateProfile,
-//   onAuthStateChanged,
-// } from 'firebase/auth';
-// import { auth } from '../firebase';
-// import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  getAuth,
+} from 'firebase/auth';
+
+import { auth } from '@/firebase';
 import axios from 'axios';
 // import { createToken, createUser } from '../api/usersApi';
 
@@ -48,65 +49,64 @@ export const AuthContextProvider = (props) => {
   };
 
   const signup = async (username, email, password) => {
-    // const mongoUser = await createUser(username, email, password);
-    // console.log(mongoUser);
-    // if (mongoUser) {
-    //   await createUserWithEmailAndPassword(
-    //     auth,
-    //     mongoUser.user.email,
-    //     mongoUser.user.password
-    //   )
-    //     .then(async (user) => {
-    //       await updateProfile(auth.currentUser, { displayName: username });
-    //       setCurrentUser({
-    //         displayName: user.user.displayName,
-    //         email: user.user.email,
-    //         uid: user.user.uid,
-    //       });
-    //     })
-    //     .catch((err) => {
-    //       setError('Signup error!');
-    //       clearError();
-    //     });
-    //   localStorage.setItem('token', mongoUser.token);
-    //   setCurrentUser(mongoUser);
-    // }
+    const mongoUser = await createUser(username, email, password);
+    console.log(mongoUser);
+    if (mongoUser) {
+      await createUserWithEmailAndPassword(
+        auth,
+        mongoUser.user.email,
+        mongoUser.user.password
+      )
+        .then(async (user) => {
+          await updateProfile(auth.currentUser, { displayName: username });
+          setCurrentUser({
+            displayName: user.user.displayName,
+            email: user.user.email,
+            uid: user.user.uid,
+          });
+        })
+        .catch((err) => {
+          setError('Signup error!');
+          clearError();
+        });
+      localStorage.setItem('token', mongoUser.token);
+      setCurrentUser(mongoUser);
+    }
   };
 
   const logout = async () => {
     localStorage.removeItem('token');
-    // return getAuth().signOut();
+    return getAuth().signOut();
   };
 
   const firebaseLogin = async (email, password) => {
-    // try {
-    //   const user = await signInWithEmailAndPassword(auth, email, password);
-    //   if (user) {
-    //     setAuthorized(true);
-    //     console.log(user.user.accessToken);
-    //     localStorage.setItem('token', user.user.accessToken);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   setError('Invalid email address or password.');
-    //   clearError();
-    // }
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      if (user) {
+        setAuthorized(true);
+        console.log(user.user.accessToken);
+        localStorage.setItem('token', user.user.accessToken);
+      }
+    } catch (err) {
+      console.log(err);
+      setError('Invalid email address or password.');
+      clearError();
+    }
   };
 
   useEffect(() => {
-    // const authStateListener = () => {
-    //   auth.onAuthStateChanged(async (user) => {
-    //     if (!user) {
-    //       setLoading(false);
-    //       return setAuthorized(false);
-    //     }
-    //     setLoading(false);
-    //     setCurrentUser(user);
-    //     return setAuthorized(true);
-    //   });
-    // };
-    // authStateListener();
-    // checkLoggedIn();
+    const authStateListener = () => {
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          setLoading(false);
+          return setAuthorized(false);
+        }
+        setLoading(false);
+        setCurrentUser(user);
+        return setAuthorized(true);
+      });
+    };
+    authStateListener();
   }, [authorized]);
 
   const contextValue = {

@@ -10,13 +10,16 @@ import '/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
+import { AuthContextProvider } from '@/context/auth-context';
 
 export default function App({ Component, pageProps }) {
   return (
-    <CartContextProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </CartContextProvider>
+    <AuthContextProvider>
+      <CartContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </CartContextProvider>
+    </AuthContextProvider>
   );
 }

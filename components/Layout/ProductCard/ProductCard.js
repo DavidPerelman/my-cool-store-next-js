@@ -8,21 +8,25 @@ import Rating from '@/components/UI/Rating/Rating';
 import CartContext from '@/context/cart-context';
 
 const ProductCard = ({ product }) => {
+  const [existingCartItemIndex, setExistingCartItemIndex] = useState();
+  const [existingCartItem, setExistingCartItem] = useState();
   const [existingCartItemId, setExistingCartItemId] = useState();
   const cartCtx = useContext(CartContext);
   const price = `$${product.price.toFixed(2)}`;
 
   useEffect(() => {
-    const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
-      return product._id === cartItem.product._id;
-    });
+    setExistingCartItemIndex(
+      cartCtx.items.findIndex((cartItem) => {
+        return product._id === cartItem.product._id;
+      })
+    );
 
-    const existingCartItem = cartCtx.items[existingCartItemIndex];
+    setExistingCartItem(cartCtx.items[existingCartItemIndex]);
 
     if (existingCartItem) {
       setExistingCartItemId(Object.values(existingCartItem)[0]._id);
     }
-  }, [cartCtx.items, product._id]);
+  }, [cartCtx.items, product._id, existingCartItem, existingCartItemIndex]);
 
   const addToCartHandler = () => {
     cartCtx.addItem(product);

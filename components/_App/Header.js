@@ -7,6 +7,8 @@ import classes from './Header.module.css';
 import nProgress from 'nprogress';
 import CartContext from '@/context/cart-context';
 import CartModal from '../Layout/CartModal/CartModal';
+import UserModal from '../Layout/UserModal/UserModal';
+import AuthContext from '@/context/auth-context';
 
 nProgress.configure({ showSpinner: false });
 
@@ -24,6 +26,7 @@ Router.onRouteChangeError = function () {
 
 const Header = () => {
   const cartCtx = useContext(CartContext);
+  const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
 
@@ -39,9 +42,20 @@ const Header = () => {
     cartCtx.hideCart();
   };
 
+  const showUserModalHandler = () => {
+    authCtx.showUserModal();
+  };
+
+  const closeUserModalHandler = () => {
+    authCtx.hideUserModal();
+  };
+
   return (
     <div className='d-flex flex-column site-container'>
       {cartCtx.cartIsShown && <CartModal onCloseCart={closeCartHandler} />}
+      {authCtx.userModalIsShown && (
+        <UserModal onCloseUserModal={closeUserModalHandler} />
+      )}
       <div className={classes.MyNavbar}>
         <div className={classes['left-side']}>
           <Link className={classes['site-title']} href='/'>
@@ -61,7 +75,12 @@ const Header = () => {
               amount={cartItemsAmount}
               onClick={showCartHandler}
             />
-            <Icon type={'user'} size='2xl' color='white' />
+            <Icon
+              type={'user'}
+              size='2xl'
+              color='white'
+              onClick={showUserModalHandler}
+            />
           </div>
           <div className={classes.Hamburger}>
             <Hamburger showLinks={showLinks} setShowLinks={setShowLinks} />

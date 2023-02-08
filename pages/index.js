@@ -45,6 +45,7 @@ export async function getStaticProps() {
         _id: product._id.toString(),
         title: product.title,
         price: product.price,
+        // rating: product.rating,
         description: product.description,
         brand: product.brand,
         category: product.category.toString(),

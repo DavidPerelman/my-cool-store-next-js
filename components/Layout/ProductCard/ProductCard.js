@@ -6,9 +6,11 @@ import classes from './ProductCard.module.css';
 import Icon from '../../UI/Icon/Icon';
 import Link from 'next/link';
 import Image from 'next/image';
+import Rating from '@/components/UI/Rating/Rating';
 
 const ProductCard = ({ product }) => {
   // const cartCtx = useContext(CartContext);
+
   const price = `$${product.price.toFixed(2)}`;
 
   // const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
@@ -44,7 +46,7 @@ const ProductCard = ({ product }) => {
             <Card.Title>{product.title}</Card.Title>
           </a>
         </Link>
-        {/* <Rating rating={product.rating} /> */}
+        <Rating rating={5} />
         <Card.Body className={classes['card-footer']}>
           <Card.Text>{price}</Card.Text>
           {/* {existingCartItemId !== product._id ? (

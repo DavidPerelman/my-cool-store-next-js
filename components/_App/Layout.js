@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 
 import Header from './Header';
-import HeadContent from './HeadContent';
 import classes from './Header.module.css';
 
 const Layout = ({ children }) => {

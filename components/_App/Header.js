@@ -6,6 +6,7 @@ import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
 import nProgress from 'nprogress';
 import CartContext from '@/context/cart-context';
+import CartModal from '../Layout/CartModal/CartModal';
 
 nProgress.configure({ showSpinner: false });
 
@@ -30,8 +31,17 @@ const Header = () => {
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length]);
 
+  const showCartHandler = () => {
+    cartCtx.showCart();
+  };
+
+  const closeCartHandler = () => {
+    cartCtx.hideCart();
+  };
+
   return (
     <div className='d-flex flex-column site-container'>
+      {cartCtx.cartIsShown && <CartModal onCloseCart={closeCartHandler} />}
       <div className={classes.MyNavbar}>
         <div className={classes['left-side']}>
           <Link className={classes['site-title']} href='/'>
@@ -49,6 +59,7 @@ const Header = () => {
               size='2xl'
               color='white'
               amount={cartItemsAmount}
+              onClick={showCartHandler}
             />
             <Icon type={'user'} size='2xl' color='white' />
           </div>

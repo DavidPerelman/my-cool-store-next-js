@@ -1,5 +1,11 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import productModel from '@/models/productModel';
+import connectDb from '@/utils/connectDb';
 
-export default function handler(req, res) {
-  res.status(200).json({ message: 'hello products api' });
-}
+connectDb();
+
+const getProdudcts = async (req, res) => {
+  const products = await productModel.find();
+  res.status(200).json({ products: products });
+};
+
+export default getProdudcts;

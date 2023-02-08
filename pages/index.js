@@ -10,7 +10,7 @@ export default function Home() {
 
   console.log(categories.length);
   useEffect(() => {
-    getProducts();
+    getCategories();
   }, []);
 
   console.log(isLoading);
@@ -27,14 +27,12 @@ export default function Home() {
     });
   }
 
-  const getProducts = async () => {
+  const getCategories = async () => {
     const url = 'api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
     setIsLoading(false);
   };
-
-  console.log(categories);
 
   return (
     <>

@@ -9,7 +9,6 @@ import Image from 'next/image';
 
 const ProductCard = ({ product }) => {
   // const cartCtx = useContext(CartContext);
-
   const price = `$${product.price.toFixed(2)}`;
 
   // const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
@@ -63,15 +62,25 @@ const ProductCard = ({ product }) => {
     // </Card>
 
     <div className={classes.myCard}>
-      <Image
-        src={`${product.thumbnail}`}
-        className='card-img'
-        alt={product.title}
-        loading='lazy'
-        width={280}
-        height={280}
-      />
-      <h1>{product.title}</h1>
+      <Link href={`/product/${product._id}`}>
+        <Image
+          src={`${product.thumbnail}`}
+          className='card-img'
+          alt={product.title}
+          loading='lazy'
+          width={280}
+          height={280}
+        />
+      </Link>
+      <div className={classes['card-body']}>
+        <Link href={`/product/${product._id}`}>
+          <p className={classes['product-title']}>{product.title}</p>
+        </Link>
+        <div className={classes['card-footer']}>
+          <p className={classes['product-price']}>{price}</p>
+          <span className={classes['in-cart']}>In Cart</span>
+        </div>
+      </div>
     </div>
   );
 };

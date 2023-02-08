@@ -9,7 +9,7 @@ const nextConfig = {
     STRIPE_SECRET_KEY: '<insert-stripe-secret-key>',
   },
   images: {
-    domains: ['i.dummyjson.com'],
+    domains: ['i.dummyjson.com', 'd3t32hsnjxo7q6.cloudfront.net'],
   },
 };
 

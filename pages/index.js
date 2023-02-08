@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { MongoClient } from 'mongodb';
+import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
-export default function Home(props) {
-  console.log(props);
+export default function Home({ categories, products }) {
   return (
     <>
       <Head>
@@ -11,6 +11,11 @@ export default function Home(props) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <>
+        {categories.map((category, i) => (
+          <CategoryContainer category={category} products={products} key={i} />
+        ))}
+      </>
     </>
   );
 }
@@ -33,12 +38,17 @@ export async function getStaticProps() {
   return {
     props: {
       categories: categories.map((category) => ({
-        id: category._id.toString(),
+        _id: category._id.toString(),
         name: category.name,
       })),
       products: products.map((product) => ({
-        id: product._id.toString(),
+        _id: product._id.toString(),
         title: product.title,
+        price: product.price,
+        description: product.description,
+        brand: product.brand,
+        category: product.category.toString(),
+        thumbnail: product.thumbnail,
       })),
     },
     revalidate: 1,

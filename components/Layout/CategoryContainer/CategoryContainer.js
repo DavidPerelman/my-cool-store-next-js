@@ -6,46 +6,30 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import ProductCard from '../ProductCard/ProductCard';
 
-const CategoryContainer = ({ category }) => {
-  const [products, setProducts] = useState([]);
+const CategoryContainer = ({ category, products }) => {
+  //   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const filteredProducts = products.filter(
+    (product) => product.category === category._id
+  );
   let content;
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    setIsLoading(false);
-
-    try {
-      const categoryId = category._id;
-      const url = `api/products/${categoryId}`;
-      const response = await axios.get(url);
-      if (response.status === 200) {
-        setProducts(response.data.products);
+  if (filteredProducts) {
+    content = filteredProducts.slice(0, 4).map(
+      (product, i) => {
+        //   if (product.category === category._id) {
+        return (
+          <div key={i} className={classes.box}>
+            <ProductCard key={i} product={product} />
+          </div>
+          //    <Col sm={6} md={4} lg={3} key={i}>
+          //      <ProductCard product={product} />
+          //    </Col>
+        );
       }
-    } catch (error) {
-      console.log(error);
-    }
-
-    setIsLoading(false);
-  };
-
-  console.log(products);
-
-  if (products && products.length > 0) {
-    content = products.map((product, i) => {
-      return (
-        // <div key={i} className={classes.box}>
-        <ProductCard key={i} product={product} />
-        // </div>
-        // <Col sm={6} md={4} lg={3} key={i}>
-        //   <ProductCard product={product} />
-        // </Col>
-      );
-    });
+      // }
+    );
   }
 
   const onCategoryClick = () => {

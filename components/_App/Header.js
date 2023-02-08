@@ -1,10 +1,11 @@
+import { useContext, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { useState } from 'react';
 import Hamburger from '../UI/Hamburger/Hamburger';
 import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
 import nProgress from 'nprogress';
+import CartContext from '@/context/cart-context';
 
 nProgress.configure({ showSpinner: false });
 
@@ -21,7 +22,13 @@ Router.onRouteChangeError = function () {
 };
 
 const Header = () => {
+  const cartCtx = useContext(CartContext);
+  const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
+
+  useEffect(() => {
+    setCartItemsAmount(cartCtx.items.length);
+  }, [cartCtx.items.length]);
 
   return (
     <div className='d-flex flex-column site-container'>
@@ -37,7 +44,12 @@ const Header = () => {
             id={showLinks ? classes['hidden'] : ''}
           ></div>
           <div className={classes.icons}>
-            <Icon type={'cart-shopping'} size='2xl' color='white' amount={0} />
+            <Icon
+              type={'cart-shopping'}
+              size='2xl'
+              color='white'
+              amount={cartItemsAmount}
+            />
             <Icon type={'user'} size='2xl' color='white' />
           </div>
           <div className={classes.Hamburger}>

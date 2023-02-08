@@ -1,31 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
-// import Rating from '../../UI/Rating/Rating';
 import classes from './ProductCard.module.css';
-// import CartContext from '../../../store/cart-context';
 import Icon from '../../UI/Icon/Icon';
 import Link from 'next/link';
 import Image from 'next/image';
 import Rating from '@/components/UI/Rating/Rating';
+import CartContext from '@/context/cart-context';
 
 const ProductCard = ({ product }) => {
-  // const cartCtx = useContext(CartContext);
-
+  const [existingCartItemId, setExistingCartItemId] = useState();
+  const cartCtx = useContext(CartContext);
   const price = `$${product.price.toFixed(2)}`;
 
-  // const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
-  //   return product._id === cartItem.product._id;
-  // });
+  useEffect(() => {
+    const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
+      return product._id === cartItem.product._id;
+    });
 
-  // const existingCartItem = cartCtx.items[existingCartItemIndex];
-  // let existingCartItemId;
+    const existingCartItem = cartCtx.items[existingCartItemIndex];
 
-  // if (existingCartItem) {
-  //   existingCartItemId = Object.values(existingCartItem)[0]._id;
-  // }
+    if (existingCartItem) {
+      setExistingCartItemId(Object.values(existingCartItem)[0]._id);
+    }
+  }, [cartCtx.items, product._id]);
 
   const addToCartHandler = () => {
-    // cartCtx.addItem(product);
+    cartCtx.addItem(product);
   };
 
   return (
@@ -49,47 +49,19 @@ const ProductCard = ({ product }) => {
         <Rating rating={5} />
         <Card.Body className={classes['card-footer']}>
           <Card.Text>{price}</Card.Text>
-          {/* {existingCartItemId !== product._id ? (
+          {existingCartItemId !== product._id ? (
             <Icon
+              type={'cart-plus'}
               color='black'
-              type='fa-solid fa-cart-plus'
               onClick={(e) => addToCartHandler(e)}
-              size='lg'
+              size='2xl'
             />
           ) : (
             <span className={classes['in-cart']}>In Cart</span>
-          )} */}
-          <Icon
-            type={'cart-plus'}
-            color='black'
-            onClick={(e) => addToCartHandler(e)}
-            size='2xl'
-          />
+          )}
         </Card.Body>
       </Card.Body>
     </Card>
-
-    // <div className={classes.myCard}>
-    //   <Link href={`/product/${product._id}`}>
-    //     <Image
-    //       src={`${product.thumbnail}`}
-    //       className='card-img'
-    //       alt={product.title}
-    //       loading='lazy'
-    //       width={280}
-    //       height={280}
-    //     />
-    //   </Link>
-    //   <div className={classes['card-body']}>
-    //     <Link href={`/product/${product._id}`}>
-    //       <p className={classes['product-title']}>{product.title}</p>
-    //     </Link>
-    //     <div className={classes['card-footer']}>
-    //       <p className={classes['product-price']}>{price}</p>
-    //       <span className={classes['in-cart']}>In Cart</span>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

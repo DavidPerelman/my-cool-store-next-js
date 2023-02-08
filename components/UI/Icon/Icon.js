@@ -11,7 +11,9 @@ import classes from './Icon.module.css';
 const Icon = ({ type, amount, onClick, isLoggedIn, size, color }) => {
   return (
     <div className={classes.Icon} onClick={onClick}>
-      {type === 'cart' && <span className={classes.count}>{amount}</span>}
+      {type === 'cart-shopping' && (
+        <span className={classes.count}>{amount}</span>
+      )}
       <FontAwesomeIcon
         size={size}
         icon={

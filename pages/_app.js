@@ -9,11 +9,14 @@ import '/static/styles.css';
 import '/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
+import { CartContextProvider } from '@/context/cart-context';
 
 export default function App({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <CartContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </CartContextProvider>
   );
 }

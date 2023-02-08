@@ -12,7 +12,9 @@ const Layout = ({ children }) => {
         <title>MyCoolStore</title>
       </Head>
       <Header />
-      <main className={classes.main}>{children}</main>
+      <main style={{ marginTop: '4rem' }} className={classes.main}>
+        {children}
+      </main>
     </>
   );
 };

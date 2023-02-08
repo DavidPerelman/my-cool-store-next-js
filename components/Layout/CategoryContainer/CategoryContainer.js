@@ -4,6 +4,7 @@ import classes from './CategoryContainer.module.css';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
+import ProductCard from '../ProductCard/ProductCard';
 
 const CategoryContainer = ({ category }) => {
   const [products, setProducts] = useState([]);
@@ -19,28 +20,33 @@ const CategoryContainer = ({ category }) => {
     setIsLoading(false);
 
     try {
-      const url = 'api/products';
+      const categoryId = category._id;
+      const url = `api/products/${categoryId}`;
       const response = await axios.get(url);
-      if (response && response.ok) {
+      if (response.status === 200) {
         setProducts(response.data.products);
-        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoading(false);
   };
 
   console.log(products);
 
-  //   if (products && products.length > 0) {
-  //     content = products.map((product, i) => {
-  //       return (
-  //         <Col sm={6} md={4} lg={3} key={i}>
-  //           <ProductCard product={product} />
-  //         </Col>
-  //       );
-  //     });
-  //   }
+  if (products && products.length > 0) {
+    content = products.map((product, i) => {
+      return (
+        // <div key={i} className={classes.box}>
+        <ProductCard key={i} product={product} />
+        // </div>
+        // <Col sm={6} md={4} lg={3} key={i}>
+        //   <ProductCard product={product} />
+        // </Col>
+      );
+    });
+  }
 
   const onCategoryClick = () => {
     console.log(category);
@@ -53,9 +59,10 @@ const CategoryContainer = ({ category }) => {
           Our {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
         </Button>
       </div>
-      <div className={classes.products}>
+      {/* <div className={classes.products}>
         <Row className={classes.Row}>{content}</Row>
-      </div>
+      </div> */}
+      <div className={classes.container}>{content}</div>
     </div>
   );
 };

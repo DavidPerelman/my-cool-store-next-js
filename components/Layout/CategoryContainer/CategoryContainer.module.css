@@ -1,7 +1,9 @@
 .CategoryContainer {
   margin-top: 1rem;
+}
+
+.Row {
   display: flex;
-  justify-content: center;
 }
 
 .products {
@@ -24,7 +26,35 @@
   padding: 0.75rem 3rem;
 }
 
+/* ////////////////////////  */
+
+.container {
+  position: relative;
+
+  width: 100%;
+  height: auto;
+  /* background-color: #007bbf; */
+
+  /* add flexbox style */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-flow: wrap;
+}
+
+/* .box {
+  width: 25%;
+  height: auto;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
 @media only screen and (max-width: 800px) {
+  .box {
+    width: 90%;
+  }
+
   .Row {
     gap: 1rem;
   }

@@ -8,6 +8,9 @@ const nextConfig = {
     CLOUDINARY_URL: '<insert-cloudinary-url>',
     STRIPE_SECRET_KEY: '<insert-stripe-secret-key>',
   },
+  images: {
+    domains: ['i.dummyjson.com'],
+  },
 };
 
 module.exports = nextConfig;

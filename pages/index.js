@@ -1,39 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import axios from 'axios';
-import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
-import LoadingSpinner from '@/components/UI/LoadingSpinner/LoadingSpinner';
+import { MongoClient } from 'mongodb';
 
-export default function Home() {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(categories.length === 0);
-
-  console.log(categories.length);
-  useEffect(() => {
-    getCategories();
-  }, []);
-
-  console.log(isLoading);
-
-  let content;
-
-  if (isLoading) {
-    content = <LoadingSpinner key={'1'} />;
-  } else if (categories && categories.length > 0) {
-    content = categories.map((category, i) => {
-      return (
-        <CategoryContainer key={i} category={category} isLoading={isLoading} />
-      );
-    });
-  }
-
-  const getCategories = async () => {
-    const url = 'api/categories';
-    const response = await axios.get(url);
-    setCategories(response.data.categories);
-    setIsLoading(false);
-  };
-
+export default function Home(props) {
+  console.log(props);
   return (
     <>
       <Head>
@@ -42,7 +11,36 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      {content}
     </>
   );
+}
+
+export async function getStaticProps() {
+  // fetch data from an API
+  const client = await MongoClient.connect(
+    'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  );
+  const db = client.db();
+
+  const categoriesCollection = db.collection('categories');
+  const productsCollection = db.collection('products');
+
+  const categories = await categoriesCollection.find().toArray();
+  const products = await productsCollection.find().toArray();
+
+  client.close();
+
+  return {
+    props: {
+      categories: categories.map((category) => ({
+        id: category._id.toString(),
+        name: category.name,
+      })),
+      products: products.map((product) => ({
+        id: product._id.toString(),
+        title: product.title,
+      })),
+    },
+    revalidate: 1,
+  };
 }

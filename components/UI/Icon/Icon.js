@@ -1,5 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser,
+  faCartShopping,
+  faCartPlus,
+  faCartArrowDown,
+} from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Icon.module.css';
 
@@ -9,7 +14,15 @@ const Icon = ({ type, amount, onClick, isLoggedIn, size, color }) => {
       {type === 'cart' && <span className={classes.count}>{amount}</span>}
       <FontAwesomeIcon
         size={size}
-        icon={type === 'user' ? faUser : faCartShopping}
+        icon={
+          type === 'user'
+            ? faUser
+            : type === 'cart-shopping'
+            ? faCartShopping
+            : type === 'cart-plus'
+            ? faCartPlus
+            : ''
+        }
         style={{ color: `${color}` }}
         className={`${type === 'user' && isLoggedIn ? classes.isLogin : ''}`}
       />

@@ -20,9 +20,7 @@ const CategoryContainer = ({ category, products }) => {
       (product, i) => {
         //   if (product.category === category._id) {
         return (
-          <div key={i} className={classes.box}>
-            <ProductCard key={i} product={product} />
-          </div>
+          <ProductCard key={i} product={product} />
           //    <Col sm={6} md={4} lg={3} key={i}>
           //      <ProductCard product={product} />
           //    </Col>
@@ -37,7 +35,7 @@ const CategoryContainer = ({ category, products }) => {
   };
 
   return (
-    <div className={classes.CategoryContainer} key={category.name}>
+    <div key={category.name}>
       <div className={classes['categories-button']}>
         <Button onClick={onCategoryClick}>
           Our {category.name.charAt(0).toUpperCase() + category.name.slice(1)}

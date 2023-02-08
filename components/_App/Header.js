@@ -37,7 +37,7 @@ const Header = () => {
             id={showLinks ? classes['hidden'] : ''}
           ></div>
           <div className={classes.icons}>
-            <Icon type={'cart'} size='2xl' color='white' amount={0} />
+            <Icon type={'cart-shopping'} size='2xl' color='white' amount={0} />
             <Icon type={'user'} size='2xl' color='white' />
           </div>
           <div className={classes.Hamburger}>

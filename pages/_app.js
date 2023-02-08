@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/styles/globals.css';
 // import '@/styles/nprogress.css';
 config.autoAddCss = false;
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '/static/styles.css';
 import '/static/nprogress.css';

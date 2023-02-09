@@ -11,12 +11,16 @@ const cartCtx = createContext({
   addCartItemAmount: (id) => {},
   removeCartItemAmount: (id) => {},
   makeAnOrderClick: (userId) => {},
+  checkExistingCartItem: (productId) => {},
 });
 
 export const CartContextProvider = (props) => {
   const [totalCartCost, setTotalCartCost] = useState(0);
   const [cartIsShown, setCartIsShown] = useState(false);
   const [cartItems, setCartItems] = useLocalStorage('cartItems', []);
+  const [existingCartItemId, setExistingCartItemId] = useState();
+  const [existingCartItem, setExistingCartItem] = useState();
+  const [existingCartItemIndex, setExistingCartItemIndex] = useState();
 
   const calculateTotalCost = () => {
     const itemsPrice = cartItems.reduce(
@@ -26,6 +30,14 @@ export const CartContextProvider = (props) => {
     );
 
     setTotalCartCost(itemsPrice);
+  };
+
+  const checkExistingCartItem = (productId) => {
+    const check = cartItems.findIndex((cartItem) => {
+      return productId === cartItem.product._id;
+    });
+
+    return check >= 0;
   };
 
   useEffect(() => {
@@ -82,6 +94,7 @@ export const CartContextProvider = (props) => {
     });
 
     const existingItem = cartItems[existingCartItemIndex];
+
     const updatedTotalAmount = totalCartCost - existingItem.product.price;
     setTotalCartCost(updatedTotalAmount);
 
@@ -100,6 +113,7 @@ export const CartContextProvider = (props) => {
       updatedItems[existingCartItemIndex] = updatedItem;
     }
 
+    setExistingCartItemId(existingItem.product._id);
     setCartItems(updatedItems);
   };
 
@@ -118,6 +132,8 @@ export const CartContextProvider = (props) => {
     addCartItemAmount: addCartItemAmount,
     removeCartItemAmount: removeCartItemAmount,
     // makeAnOrderClick: makeAnOrderClick,
+    existingCartItemId: existingCartItemId,
+    checkExistingCartItem: checkExistingCartItem,
   };
 
   return (

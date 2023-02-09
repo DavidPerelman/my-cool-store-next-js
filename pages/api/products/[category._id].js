@@ -1,4 +1,4 @@
-import productModel from '@/models/productModel';
+import Product from '@/models/Product';
 
 const getContainerProductsByCategory = async (req, res) => {
   try {

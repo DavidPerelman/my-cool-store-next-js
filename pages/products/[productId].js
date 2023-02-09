@@ -1,6 +1,5 @@
 import Layout from '@/components/_App/Layout';
 import { useRouter } from 'next/router';
-// import { MongoClient } from 'mongodb';
 
 export default function ProductDetail(params) {
   const router = useRouter();

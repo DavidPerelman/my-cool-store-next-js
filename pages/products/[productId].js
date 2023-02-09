@@ -1,6 +1,8 @@
+import Layout from '@/components/_App/Layout';
 import { useRouter } from 'next/router';
+// import { MongoClient } from 'mongodb';
 
-function ProductDetail(params) {
+export default function ProductDetail(params) {
   const router = useRouter();
   const productId = router.query.productId;
 
@@ -8,5 +10,3 @@ function ProductDetail(params) {
 
   return <h1>{productId}</h1>;
 }
-
-export default ProductDetail;

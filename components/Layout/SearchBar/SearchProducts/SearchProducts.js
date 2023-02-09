@@ -5,7 +5,7 @@ import classes from './SearchProducts.module.css';
 const SearchProducts = ({ placeholder, data }) => {
   const [show, setShow] = useState(false);
   const [filteredData, setfilteredData] = useState(data);
-
+  console.log(data);
   useEffect(() => {
     window.addEventListener('click', function (e) {
       if (e.target.id === 'SearchProductsInput') {
@@ -48,7 +48,7 @@ const SearchProducts = ({ placeholder, data }) => {
               key={key}
               onClick={() => dataItemClick(value._id)}
             >
-              <Link href={`/product/${value._id}`}>{value.title}</Link>
+              <Link href={`/products/${value._id}`}>{value.title}</Link>
             </div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import classes from './SearchCategory.module.css';
+import axios from 'axios';
 
 const SearchCategory = ({ placeholder, data }) => {
   const [show, setShow] = useState(false);

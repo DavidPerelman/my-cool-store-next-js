@@ -1,7 +1,10 @@
-import categoryModel from '@/models/categoryModel';
+import Category from '@/models/Category';
+import connectDb from '@/utils/connectDb';
+
+connectDb();
 
 const getCategories = async (req, res) => {
-  const categories = await categoryModel.find();
+  const categories = await Category.find();
   res.status(200).json({ categories: categories });
 };
 

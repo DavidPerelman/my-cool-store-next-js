@@ -13,12 +13,24 @@ import { CartContextProvider } from '@/context/cart-context';
 import { AuthContextProvider } from '@/context/auth-context';
 
 export default function MyApp({ Component, pageProps }) {
+  // if (Component.getLayout) {
+  //   return Component.getLayout(
+  //     <AuthContextProvider>
+  //       <CartContextProvider>
+  //         {/* <Layout> */}
+  //         <Component {...pageProps} />
+  //         {/* </Layout> */}
+  //       </CartContextProvider>
+  //     </AuthContextProvider>
+  //   );
+  // }
+
   return (
     <AuthContextProvider>
       <CartContextProvider>
-        {/* <Layout> */}
-        <Component {...pageProps} />
-        {/* </Layout> */}
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </CartContextProvider>
     </AuthContextProvider>
   );

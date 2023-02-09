@@ -11,6 +11,7 @@ import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
 import SearchCategory from '../Layout/SearchBar/SearchCategory/SearchCategory';
 import SearchProducts from '../Layout/SearchBar/SearchProducts/SearchProducts';
+import axios from 'axios';
 
 nProgress.configure({ showSpinner: false });
 
@@ -26,18 +27,34 @@ Router.onRouteChangeError = function () {
   NProgress.done();
 };
 
-const Header = ({ categories, products }) => {
+const Header = () => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
   const [searchBar, setSearchBar] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
 
   useEffect(() => {
+    getCategories();
+    getProducts();
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length]);
+
+  const getProducts = async () => {
+    const url = 'http://localhost:3000/api/products';
+    const response = await axios.get(url);
+    setProducts(response.data.products);
+  };
+
+  const getCategories = async () => {
+    const url = 'http://localhost:3000/api/categories';
+    const response = await axios.get(url);
+    setCategories(response.data.categories);
+  };
 
   const showCartHandler = () => {
     cartCtx.showCart();
@@ -72,11 +89,15 @@ const Header = ({ categories, products }) => {
             className={classes.links}
             id={showLinks ? classes['hidden'] : ''}
           >
-            <SearchCategory
-              data={categories}
-              placeholder='Search Category...'
-            />
-            <SearchProducts data={products} placeholder='Search Product...' />
+            {categories && categories.length > 0 && (
+              <SearchCategory
+                data={categories}
+                placeholder='Search Category...'
+              />
+            )}
+            {products && products.length > 0 && (
+              <SearchProducts data={products} placeholder='Search Product...' />
+            )}
           </div>
           <div className={classes.icons}>
             <Icon

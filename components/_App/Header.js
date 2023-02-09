@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import Hamburger from '../UI/Hamburger/Hamburger';
@@ -9,6 +9,7 @@ import CartContext from '@/context/cart-context';
 import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
+import SearchCategory from '../Layout/SearchBar/SearchCategory/SearchCategory';
 
 nProgress.configure({ showSpinner: false });
 
@@ -24,11 +25,17 @@ Router.onRouteChangeError = function () {
   NProgress.done();
 };
 
-const Header = () => {
+const Header = ({ categories, products }) => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
+  const [searchBar, setSearchBar] = useState(null);
+  const searchProductsInputRef = useRef();
+  const searchCategoriesInputRef = useRef();
+
+  console.log(categories);
+  console.log(products);
 
   useEffect(() => {
     setCartItemsAmount(cartCtx.items.length);
@@ -66,7 +73,12 @@ const Header = () => {
           <div
             className={classes.links}
             id={showLinks ? classes['hidden'] : ''}
-          ></div>
+          >
+            <SearchCategory
+              data={categories}
+              placeholder='Search Category...'
+            />
+          </div>
           <div className={classes.icons}>
             <Icon
               type={'cart-shopping'}

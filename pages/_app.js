@@ -1,3 +1,4 @@
+import App from 'next/app';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/styles/globals.css';
@@ -11,13 +12,13 @@ import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
 import { AuthContextProvider } from '@/context/auth-context';
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <AuthContextProvider>
       <CartContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        {/* <Layout> */}
+        <Component {...pageProps} />
+        {/* </Layout> */}
       </CartContextProvider>
     </AuthContextProvider>
   );

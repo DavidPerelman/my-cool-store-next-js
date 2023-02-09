@@ -45,13 +45,13 @@ const Header = () => {
   }, [cartCtx.items.length]);
 
   const getProducts = async () => {
-    const url = 'http://localhost:3000/api/products';
+    const url = 'api/products';
     const response = await axios.get(url);
     setProducts(response.data.products);
   };
 
   const getCategories = async () => {
-    const url = 'http://localhost:3000/api/categories';
+    const url = 'api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
   };

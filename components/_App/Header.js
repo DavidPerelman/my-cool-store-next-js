@@ -10,6 +10,7 @@ import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
 import SearchCategory from '../Layout/SearchBar/SearchCategory/SearchCategory';
+import SearchProducts from '../Layout/SearchBar/SearchProducts/SearchProducts';
 
 nProgress.configure({ showSpinner: false });
 
@@ -75,6 +76,7 @@ const Header = ({ categories, products }) => {
               data={categories}
               placeholder='Search Category...'
             />
+            <SearchProducts data={products} placeholder='Search Product...' />
           </div>
           <div className={classes.icons}>
             <Icon

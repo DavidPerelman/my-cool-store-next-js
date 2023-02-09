@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import classes from './SearchCategory.module.css';
+import classes from './SearchProducts.module.css';
 
-const SearchCategory = ({ placeholder, data }) => {
+const SearchProducts = ({ placeholder, data }) => {
   const [show, setShow] = useState(false);
   const [filteredData, setfilteredData] = useState(data);
 
   useEffect(() => {
     window.addEventListener('click', function (e) {
-      if (e.target.id === 'SearchCategoryInput') {
+      if (e.target.id === 'SearchProductsInput') {
         // Clicked in input
         setShow(true);
       } else {
@@ -27,7 +27,7 @@ const SearchCategory = ({ placeholder, data }) => {
   };
 
   const dataItemClick = (id) => {
-    // navigate(`/products/${id}`);
+    // navigate(`/product/${id}`);
   };
 
   return (
@@ -36,7 +36,7 @@ const SearchCategory = ({ placeholder, data }) => {
         <input
           type='text'
           placeholder={placeholder}
-          id='SearchCategoryInput'
+          id='SearchProductsInput'
           onChange={handleFilter}
         />
       </div>
@@ -48,9 +48,7 @@ const SearchCategory = ({ placeholder, data }) => {
               key={key}
               onClick={() => dataItemClick(value._id)}
             >
-              <Link href={`/products/${value._id}`}>
-                {value.name.charAt(0).toUpperCase() + value.name.slice(1)}
-              </Link>
+              <Link href={`/product/${value._id}`}>{value.title}</Link>
             </div>
           ))}
         </div>
@@ -59,4 +57,4 @@ const SearchCategory = ({ placeholder, data }) => {
   );
 };
 
-export default SearchCategory;
+export default SearchProducts;

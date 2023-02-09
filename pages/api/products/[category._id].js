@@ -1,7 +1,4 @@
 import productModel from '@/models/productModel';
-import connectDb from '@/utils/connectDb';
-
-connectDb();
 
 const getContainerProductsByCategory = async (req, res) => {
   try {

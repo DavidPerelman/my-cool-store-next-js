@@ -8,7 +8,6 @@ import AuthForm from '@/components/Auth/AuthForm/AuthForm';
 const UserModal = ({ onCloseUserModal }) => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.authorized;
-  console.log(authCtx.authorized);
 
   return (
     <Modal onClose={onCloseUserModal}>

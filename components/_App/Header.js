@@ -34,9 +34,6 @@ const Header = ({ categories, products }) => {
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
 
-  console.log(categories);
-  console.log(products);
-
   useEffect(() => {
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length]);

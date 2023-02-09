@@ -50,7 +50,6 @@ export const AuthContextProvider = (props) => {
 
   const signup = async (username, email, password) => {
     const mongoUser = await createUser(username, email, password);
-    console.log(mongoUser);
     if (mongoUser) {
       await createUserWithEmailAndPassword(
         auth,
@@ -84,7 +83,6 @@ export const AuthContextProvider = (props) => {
       const user = await signInWithEmailAndPassword(auth, email, password);
       if (user) {
         setAuthorized(true);
-        console.log(user.user.accessToken);
         localStorage.setItem('token', user.user.accessToken);
       }
     } catch (err) {

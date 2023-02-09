@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import useLocalStorage from '@/hooks/use-local-storage';
 
 const cartCtx = createContext({
@@ -22,7 +22,7 @@ export const CartContextProvider = (props) => {
   const [existingCartItem, setExistingCartItem] = useState();
   const [existingCartItemIndex, setExistingCartItemIndex] = useState();
 
-  const calculateTotalCost = () => {
+  const calculateTotalCost = useCallback(() => {
     const itemsPrice = cartItems.reduce(
       (previousValue, cartItem) =>
         previousValue + cartItem.product.price * cartItem.amount,
@@ -30,7 +30,7 @@ export const CartContextProvider = (props) => {
     );
 
     setTotalCartCost(itemsPrice);
-  };
+  }, [cartItems]);
 
   const checkExistingCartItem = (productId) => {
     const check = cartItems.findIndex((cartItem) => {
@@ -42,7 +42,7 @@ export const CartContextProvider = (props) => {
 
   useEffect(() => {
     calculateTotalCost();
-  }, [totalCartCost, cartItems, cartItems]);
+  }, [calculateTotalCost]);
 
   const onShowCart = () => {
     setCartIsShown(true);

@@ -12,6 +12,8 @@ import AuthContext from '@/context/auth-context';
 import SearchCategory from '../Layout/SearchBar/SearchCategory/SearchCategory';
 import SearchProducts from '../Layout/SearchBar/SearchProducts/SearchProducts';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import SearchBar from '../Layout/SearchBar/SearchBar';
 
 nProgress.configure({ showSpinner: false });
 
@@ -37,21 +39,46 @@ const Header = () => {
   const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
+  const router = useRouter();
+
+  const handleSearchBar = (id) => {
+    if (searchBar === id || (searchBar && id === undefined)) {
+      setSearchBar(null);
+    }
+    if (searchBar !== id) {
+      setSearchBar(id);
+    }
+
+    if (id === 'categories') {
+      searchProductsInputRef.current.value = '';
+    } else {
+      searchCategoriesInputRef.current.value = '';
+    }
+  };
 
   useEffect(() => {
+    const handleClick = ({ target }) => {
+      handleSearchBar(target.dataset.id);
+    };
+
+    document.addEventListener('click', handleClick);
+
+    setShowLinks(false);
+
     getCategories();
     getProducts();
     setCartItemsAmount(cartCtx.items.length);
-  }, [cartCtx.items.length]);
+  }, [cartCtx.items.length, router.pathname]);
 
   const getProducts = async () => {
-    const url = 'api/products';
+    const url = `https://prussian-blue-xerus-cuff.cyclic.app/api/products`;
+    // const url = `${process.env.API}/api/products`;
     const response = await axios.get(url);
     setProducts(response.data.products);
   };
 
   const getCategories = async () => {
-    const url = 'api/categories';
+    const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
   };
@@ -90,13 +117,24 @@ const Header = () => {
             id={showLinks ? classes['hidden'] : ''}
           >
             {categories && categories.length > 0 && (
-              <SearchCategory
+              <SearchBar
+                searchBarInputRef={searchCategoriesInputRef}
+                searchBar={searchBar}
+                setSearchBar={setSearchBar}
+                id='categories'
                 data={categories}
                 placeholder='Search Category...'
               />
             )}
             {products && products.length > 0 && (
-              <SearchProducts data={products} placeholder='Search Product...' />
+              <SearchBar
+                id='products'
+                searchBar={searchBar}
+                setSearchBar={setSearchBar}
+                searchBarInputRef={searchProductsInputRef}
+                data={products}
+                placeholder='Search Product...'
+              />
             )}
           </div>
           <div className={classes.icons}>

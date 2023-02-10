@@ -5,7 +5,7 @@ import classes from './SearchProducts.module.css';
 const SearchProducts = ({ placeholder, data }) => {
   const [show, setShow] = useState(false);
   const [filteredData, setfilteredData] = useState(data);
-  console.log(data);
+
   useEffect(() => {
     window.addEventListener('click', function (e) {
       if (e.target.id === 'SearchProductsInput') {
@@ -26,10 +26,6 @@ const SearchProducts = ({ placeholder, data }) => {
     setfilteredData(newFilter);
   };
 
-  const dataItemClick = (id) => {
-    // navigate(`/product/${id}`);
-  };
-
   return (
     <div className={classes.search}>
       <div className={classes.searchInputs}>
@@ -43,13 +39,13 @@ const SearchProducts = ({ placeholder, data }) => {
       {show && (
         <div className={classes.dataResults}>
           {filteredData.map((value, key) => (
-            <div
-              className={classes.dataItem}
+            <Link
               key={key}
-              onClick={() => dataItemClick(value._id)}
+              className={classes.dataItem}
+              href={`/products/${value._id}`}
             >
-              <Link href={`/products/${value._id}`}>{value.title}</Link>
-            </div>
+              {value.title}
+            </Link>
           ))}
         </div>
       )}

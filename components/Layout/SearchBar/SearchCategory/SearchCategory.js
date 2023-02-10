@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import classes from './SearchCategory.module.css';
-import axios from 'axios';
 
 const SearchCategory = ({ placeholder, data }) => {
   const [show, setShow] = useState(false);
@@ -27,10 +26,6 @@ const SearchCategory = ({ placeholder, data }) => {
     setfilteredData(newFilter);
   };
 
-  const dataItemClick = (id) => {
-    // navigate(`/products/${id}`);
-  };
-
   return (
     <div className={classes.search}>
       <div className={classes.searchInputs}>
@@ -44,15 +39,13 @@ const SearchCategory = ({ placeholder, data }) => {
       {show && (
         <div className={classes.dataResults}>
           {filteredData.map((value, key) => (
-            <div
-              className={classes.dataItem}
+            <Link
               key={key}
-              onClick={() => dataItemClick(value._id)}
+              className={classes.dataItem}
+              href={`/products/${value._id}`}
             >
-              <Link href={`/products/${value._id}`}>
-                {value.name.charAt(0).toUpperCase() + value.name.slice(1)}
-              </Link>
-            </div>
+              {value.name.charAt(0).toUpperCase() + value.name.slice(1)}
+            </Link>
           ))}
         </div>
       )}

@@ -71,14 +71,14 @@ const Header = () => {
   }, [cartCtx.items.length, router.pathname]);
 
   const getProducts = async () => {
-    const url = `https://prussian-blue-xerus-cuff.cyclic.app/api/products`;
+    // const url = `https://prussian-blue-xerus-cuff.cyclic.app/api/products`;
     // const url = `${process.env.API}/api/products`;
     // const response = await axios.get(url);
     // setProducts(response.data.products);
   };
 
   const getCategories = async () => {
-    const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
+    // const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
     // const response = await axios.get(url);
     // setCategories(response.data.categories);
   };

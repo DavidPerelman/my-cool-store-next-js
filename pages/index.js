@@ -21,37 +21,37 @@ export default function Home() {
   );
 }
 
-// export async function getStaticProps() {
-//   // fetch data from an API
-//   const client = await MongoClient.connect(
-//     'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-//   );
-//   const db = client.db();
+export async function getStaticProps() {
+  // fetch data from an API
+  // const client = await MongoClient.connect(
+  //   'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  // );
+  // const db = client.db();
 
-//   const categoriesCollection = db.collection('categories');
-//   const productsCollection = db.collection('products');
+  // const categoriesCollection = db.collection('categories');
+  // const productsCollection = db.collection('products');
 
-//   const categories = await categoriesCollection.find().toArray();
-//   const products = await productsCollection.find().toArray();
+  // const categories = await categoriesCollection.find().toArray();
+  // const products = await productsCollection.find().toArray();
 
-//   client.close();
+  // client.close();
 
-//   return {
-//     props: {
-//       categories: categories.map((category) => ({
-//         _id: category._id.toString(),
-//         name: category.name,
-//       })),
-//       products: products.map((product) => ({
-//         _id: product._id.toString(),
-//         title: product.title,
-//         price: product.price,
-//         description: product.description,
-//         brand: product.brand,
-//         category: product.category.toString(),
-//         thumbnail: product.thumbnail,
-//       })),
-//     },
-//     revalidate: 1,
-//   };
-// }
+  return {
+    props: {
+      categories: categories.map((category) => ({
+        _id: category._id.toString(),
+        name: category.name,
+      })),
+      products: products.map((product) => ({
+        _id: product._id.toString(),
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        brand: product.brand,
+        category: product.category.toString(),
+        thumbnail: product.thumbnail,
+      })),
+    },
+    revalidate: 1,
+  };
+}

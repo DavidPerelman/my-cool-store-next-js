@@ -3,10 +3,13 @@ import classes from './CategoryContainer.module.css';
 import ProductCard from '../ProductCard/ProductCard';
 
 const CategoryContainer = ({ category, products }) => {
+  console.log(products.filter((product) => product.category === category._id));
+
   const filteredProducts = products.filter(
     (product) => product.category === category._id
   );
   let content;
+  console.log(filteredProducts);
 
   if (filteredProducts) {
     content = filteredProducts.slice(0, 4).map((product, i) => {

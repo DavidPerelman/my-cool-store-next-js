@@ -1,0 +1,56 @@
+[
+  {
+    "_id": "63b4e80a88064db960c870bd",
+    "name": "smartphones"
+  },
+  {
+    "_id": "63b4e80a88064db960c870be",
+    "name": "laptops"
+  },
+  {
+    "_id": "63b4e80a88064db960c870bf",
+    "name": "fragrances"
+  },
+  {
+    "_id": "63b4e80a88064db960c870c0",
+    "name": "skincare"
+  },
+  {
+    "_id": "63b4e80a88064db960c870c1",
+    "name": "groceries"
+  },
+  {
+    "_id": "63cc312e019bb163fbe5704a",
+    "name": "home-decoration"
+  },
+  {
+    "_id": "63ce80a6da495b3ed4148d09",
+    "name": "powder",
+    "__v": 0
+  },
+  {
+    "_id": "63ce80a7da495b3ed4148d0b",
+    "name": "cream",
+    "__v": 0
+  },
+  {
+    "_id": "63ce80a7da495b3ed4148d0f",
+    "name": "liquid",
+    "__v": 0
+  },
+  {
+    "_id": "63ce80a7da495b3ed4148d11",
+    "name": "palette",
+    "__v": 0
+  },
+  {
+    "_id": "63ce80a7da495b3ed4148d15",
+    "name": "lipstick",
+    "__v": 0
+  },
+  {
+    "_id": "63ce80a8da495b3ed4148d17",
+    "name": "mascara",
+    "__v": 0
+  }
+]

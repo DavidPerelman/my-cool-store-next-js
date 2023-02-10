@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import { MongoClient } from 'mongodb';
+// import { MongoClient } from 'mongodb';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
-import Header from '@/components/_App/Header';
-import Layout from '@/components/_App/Layout';
-import axios from 'axios';
+import categories from '../static/categories.json';
+import products from '../static/products.json';
 
-export default function Home({ categories, products }) {
+export default function Home() {
   return (
     <>
       <Head>
@@ -15,46 +14,44 @@ export default function Home({ categories, products }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      {/* <Layout categories={categories} products={products}> */}
       {categories.map((category, i) => (
         <CategoryContainer category={category} products={products} key={i} />
       ))}
-      {/* </Layout> */}
     </>
   );
 }
 
-export async function getStaticProps() {
-  // fetch data from an API
-  const client = await MongoClient.connect(
-    'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-  );
-  const db = client.db();
+// export async function getStaticProps() {
+//   // fetch data from an API
+//   const client = await MongoClient.connect(
+//     'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//   );
+//   const db = client.db();
 
-  const categoriesCollection = db.collection('categories');
-  const productsCollection = db.collection('products');
+//   const categoriesCollection = db.collection('categories');
+//   const productsCollection = db.collection('products');
 
-  const categories = await categoriesCollection.find().toArray();
-  const products = await productsCollection.find().toArray();
+//   const categories = await categoriesCollection.find().toArray();
+//   const products = await productsCollection.find().toArray();
 
-  client.close();
+//   client.close();
 
-  return {
-    props: {
-      categories: categories.map((category) => ({
-        _id: category._id.toString(),
-        name: category.name,
-      })),
-      products: products.map((product) => ({
-        _id: product._id.toString(),
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        brand: product.brand,
-        category: product.category.toString(),
-        thumbnail: product.thumbnail,
-      })),
-    },
-    revalidate: 1,
-  };
-}
+//   return {
+//     props: {
+//       categories: categories.map((category) => ({
+//         _id: category._id.toString(),
+//         name: category.name,
+//       })),
+//       products: products.map((product) => ({
+//         _id: product._id.toString(),
+//         title: product.title,
+//         price: product.price,
+//         description: product.description,
+//         brand: product.brand,
+//         category: product.category.toString(),
+//         thumbnail: product.thumbnail,
+//       })),
+//     },
+//     revalidate: 1,
+//   };
+// }

@@ -9,11 +9,11 @@ import CartContext from '@/context/cart-context';
 import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
-import SearchCategory from '../Layout/SearchBar/SearchCategory/SearchCategory';
-import SearchProducts from '../Layout/SearchBar/SearchProducts/SearchProducts';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
+import products from '../../static/products.json';
+import categories from '../../static/categories.json';
 
 nProgress.configure({ showSpinner: false });
 
@@ -35,8 +35,8 @@ const Header = () => {
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
   const [searchBar, setSearchBar] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  // const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
   const router = useRouter();
@@ -65,22 +65,22 @@ const Header = () => {
 
     setShowLinks(false);
 
-    getCategories();
-    getProducts();
+    // getCategories();
+    // getProducts();
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
 
   const getProducts = async () => {
     const url = `https://prussian-blue-xerus-cuff.cyclic.app/api/products`;
     // const url = `${process.env.API}/api/products`;
-    const response = await axios.get(url);
-    setProducts(response.data.products);
+    // const response = await axios.get(url);
+    // setProducts(response.data.products);
   };
 
   const getCategories = async () => {
     const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
-    const response = await axios.get(url);
-    setCategories(response.data.categories);
+    // const response = await axios.get(url);
+    // setCategories(response.data.categories);
   };
 
   const showCartHandler = () => {

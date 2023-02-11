@@ -1,10 +1,10 @@
 import Head from 'next/head';
-// import { MongoClient } from 'mongodb';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 import categories from '../static/categories.json';
-import products from '../static/products.json';
+import { getProducts } from '@/lib/mongo/products';
+// import products from '../static/products.json';
 
-export default function Home() {
+export default function Home({ categories, products }) {
   return (
     <>
       <Head>
@@ -22,19 +22,7 @@ export default function Home() {
 }
 
 export async function getStaticProps() {
-  // fetch data from an API
-  // const client = await MongoClient.connect(
-  //   'mongodb+srv://m001-student:m001-mongodb-basics@cluster0.6hgde.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-  // );
-  // const db = client.db();
-
-  // const categoriesCollection = db.collection('categories');
-  // const productsCollection = db.collection('products');
-
-  // const categories = await categoriesCollection.find().toArray();
-  // const products = await productsCollection.find().toArray();
-
-  // client.close();
+  const products = await getProducts();
 
   return {
     props: {
@@ -42,7 +30,7 @@ export async function getStaticProps() {
         _id: category._id.toString(),
         name: category.name,
       })),
-      products: products.map((product) => ({
+      products: products.products.map((product) => ({
         _id: product._id.toString(),
         title: product.title,
         price: product.price,

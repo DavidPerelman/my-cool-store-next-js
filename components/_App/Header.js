@@ -12,7 +12,7 @@ import AuthContext from '@/context/auth-context';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
-import products from '../../static/products.json';
+// import products from '../../static/products.json';
 import categories from '../../static/categories.json';
 
 nProgress.configure({ showSpinner: false });
@@ -36,7 +36,7 @@ const Header = () => {
   const [showLinks, setShowLinks] = useState(false);
   const [searchBar, setSearchBar] = useState(null);
   // const [categories, setCategories] = useState([]);
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
   const router = useRouter();
@@ -64,23 +64,22 @@ const Header = () => {
     document.addEventListener('click', handleClick);
 
     setShowLinks(false);
-
     // getCategories();
-    // getProducts();
+    getProducts();
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
 
   const getProducts = async () => {
-    // const url = `https://prussian-blue-xerus-cuff.cyclic.app/api/products`;
-    // const url = `${process.env.API}/api/products`;
-    // const response = await axios.get(url);
-    // setProducts(response.data.products);
+    const url = `api/products`;
+    const response = await axios.get(url);
+    console.log(response.data.products);
+    setProducts(response.data.products);
   };
 
   const getCategories = async () => {
-    // const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
-    // const response = await axios.get(url);
-    // setCategories(response.data.categories);
+    const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
+    const response = await axios.get(url);
+    setCategories(response.data.categories);
   };
 
   const showCartHandler = () => {

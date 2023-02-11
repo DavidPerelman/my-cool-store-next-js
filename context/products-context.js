@@ -22,7 +22,7 @@ export const ProductContextProvider = (props) => {
 
     fetchProduct(
       {
-        url: `/api/products/product/${productId}`,
+        url: `api/products/product/${productId}`,
       },
       transformProduct
     );

@@ -12,7 +12,6 @@ import AuthContext from '@/context/auth-context';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
-// import products from '../../static/products.json';
 import categories from '../../static/categories.json';
 
 nProgress.configure({ showSpinner: false });

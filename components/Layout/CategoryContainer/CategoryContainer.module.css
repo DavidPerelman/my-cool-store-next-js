@@ -2,6 +2,11 @@
   margin-top: 1rem;
 }
 
+.category-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .Row {
   display: flex;
 }

@@ -12,7 +12,6 @@ import AuthContext from '@/context/auth-context';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
-import categories from '../../static/categories.json';
 
 nProgress.configure({ showSpinner: false });
 
@@ -34,7 +33,7 @@ const Header = () => {
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
   const [searchBar, setSearchBar] = useState(null);
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
@@ -63,7 +62,7 @@ const Header = () => {
     document.addEventListener('click', handleClick);
 
     setShowLinks(false);
-    // getCategories();
+    getCategories();
     getProducts();
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
@@ -75,7 +74,7 @@ const Header = () => {
   };
 
   const getCategories = async () => {
-    const url = 'https://prussian-blue-xerus-cuff.cyclic.app/api/categories';
+    const url = 'api/categories';
     const response = await axios.get(url);
     setCategories(response.data.categories);
   };

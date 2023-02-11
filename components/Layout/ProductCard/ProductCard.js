@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Card className={classes.card}>
-      <Link href={`/product/${product._id}`}>
+      <Link href={`/products/${product._id}`}>
         <Image
           src={`${product.thumbnail}`}
           className='card-img-top'
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
         />
       </Link>
       <Card.Body className={classes['card-body']}>
-        <Link href={`/product/${product._id}`} legacyBehavior>
+        <Link href={`/products/${product._id}`} legacyBehavior>
           <a className={classes['card-title']}>
             <Card.Title>{product.title}</Card.Title>
           </a>

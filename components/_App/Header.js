@@ -62,10 +62,14 @@ const Header = () => {
     document.addEventListener('click', handleClick);
 
     setShowLinks(false);
-    getCategories();
-    getProducts();
+
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
+
+  useEffect(() => {
+    getCategories();
+    getProducts();
+  }, [cartCtx.items.length]);
 
   const getProducts = async () => {
     const url = `api/products`;

@@ -1,41 +1,47 @@
-import { getProduct } from '@/lib/mongo/products';
+import { getProducts, getProduct } from '@/lib/mongo/products';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
-export default function ProductDetail(props) {
-  console.log(props);
-  const router = useRouter();
-  const productId = router.query.productId;
+export async function getStaticPaths() {
+  const products = await getProducts();
 
-  return <h1>{productId}</h1>;
-}
+  const paths = products.products.map((product) => {
+    return {
+      params: { productId: product._id.toString() },
+    };
+  });
 
-export async function getStaticPaths(productId) {
   return {
-    paths: [
-      // String variant:
-      '/products/productId',
-      // Object variant:
-      { params: { productId: `${productId}` } },
-    ],
-    fallback: true,
+    paths,
+    fallback: false,
   };
 }
 
-export async function getStaticProps(productId) {
-  const product = await getProduct(productId);
+export async function getStaticProps(context) {
+  const productId = context.params.productId;
+  const res = await getProduct(productId);
+
+  console.log(typeof res);
+
+  // const product = await getProduct(productId);
 
   return {
     props: {
-      // products: products.products.map((product) => ({
-      //   _id: product._id.toString(),
-      //   title: product.title,
-      //   price: product.price,
-      //   description: product.description,
-      //   brand: product.brand,
-      //   category: product.category.toString(),
-      //   thumbnail: product.thumbnail,
-      // })),
+      product: res.product,
     },
-    revalidate: 1,
   };
+}
+
+export default function ProductDetail({ product }) {
+  const [productObj, setProductObj] = useState({});
+
+  useEffect(() => {
+    setProductObj(JSON.parse(product));
+  }, [product]);
+
+  const router = useRouter();
+  const productId = router.query.productId;
+
+  console.log(JSON.parse(product));
+  return <h1>{productObj.title}</h1>;
 }

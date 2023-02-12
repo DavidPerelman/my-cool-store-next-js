@@ -2,14 +2,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import classes from './SearchBar.module.css';
 
-const SearchBar = ({
-  id,
-  searchBar,
-  setSearchBar,
-  searchBarInputRef,
-  placeholder,
-  data,
-}) => {
+const SearchBar = ({ id, searchBar, searchBarInputRef, placeholder, data }) => {
   const [filteredData, setfilteredData] = useState(data);
 
   const handleFilter = (e) => {

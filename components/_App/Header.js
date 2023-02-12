@@ -9,7 +9,6 @@ import CartContext from '@/context/cart-context';
 import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
 
@@ -27,14 +26,12 @@ Router.onRouteChangeError = function () {
   NProgress.done();
 };
 
-const Header = () => {
+const Header = ({ categories, products }) => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
   const [searchBar, setSearchBar] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
   const router = useRouter();
@@ -65,23 +62,6 @@ const Header = () => {
 
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
-
-  useEffect(() => {
-    getCategories();
-    getProducts();
-  }, [cartCtx.items.length]);
-
-  const getProducts = async () => {
-    const url = `api/products`;
-    const response = await axios.get(url);
-    setProducts(response.data.products);
-  };
-
-  const getCategories = async () => {
-    const url = 'api/categories';
-    const response = await axios.get(url);
-    setCategories(response.data.categories);
-  };
 
   const showCartHandler = () => {
     cartCtx.showCart();
@@ -116,26 +96,23 @@ const Header = () => {
             className={classes.links}
             id={showLinks ? classes['hidden'] : ''}
           >
-            {categories && categories.length > 0 && (
-              <SearchBar
-                searchBarInputRef={searchCategoriesInputRef}
-                searchBar={searchBar}
-                setSearchBar={setSearchBar}
-                id='categories'
-                data={categories}
-                placeholder='Search Category...'
-              />
-            )}
-            {products && products.length > 0 && (
-              <SearchBar
-                id='products'
-                searchBar={searchBar}
-                setSearchBar={setSearchBar}
-                searchBarInputRef={searchProductsInputRef}
-                data={products}
-                placeholder='Search Product...'
-              />
-            )}
+            <SearchBar
+              searchBarInputRef={searchCategoriesInputRef}
+              searchBar={searchBar}
+              setSearchBar={setSearchBar}
+              id='categories'
+              data={categories}
+              placeholder='Search Category...'
+            />
+
+            <SearchBar
+              id='products'
+              searchBar={searchBar}
+              setSearchBar={setSearchBar}
+              searchBarInputRef={searchProductsInputRef}
+              data={products}
+              placeholder='Search Product...'
+            />
           </div>
           <div className={classes.icons}>
             <Icon

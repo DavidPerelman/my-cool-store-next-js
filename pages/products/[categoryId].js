@@ -1,4 +1,3 @@
-import Layout from '@/components/_App/Layout';
 import { useRouter } from 'next/router';
 
 export default function ProductsCategoryPage() {

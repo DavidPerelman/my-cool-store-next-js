@@ -3,14 +3,16 @@ import {
   faUser,
   faCartShopping,
   faCartPlus,
-  faCartArrowDown,
+  faFlag,
+  faArrowRight,
+  faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Icon.module.css';
 
 const Icon = ({ type, amount, onClick, isLoggedIn, size, color }) => {
   return (
-    <div className={classes.Icon} onClick={onClick}>
+    <div className={`${classes.Icon} ${classes[type]}`} onClick={onClick}>
       {type === 'cart-shopping' && (
         <span className={classes.count}>{amount}</span>
       )}
@@ -23,6 +25,12 @@ const Icon = ({ type, amount, onClick, isLoggedIn, size, color }) => {
             ? faCartShopping
             : type === 'cart-plus'
             ? faCartPlus
+            : type === 'brand'
+            ? faFlag
+            : type === 'arrow-left'
+            ? faArrowLeft
+            : type === 'arrow-right'
+            ? faArrowRight
             : ''
         }
         style={{ color: `${color}` }}

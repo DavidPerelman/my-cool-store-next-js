@@ -3,9 +3,14 @@
   cursor: pointer;
 }
 
-/* .icon {
-  align-self: center;
-} */
+.brand {
+  margin-right: 0.5rem;
+  cursor: default !important;
+}
+
+.brand:hover {
+  cursor: default;
+}
 
 .Icon {
   position: relative;

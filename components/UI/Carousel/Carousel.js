@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Icon from '../Icon/Icon';
 import classes from './Carousel.module.css';
 
 const Carousel = ({ images }) => {
@@ -47,11 +48,11 @@ const Carousel = ({ images }) => {
           style={{ backgroundImage: `url(${images[currImg]})` }}
         >
           <div className={classes.left} onClick={leftClick}>
-            <i className='fa-sharp fa-solid fa-arrow-left'></i>
+            <Icon type={'arrow-left'} color='white' size='2xl' />
           </div>
           <div className={classes.center}></div>
           <div className={classes.right} onClick={rightClick}>
-            <i className='fa-sharp fa-solid fa-arrow-right'></i>
+            <Icon type={'arrow-right'} color='white' size='2xl' />
           </div>
         </div>
       </div>

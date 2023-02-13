@@ -25,7 +25,7 @@ const CategoryContainer = ({ category, products }) => {
     <div key={category.name}>
       <div className={classes['categories-button']}>
         <Button onClick={onCategoryClick}>
-          <Link href={`/products/${category._id}`} legacyBehavior>
+          <Link href={`/products/category/${category._id}`} legacyBehavior>
             <a className={classes['category-link']}>
               Our{' '}
               {category.name.charAt(0).toUpperCase() + category.name.slice(1)}{' '}

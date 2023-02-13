@@ -35,6 +35,5 @@ export default function ProductDetail({ product }) {
     setProductObj(JSON.parse(product));
   }, [product]);
 
-  console.log(JSON.parse(product));
   return <h1>{productObj.title}</h1>;
 }

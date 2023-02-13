@@ -1,0 +1,25 @@
+.Filtering {
+  text-align-last: center;
+  display: flex;
+  justify-content: center;
+}
+
+.Filtering div {
+  padding-top: 1rem;
+}
+
+.Filtering input {
+  height: 2rem;
+}
+
+.button {
+  padding: 0;
+  background-color: rgb(77, 22, 1);
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 700;
+  height: 2rem;
+  width: 2rem;
+}

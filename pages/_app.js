@@ -11,7 +11,6 @@ import '/static/nprogress.css';
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
 import { AuthContextProvider } from '@/context/auth-context';
-// import { getProducts } from '@/lib/mongo/products';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -24,8 +23,3 @@ export default function MyApp({ Component, pageProps }) {
     </AuthContextProvider>
   );
 }
-
-// MyApp.getInitialProps = async () => {
-//   let pageProps = { products: 'products' };
-//   return { pageProps };
-// };

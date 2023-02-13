@@ -1,5 +1,4 @@
-import { getProducts } from '@/lib/mongo/products';
-import { getProduct } from '@/lib/mongo/product';
+import { getProducts, getProduct } from '@/lib/mongo/products';
 import { useState, useEffect } from 'react';
 
 export async function getStaticPaths() {

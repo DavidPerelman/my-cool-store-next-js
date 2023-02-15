@@ -10,6 +10,22 @@ import CartContext from '@/context/cart-context';
 const ProductCard = ({ product }) => {
   const cartCtx = useContext(CartContext);
   const price = `$${product.price.toFixed(2)}`;
+  const [inCartHtml, setInCartHtml] = useState();
+
+  const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
+    return product && product._id === cartItem.product._id;
+  });
+
+  const existingCartItem = cartCtx.items[existingCartItemIndex];
+  let existingCartItemId;
+
+  if (existingCartItem) {
+    existingCartItemId = Object.values(existingCartItem)[0]._id;
+  }
+
+  useEffect(() => {
+    setInCartHtml(existingCartItemId !== product._id);
+  }, [existingCartItemId, product._id]);
 
   const addToCartHandler = () => {
     cartCtx.addItem(product);
@@ -36,7 +52,7 @@ const ProductCard = ({ product }) => {
         <Rating rating={5} />
         <Card.Body className={classes['card-footer']}>
           <Card.Text>{price}</Card.Text>
-          {!cartCtx.checkExistingCartItem(product._id) ? (
+          {inCartHtml ? (
             <Icon
               type={'cart-plus'}
               color='black'

@@ -11,7 +11,6 @@ const cartCtx = createContext({
   addCartItemAmount: (id) => {},
   removeCartItemAmount: (id) => {},
   makeAnOrderClick: (userId) => {},
-  checkExistingCartItem: (productId) => {},
 });
 
 export const CartContextProvider = (props) => {
@@ -31,14 +30,6 @@ export const CartContextProvider = (props) => {
 
     setTotalCartCost(itemsPrice);
   }, [cartItems]);
-
-  const checkExistingCartItem = (productId) => {
-    const check = cartItems.findIndex((cartItem) => {
-      return productId === cartItem.product._id;
-    });
-
-    return check >= 0;
-  };
 
   useEffect(() => {
     calculateTotalCost();
@@ -133,7 +124,6 @@ export const CartContextProvider = (props) => {
     removeCartItemAmount: removeCartItemAmount,
     // makeAnOrderClick: makeAnOrderClick,
     existingCartItemId: existingCartItemId,
-    checkExistingCartItem: checkExistingCartItem,
   };
 
   return (

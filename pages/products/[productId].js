@@ -37,8 +37,6 @@ export default function ProductDetail({ product }) {
   const [inCartHtml, setInCartHtml] = useState();
   const cartCtx = useContext(CartContext);
 
-  console.log(cartCtx);
-
   const price = `$${product.price.toFixed(2)}`;
   const existingCartItemIndex = cartCtx.items.findIndex((cartItem) => {
     return product && product._id === cartItem.product._id;

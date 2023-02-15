@@ -4,6 +4,7 @@ import Modal from '@/components/UI/Modal/Modal';
 import classes from './UserModal.module.css';
 import AuthContext from '@/context/auth-context';
 import AuthForm from '@/components/Auth/AuthForm/AuthForm';
+import LoggedInLayout from '../LoggedInLayout/LoggedInLayout';
 
 const UserModal = ({ onCloseUserModal }) => {
   const authCtx = useContext(AuthContext);
@@ -11,7 +12,7 @@ const UserModal = ({ onCloseUserModal }) => {
 
   return (
     <Modal onClose={onCloseUserModal}>
-      {/* {isLoggedIn && <LoggedInLayout onCloseUserModal={onCloseUserModal} />} */}
+      {isLoggedIn && <LoggedInLayout onCloseUserModal={onCloseUserModal} />}
       {!isLoggedIn && <AuthForm onCloseUserModal={onCloseUserModal} />}
     </Modal>
   );

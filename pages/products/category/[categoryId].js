@@ -53,15 +53,9 @@ export default function CategoryProductsPage({ category, products }) {
   let content;
 
   if (products && products.length > 0) {
-    content = products.map((product) => {
+    content = products.map((product, i) => {
       return (
-        <Col
-          sm={6}
-          md={4}
-          lg={3}
-          key={product.id}
-          className={classes['product-card']}
-        >
+        <Col sm={6} md={4} lg={3} key={i} className={classes['product-card']}>
           <ProductCard product={product} />
         </Col>
       );

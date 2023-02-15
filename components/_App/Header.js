@@ -34,6 +34,7 @@ const Header = ({ categories, products }) => {
   const [searchBar, setSearchBar] = useState(null);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
+  const isLoggedIn = authCtx.authorized;
   const router = useRouter();
 
   const handleSearchBar = (id) => {
@@ -126,6 +127,7 @@ const Header = ({ categories, products }) => {
               type={'user'}
               size='2xl'
               color='white'
+              isLoggedIn={isLoggedIn}
               onClick={showUserModalHandler}
             />
           </div>

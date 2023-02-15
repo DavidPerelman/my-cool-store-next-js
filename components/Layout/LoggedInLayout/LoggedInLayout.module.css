@@ -1,0 +1,15 @@
+.LoggedInLayout {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-self: center;
+  text-align: center;
+}
+
+.LoggedInLayout button {
+  margin: 0.55rem !important;
+}
+
+.AuthForm {
+  color: darksalmon;
+}

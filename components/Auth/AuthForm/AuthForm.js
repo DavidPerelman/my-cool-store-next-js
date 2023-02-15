@@ -61,9 +61,23 @@ const AuthForm = ({ onCloseUserModal }) => {
       if (authCtx.authorized !== null) {
       }
     } else {
-      await authCtx.signup(enteredUserName, enteredEmail, enteredPassword);
-      setIsLoading(false);
-      console.log(authCtx.authorized);
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          useName: enteredUserName,
+        }),
+      });
+      //Await for data for any desirable next steps
+      const data = await res.json();
+      console.log(data);
+      // await authCtx.signup(enteredUserName, enteredEmail, enteredPassword);
+      // setIsLoading(false);
+      // console.log(authCtx.authorized);
     }
 
     // onCloseUserModal();

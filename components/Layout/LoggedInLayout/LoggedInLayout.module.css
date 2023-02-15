@@ -13,3 +13,12 @@
 .AuthForm {
   color: darksalmon;
 }
+
+.buttons-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.buttons-link:hover {
+  color: #ffffff;
+}

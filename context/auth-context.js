@@ -10,6 +10,7 @@ import {
 
 import { auth } from '@/firebase';
 import axios from 'axios';
+// import { useSWRConfig } from 'swr';
 // import { createToken, createUser } from '../api/usersApi';
 
 const AuthContext = createContext({
@@ -99,8 +100,8 @@ export const AuthContextProvider = (props) => {
           setLoading(false);
           return setAuthorized(false);
         }
+
         setLoading(false);
-        setCurrentUser(user);
         return setAuthorized(true);
       });
     };

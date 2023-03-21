@@ -18,7 +18,7 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
 
   const onEditProfileHandler = () => {
     onCloseUserModal();
-    // navigate(`/profile-setting`);
+    router.replace(`/users/3232`);
   };
 
   const logoutHandler = () => {

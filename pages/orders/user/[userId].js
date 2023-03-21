@@ -10,8 +10,14 @@ const MyOrders = () => {
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
   // const { isLoading, error, data: orders } = useGetAllUserOrders();
+  useEffect(() => {
+    getSession().then((seesion) => {
+      console.log(seesion);
+    });
+  }, []);
 
-  // console.log(orders);
+  // console.log(session);
+
   const columns = [
     {
       name: 'No.',

@@ -87,8 +87,6 @@ const AuthForm = ({ onCloseUserModal }) => {
       }
     } else {
       try {
-        console.log(enteredUserName, enteredEmail, enteredPassword);
-
         const result = await createUser(
           enteredUserName,
           enteredEmail,

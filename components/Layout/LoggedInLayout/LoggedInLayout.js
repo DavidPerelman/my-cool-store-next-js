@@ -1,18 +1,19 @@
 import AuthContext from '@/context/auth-context';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import Button from '../../UI/Button/Button';
 import classes from './LoggedInLayout.module.css';
 
 const LoggedInLayout = ({ onCloseUserModal }) => {
+  const router = useRouter();
   const authCtx = useContext(AuthContext);
   const displayName = 'name';
 
-  console.log(useSession);
   const onMyOrdersHandler = () => {
     onCloseUserModal();
-    // navigate(`/my-orders`);
+    router.replace(`/orders/user/3232`);
   };
 
   const onEditProfileHandler = () => {
@@ -30,11 +31,11 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
   return (
     <div className={classes.LoggedInLayout}>
       <h1>Hello {displayName !== null ? displayName : ''}!</h1>
-      <Button className={classes.button} background='#540d83' color='white'>
+      {/* <Button className={classes.button} background='#540d83' color='white'>
         <Link href={`/orders/user/${authCtx.currentUser}`} legacyBehavior>
           <a className={classes['buttons-link']}>My Orders</a>
         </Link>
-      </Button>
+      </Button> */}
 
       <Button
         onClick={onMyOrdersHandler}

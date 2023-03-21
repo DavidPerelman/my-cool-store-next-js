@@ -1,47 +1,61 @@
+import User from '@/models/User';
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
-import { MongoClient } from 'mongodb';
-import { compare } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
+import Credentials from 'next-auth/providers/credentials';
+import dbConnect from '@/config/dbConnect';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export default NextAuth({
-  //Configure JWT
   session: {
     jwt: true,
   },
-  //Specify Provider
   providers: [
-    Providers.Credentials({
-      async authorize(credentials) {
-        //Connect to DB
-        const client = await MongoClient.connect(process.env.MONGODB_URI, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-        //Get all the users
-        const users = await client.db().collection('users');
-        //Find user with the email
-        const result = await users.findOne({
-          email: credentials.email,
-        });
-        //Not found - send error res
-        if (!result) {
-          client.close();
-          throw new Error('No user found with the email');
+    CredentialsProvider({
+      async authorize(credentials, req) {
+        dbConnect();
+        console.log(credentials);
+
+        const { enteredEmail, enteredPassword } = credentials;
+
+        console.log(enteredEmail);
+        console.log(enteredPassword);
+        const user = await User.findOne({ enteredEmail });
+
+        if (!user) {
+          throw new Error('Invalid Email');
         }
-        //Check hased password with DB password
-        const checkPassword = await compare(
-          credentials.passowrd,
-          result.passowrd
+
+        // const isPasswordMatched = user.comparePassword(
+        //   enteredPassword,
+        //   function (err, isMatch) {
+        //     if (err) throw err;
+        //     console.log('enteredPassword:', isMatch); // -&gt; Password123: true
+        //   }
+        // );
+
+        // let passwordHash = await bcrypt.hash(user.password, salt);
+        // const booleanResult = await bcrypt.compare(
+        //   enteredPassword,
+        //   passwordHash
+        // );
+
+        // console.log(booleanResult);
+
+        const isPasswordMatched = await bcrypt.compare(
+          enteredPassword,
+          user.password
         );
-        //Incorrect password - send response
-        if (!checkPassword) {
-          client.close();
-          throw new Error('Password doesnt match');
+
+        if (!isPasswordMatched) {
+          throw new Error('Invalid Password');
         }
-        //Else send success response
-        client.close();
-        return { email: result.email };
+
+        return user;
       },
     }),
   ],
+  //   pages: {
+  //     signIn: '/login',
+  //   },
+  secret: process.env.NEXTAUTH_SECRET,
 });

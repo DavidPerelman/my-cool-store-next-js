@@ -11,15 +11,21 @@ import '/static/nprogress.css';
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
 import { AuthContextProvider } from '@/context/auth-context';
+import { SessionProvider } from 'next-auth/react';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-    <AuthContextProvider>
-      <CartContextProvider>
-        <Layout data={pageProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </CartContextProvider>
-    </AuthContextProvider>
+    <SessionProvider session={session}>
+      <AuthContextProvider>
+        <CartContextProvider>
+          <Layout data={pageProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </CartContextProvider>
+      </AuthContextProvider>
+    </SessionProvider>
   );
 }

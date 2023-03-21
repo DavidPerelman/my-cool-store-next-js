@@ -11,6 +11,7 @@ import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
+import { useSession } from 'next-auth/react';
 
 nProgress.configure({ showSpinner: false });
 
@@ -27,6 +28,7 @@ Router.onRouteChangeError = function () {
 };
 
 const Header = ({ categories, products }) => {
+  const session = useSession();
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);

@@ -1,46 +1,21 @@
 import { MongoClient } from 'mongodb';
-import { hash } from 'bcryptjs';
+import User from '@/models/User';
+import { signup } from '@/lib/mongo/auth';
 
-async function handler(req, res) {
-  //Only POST mothod is accepted
+export default async function handler(req, res) {
   if (req.method === 'POST') {
-    //Getting email and password from body
-    const { useName, email, password } = req.body;
-    //Validate
-    if (!email || !email.includes('@') || !password) {
-      res.status(422).json({ message: 'Invalid Data' });
-      return;
-    }
-    //Connect with database
-    const client = await MongoClient.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    const db = client.db();
-    //Check existing
-    const checkExisting = await db
-      .collection('users')
-      .findOne({ email: email });
-    //Send error response if duplicate user is found
-    if (checkExisting) {
-      res.status(422).json({ message: 'User already exists' });
-      client.close();
-      return;
-    }
-    //Hash password
-    const status = await db.collection('users').insertOne({
-      useName,
-      email,
-      password: await hash(password, 12),
-    });
-    //Send success response
-    res.status(201).json({ message: 'User created', ...status });
-    //Close DB connection
-    client.close();
-  } else {
-    //Response for other than POST method
-    res.status(500).json({ message: 'Route not valid' });
-  }
-}
+    try {
+      const { userName, email, password } = req.body;
+      const { user, error } = await signup(userName, email, password);
+      if (error) throw new Error(error);
 
-export default handler;
+      console.log(user);
+      return res.status(200).json({ user });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  res.setHeader('Allow', ['POST']);
+  res.status(425).end(`Method ${req.method} is not allowed.`);
+}

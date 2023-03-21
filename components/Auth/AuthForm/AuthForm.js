@@ -2,6 +2,8 @@ import { useContext, useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
 // import LoggedInLayout from '../../Layout/LoggedInLayout/LoggedInLayout';
 import AuthContext from '@/context/auth-context';
+import { signIn } from 'next-auth/react';
+import axios from 'axios';
 
 const AuthForm = ({ onCloseUserModal }) => {
   // const navigate = useNavigate();
@@ -55,32 +57,37 @@ const AuthForm = ({ onCloseUserModal }) => {
     setIsLoading(true);
 
     if (isLogin) {
-      await authCtx.login(enteredEmail, enteredPassword);
-      setIsLoading(false);
+      try {
+        const data = await signIn('credentials', {
+          redirect: false,
+          enteredEmail,
+          enteredPassword,
+        });
 
-      if (authCtx.authorized !== null) {
+        console.log(data);
+      } catch (error) {
+        console.log(error);
       }
-    } else {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          useName: enteredUserName,
-        }),
-      });
-      //Await for data for any desirable next steps
-      const data = await res.json();
-      console.log(data);
-      // await authCtx.signup(enteredUserName, enteredEmail, enteredPassword);
+      // await authCtx.login(enteredEmail, enteredPassword);
       // setIsLoading(false);
-      // console.log(authCtx.authorized);
-    }
 
-    // onCloseUserModal();
+      // if (authCtx.authorized !== null) {
+      // }
+    } else {
+      try {
+        const data = await axios.post('/api/register', {
+          userName: enteredUserName,
+          email: enteredEmail,
+          password: enteredPassword,
+        });
+
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    setIsLoading(false);
+    onCloseUserModal();
   };
 
   return (

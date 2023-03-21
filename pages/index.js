@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
-import categories from '../static/categories.json';
 import { getProducts } from '@/lib/mongo/products';
-// import products from '../static/products.json';
+import { getCategories } from '@/lib/mongo/categories';
 
 export default function Home({ categories, products }) {
   return (
@@ -23,10 +22,11 @@ export default function Home({ categories, products }) {
 
 export async function getStaticProps() {
   const products = await getProducts();
+  const categories = await getCategories();
 
   return {
     props: {
-      categories: categories.map((category) => ({
+      categories: categories.categories.map((category) => ({
         _id: category._id.toString(),
         name: category.name,
       })),

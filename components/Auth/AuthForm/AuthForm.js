@@ -1,9 +1,8 @@
 import { useContext, useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
-// import LoggedInLayout from '../../Layout/LoggedInLayout/LoggedInLayout';
+import LoggedInLayout from '../../Layout/LoggedInLayout/LoggedInLayout';
 import AuthContext from '@/context/auth-context';
-import { signIn } from 'next-auth/react';
-import axios from 'axios';
+import { signIn, useSession } from 'next-auth/react';
 
 async function createUser(userName, email, password) {
   const response = await fetch('/api/auth/signup', {
@@ -24,14 +23,14 @@ async function createUser(userName, email, password) {
 }
 
 const AuthForm = ({ onCloseUserModal }) => {
-  // const navigate = useNavigate();
+  const { data: session, status } = useSession();
   const authCtx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const usernameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  const isLoggedIn = authCtx.authorized;
+  const isLoggedIn = session && status === 'authenticated';
   const [error, setError] = useState(null);
 
   const switchAuthModeHandler = () => {
@@ -86,11 +85,6 @@ const AuthForm = ({ onCloseUserModal }) => {
       } catch (error) {
         console.log(error);
       }
-      // await authCtx.login(enteredEmail, enteredPassword);
-      // setIsLoading(false);
-
-      // if (authCtx.authorized !== null) {
-      // }
     } else {
       try {
         console.log(enteredUserName, enteredEmail, enteredPassword);
@@ -100,11 +94,6 @@ const AuthForm = ({ onCloseUserModal }) => {
           enteredEmail,
           enteredPassword
         );
-        // const data = await axios.post('/api/register', {
-        //   userName: enteredUserName,
-        //   email: enteredEmail,
-        //   password: enteredPassword,
-        // });
 
         console.log(result);
       } catch (error) {
@@ -159,7 +148,7 @@ const AuthForm = ({ onCloseUserModal }) => {
           </form>
         </>
       )}
-      {/* {isLoggedIn && <LoggedInLayout onCloseUserModal={onCloseUserModal} />} */}
+      {isLoggedIn && <LoggedInLayout onCloseUserModal={onCloseUserModal} />}
     </section>
   );
 };

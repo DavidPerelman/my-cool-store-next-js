@@ -28,7 +28,7 @@ Router.onRouteChangeError = function () {
 };
 
 const Header = ({ categories, products }) => {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
@@ -36,8 +36,11 @@ const Header = ({ categories, products }) => {
   const [searchBar, setSearchBar] = useState(null);
   const searchProductsInputRef = useRef();
   const searchCategoriesInputRef = useRef();
-  const isLoggedIn = authCtx.authorized;
+  const isLoggedIn = session && status === 'authenticated';
   const router = useRouter();
+
+  console.log(session);
+  console.log(status);
 
   const handleSearchBar = (id) => {
     if (searchBar === id || (searchBar && id === undefined)) {

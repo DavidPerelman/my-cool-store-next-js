@@ -4,19 +4,13 @@ import classes from './MyOrders.module.css';
 import Table from '@/components/UI/Table/Table';
 import { getSession, signIn, useSession } from 'next-auth/react';
 
-const MyOrders = () => {
+const MyOrders = (props) => {
+  const { orders } = props;
   const { data: session, status } = useSession();
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
   // const { isLoading, error, data: orders } = useGetAllUserOrders();
-  useEffect(() => {
-    getSession().then((seesion) => {
-      console.log(seesion);
-    });
-  }, []);
-
-  // console.log(session);
 
   const columns = [
     {
@@ -97,7 +91,7 @@ const MyOrders = () => {
           <Table
             filterInputRef={filterInputRef}
             columns={columns}
-            tableData={[]}
+            tableData={orders.orders}
             // filterText={filterText}
             handleChange={handleChange}
             handleClear={handleClear}
@@ -112,6 +106,8 @@ const MyOrders = () => {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
+  let data;
+
   if (!session) {
     return {
       redirect: {
@@ -119,10 +115,23 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
+  } else {
+    const response = await fetch(
+      'http://localhost:3000/api/orders/user-orders',
+      {
+        method: 'POST',
+        body: JSON.stringify({ email: session.user.email }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    data = await response.json();
   }
 
   return {
-    props: { session },
+    props: { orders: data },
   };
 }
 

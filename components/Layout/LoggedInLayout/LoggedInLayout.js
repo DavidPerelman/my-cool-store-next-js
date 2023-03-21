@@ -13,12 +13,12 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
 
   const onMyOrdersHandler = () => {
     onCloseUserModal();
-    router.replace(`/orders/user/3232`);
+    router.replace(`/orders/user/user-orders`);
   };
 
   const onEditProfileHandler = () => {
     onCloseUserModal();
-    router.replace(`/users/3232`);
+    router.replace(`/users/profile`);
   };
 
   const logoutHandler = () => {

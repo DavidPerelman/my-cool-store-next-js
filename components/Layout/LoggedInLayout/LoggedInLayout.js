@@ -1,4 +1,5 @@
 import AuthContext from '@/context/auth-context';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import Button from '../../UI/Button/Button';
@@ -8,21 +9,19 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
   const authCtx = useContext(AuthContext);
   const displayName = 'name';
 
-  console.log(authCtx.currentUser);
-
   const onMyOrdersHandler = () => {
-    authCtx.hideUserModal();
+    onCloseUserModal();
     // navigate(`/my-orders`);
   };
 
   const onEditProfileHandler = () => {
-    authCtx.hideUserModal();
+    onCloseUserModal();
     // navigate(`/profile-setting`);
   };
 
-  const onLogoutHandler = () => {
-    authCtx.logout();
-    authCtx.hideUserModal();
+  const logoutHandler = () => {
+    signOut();
+    onCloseUserModal();
 
     // navigate(`/`);
   };
@@ -56,7 +55,7 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
         className={classes.button}
         background='#540d83'
         color='white'
-        onClick={onLogoutHandler}
+        onClick={logoutHandler}
       >
         Logout
       </Button>

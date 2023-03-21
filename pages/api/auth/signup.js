@@ -1,21 +1,56 @@
-import { MongoClient } from 'mongodb';
-import User from '@/models/User';
-import { signup } from '@/lib/mongo/auth';
+// import { MongoClient } from 'mongodb';
+// import User from '@/models/User';
+// import { signup } from '@/lib/mongo/auth';
 
-export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    try {
-      const { userName, email, password } = req.body;
-      const { user, error } = await signup(userName, email, password);
-      if (error) throw new Error(error);
+import { hashPassword } from '@/lib/auth';
+import { connectToDatabase } from '@/lib/db';
 
-      console.log(user);
-      return res.status(200).json({ user });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+// export default async function handler(req, res) {
+//   if (req.method === 'POST') {
+//     try {
+//       const { userName, email, password } = req.body;
+//       const { user, error } = await signup(userName, email, password);
+//       if (error) throw new Error(error);
+
+//       console.log(user);
+//       return res.status(200).json({ user });
+//     } catch (error) {
+//       return res.status(500).json({ error: error.message });
+//     }
+//   }
+
+//   res.setHeader('Allow', ['POST']);
+//   res.status(425).end(`Method ${req.method} is not allowed.`);
+// }
+
+async function handler(req, res) {
+  const { userName, email, password } = req.body;
+
+  if (
+    !userName ||
+    !userName.trim().length < 4 ||
+    !email ||
+    !email.includes('@') ||
+    !password ||
+    !password.trim().length < 7
+  ) {
+    res.status(422).json({ message: 'Invalid inputs.' });
+    return;
   }
 
-  res.setHeader('Allow', ['POST']);
-  res.status(425).end(`Method ${req.method} is not allowed.`);
+  const client = await connectToDatabase();
+
+  const db = client.db();
+
+  const hashedPassword = hashPassword(password);
+
+  const result = await db.collection('users').insertOne({
+    userName: userName,
+    email: email,
+    password: hashedPassword,
+  });
+
+  res.status(201).json({ message: 'Created user!', result });
 }
+
+export default handler;

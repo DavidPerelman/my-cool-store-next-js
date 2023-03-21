@@ -1,5 +1,5 @@
 import AuthContext from '@/context/auth-context';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import Button from '../../UI/Button/Button';
@@ -9,6 +9,7 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
   const authCtx = useContext(AuthContext);
   const displayName = 'name';
 
+  console.log(useSession);
   const onMyOrdersHandler = () => {
     onCloseUserModal();
     // navigate(`/my-orders`);

@@ -1,16 +1,28 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import Table from '../../components/UI/Table/Table';
-import { useGetAllUserOrders } from '../../hooks/useOrdersQuery';
+// import { useGetAllUserOrders } from '../../hooks/useOrdersQuery';
 import classes from './MyOrders.module.css';
+import Table from '@/components/UI/Table/Table';
+import { getSession, signIn, useSession } from 'next-auth/react';
 
 const MyOrders = () => {
+  const { data: session, status } = useSession();
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
-  const navigate = useNavigate();
+  const isLoggedIn = session && status === 'authenticated';
+  // const navigate = useNavigate();
 
-  const { isLoading, error, data: orders } = useGetAllUserOrders();
+  useEffect(() => {
+    getSession().then((session) => {
+      if (!session) {
+        window.location.href = '/';
+      }
+    });
+  }, []);
 
-  console.log(orders);
+  console.log('status: ', status);
+  // const { isLoading, error, data: orders } = useGetAllUserOrders();
+
+  // console.log(orders);
   const columns = [
     {
       name: 'No.',
@@ -44,60 +56,61 @@ const MyOrders = () => {
   ];
 
   // first filter
-  const filter = (item) =>
-    (item.orderNumber &&
-      item.orderNumber.toLowerCase().includes(filterText.toLowerCase())) ||
-    (item.created &&
-      item.created.toLowerCase().includes(filterText.toLowerCase())) ||
-    (item.status &&
-      item.status.toLowerCase().includes(filterText.toLowerCase()));
+  // const filter = (item) =>
+  //   (item.orderNumber &&
+  //     item.orderNumber.toLowerCase().includes(filterText.toLowerCase())) ||
+  //   (item.created &&
+  //     item.created.toLowerCase().includes(filterText.toLowerCase())) ||
+  //   (item.status &&
+  //     item.status.toLowerCase().includes(filterText.toLowerCase()));
 
-  const ordersData =
-    orders &&
-    orders.filter(filter).map((order) => {
-      return {
-        id: order._id,
-        orderNumber: order.orderNumber,
-        created: order.created,
-        totalPayment: order.totalPayment,
-        status: order.status,
-      };
-    });
+  // const ordersData =
+  //   orders &&
+  //   orders.filter(filter).map((order) => {
+  //     return {
+  //       id: order._id,
+  //       orderNumber: order.orderNumber,
+  //       created: order.created,
+  //       totalPayment: order.totalPayment,
+  //       status: order.status,
+  //     };
+  //   });
 
   const rowClickedHandler = (e) => {
-    console.log(e.id);
-    navigate(`/order/${e.id}`);
+    // console.log(e.id);
+    // navigate(`/order/${e.id}`);
   };
 
   const handleChange = (e) => {
-    setFilterText(e.target.value);
-    console.log(filterText);
+    // setFilterText(e.target.value);
+    // console.log(filterText);
   };
 
   const handleClear = () => {
-    console.log('handleClear');
-    console.log(filterText);
-    if (filterText) {
-      setFilterText('');
-      filterInputRef.current.value = '';
-    }
+    // console.log('handleClear');
+    // console.log(filterText);
+    // if (filterText) {
+    //   setFilterText('');
+    //   filterInputRef.current.value = '';
+    // }
   };
 
-  console.log(orders);
-
   return (
-    <div className={classes.MyOrders}>
-      <Table
-        filterInputRef={filterInputRef}
-        columns={columns}
-        tableData={ordersData}
-        isLoading={isLoading}
-        // filterText={filterText}
-        handleChange={handleChange}
-        handleClear={handleClear}
-        rowClickedHandler={rowClickedHandler}
-      />
-    </div>
+    <>
+      {isLoggedIn && (
+        <div className={classes.MyOrders}>
+          <Table
+            filterInputRef={filterInputRef}
+            columns={columns}
+            tableData={[]}
+            // filterText={filterText}
+            handleChange={handleChange}
+            handleClear={handleClear}
+            rowClickedHandler={rowClickedHandler}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

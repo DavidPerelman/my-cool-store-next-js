@@ -39,9 +39,6 @@ const Header = ({ categories, products }) => {
   const isLoggedIn = session && status === 'authenticated';
   const router = useRouter();
 
-  console.log(session);
-  console.log(status);
-
   const handleSearchBar = (id) => {
     if (searchBar === id || (searchBar && id === undefined)) {
       setSearchBar(null);

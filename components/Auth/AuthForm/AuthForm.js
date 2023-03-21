@@ -76,13 +76,13 @@ const AuthForm = ({ onCloseUserModal }) => {
 
     if (isLogin) {
       try {
-        const data = await signIn('credentials', {
+        const result = await signIn('credentials', {
           redirect: false,
-          enteredEmail,
-          enteredPassword,
+          email: enteredEmail,
+          password: enteredPassword,
         });
 
-        console.log(data);
+        console.log(result);
       } catch (error) {
         console.log(error);
       }

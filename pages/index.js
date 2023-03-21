@@ -2,8 +2,11 @@ import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 // import { getProducts } from '@/lib/mongo/products';
 import { getCategories } from '@/lib/mongo/categories';
+import { useSession } from 'next-auth/react';
 
 export default function Home({ categories, products }) {
+  const { data: session, status } = useSession();
+  console.log(session);
   return (
     <>
       <Head>

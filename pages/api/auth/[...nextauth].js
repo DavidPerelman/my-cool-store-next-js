@@ -33,7 +33,11 @@ export default NextAuth({
 
         client.close();
 
-        return { _id: user._id, username: user.userName, email: user.email };
+        return {
+          email: user.email,
+          name: user.userName,
+          id: user._id.toString(),
+        };
       },
     }),
   ],

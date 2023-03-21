@@ -23,6 +23,13 @@ function ProfilePage() {
   );
 }
 
+export async function getStaticProps() {
+  return {
+    props: {},
+    revalidate: 1,
+  };
+}
+
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 

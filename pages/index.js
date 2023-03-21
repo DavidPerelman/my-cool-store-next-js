@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
-import { getProducts } from '@/lib/mongo/products';
+// import { getProducts } from '@/lib/mongo/products';
 import { getCategories } from '@/lib/mongo/categories';
 
 export default function Home({ categories, products }) {
@@ -21,8 +21,11 @@ export default function Home({ categories, products }) {
 }
 
 export async function getStaticProps() {
-  const products = await getProducts();
+  const response = await fetch('http://localhost:3000/api/products');
+  // const products = await getProducts();
   const categories = await getCategories();
+
+  const data = await response.json();
 
   return {
     props: {
@@ -30,7 +33,7 @@ export async function getStaticProps() {
         _id: category._id.toString(),
         name: category.name,
       })),
-      products: products.products.map((product) => ({
+      products: data.products.map((product) => ({
         _id: product._id.toString(),
         title: product.title,
         price: product.price,

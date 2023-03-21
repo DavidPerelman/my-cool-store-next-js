@@ -27,7 +27,6 @@ async function handler(req, res) {
   if (req.method === 'POST') {
     const { userName, email, password } = req.body;
 
-    console.log(userName, email, password);
     if (
       !userName ||
       userName.trim().length < 4 ||

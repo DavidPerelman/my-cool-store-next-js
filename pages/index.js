@@ -21,11 +21,11 @@ export default function Home({ categories, products }) {
 }
 
 export async function getStaticProps() {
-  const response = await fetch('http://localhost:3000/api/products');
+  const productsResponse = await fetch('http://localhost:3000/api/products');
   // const products = await getProducts();
   const categories = await getCategories();
 
-  const data = await response.json();
+  const data = await productsResponse.json();
 
   return {
     props: {

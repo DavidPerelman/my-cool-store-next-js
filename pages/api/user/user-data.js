@@ -2,15 +2,8 @@ import { connectToDatabase } from '@/lib/db';
 import { getSession } from 'next-auth/react';
 
 async function handler(req, res) {
-  if (req.method === 'GET') {
-    const session = await getSession({ req: req });
-
-    if (!session) {
-      res.status(401).json({ message: 'Not authenticated!' });
-      return;
-    }
-
-    console.log('session');
+  if (req.method === 'POST') {
+    const { email } = req.body;
 
     const client = await connectToDatabase();
 

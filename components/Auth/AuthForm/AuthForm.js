@@ -5,6 +5,24 @@ import AuthContext from '@/context/auth-context';
 import { signIn } from 'next-auth/react';
 import axios from 'axios';
 
+async function createUser(userName, email, password) {
+  const response = await fetch('/api/auth/signup', {
+    method: 'POST',
+    body: JSON.stringify({ userName, email, password }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Something went wrong!');
+  }
+
+  return data;
+}
+
 const AuthForm = ({ onCloseUserModal }) => {
   // const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
@@ -75,13 +93,20 @@ const AuthForm = ({ onCloseUserModal }) => {
       // }
     } else {
       try {
-        const data = await axios.post('/api/register', {
-          userName: enteredUserName,
-          email: enteredEmail,
-          password: enteredPassword,
-        });
+        console.log(enteredUserName, enteredEmail, enteredPassword);
 
-        console.log(data);
+        const result = await createUser(
+          enteredUserName,
+          enteredEmail,
+          enteredPassword
+        );
+        // const data = await axios.post('/api/register', {
+        //   userName: enteredUserName,
+        //   email: enteredEmail,
+        //   password: enteredPassword,
+        // });
+
+        console.log(result);
       } catch (error) {
         console.log(error);
       }

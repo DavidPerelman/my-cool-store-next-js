@@ -24,33 +24,36 @@ import { connectToDatabase } from '@/lib/db';
 // }
 
 async function handler(req, res) {
-  const { userName, email, password } = req.body;
+  if (req.method === 'POST') {
+    const { userName, email, password } = req.body;
 
-  if (
-    !userName ||
-    !userName.trim().length < 4 ||
-    !email ||
-    !email.includes('@') ||
-    !password ||
-    !password.trim().length < 7
-  ) {
-    res.status(422).json({ message: 'Invalid inputs.' });
-    return;
+    console.log(userName, email, password);
+    if (
+      !userName ||
+      userName.trim().length < 4 ||
+      !email ||
+      !email.includes('@') ||
+      !password ||
+      password.trim().length < 7
+    ) {
+      res.status(422).json({ message: 'Invalid inputs.' });
+      return;
+    }
+
+    const client = await connectToDatabase();
+
+    const db = client.db();
+
+    const hashedPassword = await hashPassword(password);
+
+    const result = await db.collection('users').insertOne({
+      userName: userName,
+      email: email,
+      password: hashedPassword,
+    });
+
+    res.status(201).json({ message: 'Created user!', result });
   }
-
-  const client = await connectToDatabase();
-
-  const db = client.db();
-
-  const hashedPassword = hashPassword(password);
-
-  const result = await db.collection('users').insertOne({
-    userName: userName,
-    email: email,
-    password: hashedPassword,
-  });
-
-  res.status(201).json({ message: 'Created user!', result });
 }
 
 export default handler;

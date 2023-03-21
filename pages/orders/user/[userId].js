@@ -9,17 +9,6 @@ const MyOrders = () => {
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    getSession().then((session) => {
-      if (!session) {
-        window.location.href = '/';
-      }
-    });
-  }, []);
-
-  console.log('status: ', status);
   // const { isLoading, error, data: orders } = useGetAllUserOrders();
 
   // console.log(orders);
@@ -113,5 +102,22 @@ const MyOrders = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+}
 
 export default MyOrders;

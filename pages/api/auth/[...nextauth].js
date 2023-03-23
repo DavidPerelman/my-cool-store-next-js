@@ -3,7 +3,7 @@ import { connectToDatabase } from '@/lib/db';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export default NextAuth({
+export const authOptions = {
   session: { jwt: true },
   callbacks: {
     async jwt({ token, user }) {
@@ -49,8 +49,10 @@ export default NextAuth({
           _id: user._id,
           name: user.userName,
           email: user.email,
+          image: '',
         };
       },
     }),
   ],
-});
+};
+export default NextAuth(authOptions);

@@ -1,29 +1,28 @@
 import { connectToDatabase } from '@/lib/db';
+import { getSession } from 'next-auth/react';
 
 async function handler(req, res) {
-  if (req.method === 'POST') {
-    const { email } = req.body;
+  const session = await getSession({ req });
 
-    const client = await connectToDatabase();
+  if (session) {
+    if (req.method === 'GET') {
+      const client = await connectToDatabase();
 
-    const db = client.db();
+      const db = client.db();
 
-    const user = await db.collection('users').findOne({ email: email });
-    const userId = user._id.toString();
+      const orders = await db
+        .collection('orders')
+        .find({ user: session.user._id })
+        .toArray();
 
-    if (!user) {
-      res.status(401).json({ message: 'Not authenticated!' });
+      res.status(201).json({ orders });
       client.close();
-      return;
     }
-
-    const orders = await db
-      .collection('orders')
-      .find({ user: userId })
-      .toArray();
-
-    res.status(201).json({ orders });
-    client.close();
+  } else {
+    res.send({
+      error:
+        'You must be signed in to view the protected content on this page.',
+    });
   }
 }
 

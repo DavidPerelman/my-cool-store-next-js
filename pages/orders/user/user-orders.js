@@ -1,8 +1,9 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-// import { useGetAllUserOrders } from '../../hooks/useOrdersQuery';
 import classes from './MyOrders.module.css';
 import Table from '@/components/UI/Table/Table';
-import { getSession, signIn, useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 const MyOrders = (props) => {
   const { orders } = props;
@@ -10,7 +11,6 @@ const MyOrders = (props) => {
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
-  // const { isLoading, error, data: orders } = useGetAllUserOrders();
 
   const columns = [
     {
@@ -91,7 +91,7 @@ const MyOrders = (props) => {
           <Table
             filterInputRef={filterInputRef}
             columns={columns}
-            tableData={orders.orders}
+            tableData={orders}
             // filterText={filterText}
             handleChange={handleChange}
             handleClear={handleClear}
@@ -106,8 +106,6 @@ const MyOrders = (props) => {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
 
-  let data;
-
   if (!session) {
     return {
       redirect: {
@@ -115,23 +113,22 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
-  } else {
-    const response = await fetch(
-      'http://localhost:3000/api/orders/user-orders',
-      {
-        method: 'POST',
-        body: JSON.stringify({ email: session.user.email }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    data = await response.json();
   }
 
+  const response = await fetch('http://localhost:3000/api/orders/user-orders', {
+    headers: {
+      Cookie: context.req.headers.cookie,
+    },
+  });
+
+  const data = await response.json();
+
   return {
-    props: { orders: data },
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+      orders: data.orders,
+      data,
+    },
   };
 }
 

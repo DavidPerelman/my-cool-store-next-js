@@ -1,8 +1,9 @@
 import { getSession } from 'next-auth/react';
 import React from 'react';
 
-const OrderPage = ({ order }) => {
+const OrderPage = ({ order, error }) => {
   console.log(order);
+  console.log(error);
   return <div>OrderPage</div>;
 };
 
@@ -27,6 +28,16 @@ export async function getServerSideProps(context) {
   });
 
   const data = await response.json();
+
+  console.log(data.error);
+  if (data.error) {
+    return {
+      props: {
+        order: {},
+        error: data.error,
+      },
+    };
+  }
 
   return {
     props: {

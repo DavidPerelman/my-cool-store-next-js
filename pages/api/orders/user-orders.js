@@ -4,7 +4,6 @@ import { getSession } from 'next-auth/react';
 async function handler(req, res) {
   const session = await getSession({ req });
 
-  console.log(session);
   if (req.method === 'GET') {
     const client = await connectToDatabase();
 

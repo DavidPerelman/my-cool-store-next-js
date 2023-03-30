@@ -4,8 +4,10 @@ import Table from '@/components/UI/Table/Table';
 import { getSession, useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { useRouter } from 'next/router';
 
 const MyOrders = (props) => {
+  const router = useRouter();
   const { orders } = props;
   const { data: session, status } = useSession();
   const filterInputRef = useRef();
@@ -65,8 +67,11 @@ const MyOrders = (props) => {
   //     };
   //   });
 
-  const rowClickedHandler = (e) => {
-    // console.log(e.id);
+  const rowClickedHandler = (row, e) => {
+    // e.preventDefault();
+    router.push(`/orders/order/${row._id}`);
+    console.log(e);
+    console.log(row._id);
     // navigate(`/order/${e.id}`);
   };
 

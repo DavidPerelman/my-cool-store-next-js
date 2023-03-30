@@ -12,6 +12,7 @@ import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
 import { AuthContextProvider } from '@/context/auth-context';
 import { SessionProvider } from 'next-auth/react';
+import { OrderContextProvider } from '@/context/order-context';
 
 export default function MyApp({
   Component,
@@ -19,13 +20,15 @@ export default function MyApp({
 }) {
   return (
     <SessionProvider session={session}>
-      <AuthContextProvider>
-        <CartContextProvider>
-          <Layout data={pageProps}>
-            <Component {...pageProps} />
-          </Layout>
-        </CartContextProvider>
-      </AuthContextProvider>
+      <OrderContextProvider>
+        <AuthContextProvider>
+          <CartContextProvider>
+            <Layout data={pageProps}>
+              <Component {...pageProps} />
+            </Layout>
+          </CartContextProvider>
+        </AuthContextProvider>
+      </OrderContextProvider>
     </SessionProvider>
   );
 }

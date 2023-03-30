@@ -15,6 +15,10 @@ const Table = ({
     console.log(selectedRows);
   };
 
+  const onRowClicked = (row, event) => {
+    onMeetingTitleClick(event, row.id);
+  };
+
   const disabledCriteria = (selectedRows) => {
     if (selectedRows.isOpen === true) {
       return false;
@@ -59,7 +63,9 @@ const Table = ({
         onSelectedRowsChange={handleSelected}
         selectableRowDisabled={disabledCriteria}
         customStyles={customStyles}
-        onRowClicked={rowClickedHandler}
+        onRowClicked={(row, e) => {
+          rowClickedHandler(row, e);
+        }}
       />
     </>
   );

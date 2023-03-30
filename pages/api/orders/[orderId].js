@@ -20,7 +20,7 @@ async function handler(req, res) {
         })
         .toArray();
 
-      if (order.user !== session.user._id) {
+      if (order[0].user !== session.user._id) {
         res.status(401).json({
           error:
             'You must be signed in to view the protected content on this page.',

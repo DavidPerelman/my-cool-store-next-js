@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-const orderCtx = createContext({
+const OrderContext = createContext({
   editable: false,
   copyOrderProducts: [],
   totalAmount: 0,
@@ -94,8 +94,10 @@ export const OrderContextProvider = (props) => {
   };
 
   return (
-    <orderCtx.Provider value={contextValue}>{props.children}</orderCtx.Provider>
+    <OrderContext.Provider value={contextValue}>
+      {props.children}
+    </OrderContext.Provider>
   );
 };
 
-export default orderCtx;
+export default OrderContext;

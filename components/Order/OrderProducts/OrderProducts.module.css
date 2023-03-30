@@ -1,0 +1,39 @@
+.products {
+  max-width: 60rem;
+  width: 90%;
+  margin: 2rem auto;
+  animation: products-appear 1s ease-out forwards;
+}
+
+.productsContainer {
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  background-color: white;
+}
+
+.products ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 1rem;
+  margin-right: 1rem;
+  padding-left: 0;
+}
+
+.OrderProducts {
+  padding-top: 1rem;
+  padding-left: 0;
+}
+
+@keyframes products-appear {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

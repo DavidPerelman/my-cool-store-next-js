@@ -9,8 +9,6 @@ const OrderDetailsPage = ({ order, error }) => {
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
 
-  console.log(order);
-
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order.products);
     setEditable(true);
@@ -28,12 +26,12 @@ const OrderDetailsPage = ({ order, error }) => {
     content = (
       <div className={classes.container}>
         <OrderProducts
-          products={editable ? orderCtx.copyOrderProducts : order.products}
+          products={editable ? orderCtx.copyOrderProducts : order[0].products}
           editable={editable}
         />
         <OrderSummary
           editable={editable}
-          totalPayment={order && order.totalPayment}
+          totalPayment={order[0].totalPayment}
           onEditClick={editOrderHandler}
           onCancelEditClick={cancelEditOrderHandler}
         />

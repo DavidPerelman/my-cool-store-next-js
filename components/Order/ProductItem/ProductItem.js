@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './ProductItem.module.css';
 
 const ProductItem = ({ product, amount, editable, onAdd, onRemove }) => {
-  const price = `$${product.price.toFixed(2)}`;
+  // const price = `$${product.price.toFixed(2)}`;
 
   return (
     <li key={product._id} className={classes.product}>
@@ -19,7 +19,7 @@ const ProductItem = ({ product, amount, editable, onAdd, onRemove }) => {
           <h3>{product.title}</h3>
           <div className={classes.description}>{product.description}</div>
           <div className={classes.summary}>
-            <span className={classes.price}>{price}</span>
+            <span className={classes.price}>{product.price}</span>
             <span className={classes.amount}>x {amount}</span>
           </div>
         </div>

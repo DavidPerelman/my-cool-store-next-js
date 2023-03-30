@@ -4,6 +4,7 @@ import ProductItem from '../ProductItem/ProductItem';
 import classes from './OrderProducts.module.css';
 
 const OrderProducts = ({ products, editable }) => {
+  // console.log(products);
   const orderCtx = useContext(OrderContext);
 
   const productItemAddHandler = (product) => {
@@ -19,7 +20,7 @@ const OrderProducts = ({ products, editable }) => {
     products.map((product, i) => (
       <ProductItem
         key={i}
-        product={product.product}
+        product={product}
         editable={editable}
         amount={product.productQuantity}
         onAdd={productItemAddHandler.bind(null, product)}

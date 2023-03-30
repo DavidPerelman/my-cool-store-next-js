@@ -16,7 +16,6 @@ const OrderSummary = ({
       : totalPayment && totalPayment.toFixed(2)
   }`;
 
-  console.log(orderCtx.totalAmount);
   return (
     <div className={classes.OrderSummary}>
       <div className={classes.total}>

@@ -20,6 +20,32 @@ async function handler(req, res) {
         })
         .toArray();
 
+      let productsOrder = [];
+      let product;
+
+      for (let i = 0; i < order.length; i++) {
+        for (let x = 0; x < order[i].products.length; x++) {
+          const productId = order[i].products[x].product.toString();
+
+          product = await db
+            .collection('products')
+            .find({ _id: new ObjectId(`${productId}`) })
+            .toArray();
+
+          productsOrder.push(product[0]);
+        }
+
+        for (let y = 0; y < order[0].products.length; y++) {
+          productsOrder.forEach((product) => {
+            if (
+              product._id.toString() === order[0].products[y].product.toString()
+            ) {
+              order[0].products[y].product = product;
+            }
+          });
+        }
+      }
+
       if (order[0].user !== session.user._id) {
         res.status(401).json({
           error:

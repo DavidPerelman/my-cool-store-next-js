@@ -4,7 +4,6 @@ import ProductItem from '../ProductItem/ProductItem';
 import classes from './OrderProducts.module.css';
 
 const OrderProducts = ({ products, editable }) => {
-  // console.log(products);
   const orderCtx = useContext(OrderContext);
 
   const productItemAddHandler = (product) => {

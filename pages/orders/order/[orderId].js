@@ -20,13 +20,16 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const updateOrderHandler = async () => {
+    console.log(order[0]._id);
+    const orderId = order[0]._id;
     const updateOrderData = {
+      orderId: orderId,
       totalPayment: orderCtx.totalAmount,
       products: orderCtx.copyOrderProducts,
     };
 
     const response = await fetch(
-      `http://localhost:3000/api/orders/${order._id}`,
+      `http://localhost:3000/api/orders/${order[0]._id}`,
       {
         method: 'PUT',
         headers: {

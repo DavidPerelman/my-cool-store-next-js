@@ -9,15 +9,19 @@ const OrderDetailsPage = ({ order, error }) => {
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
 
+  console.log(order);
+
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order[0].products);
     setEditable(true);
   };
 
   const cancelEditOrderHandler = () => {
-    // orderCtx.cancelEdit(order.products);
-
     setEditable(false);
+  };
+
+  const updateOrderHandler = () => {
+    console.log('fdf');
   };
 
   let content;
@@ -34,6 +38,7 @@ const OrderDetailsPage = ({ order, error }) => {
           totalPayment={order[0].totalPayment}
           onEditClick={editOrderHandler}
           onCancelEditClick={cancelEditOrderHandler}
+          onUpdateOrderClick={updateOrderHandler}
         />
       </div>
     );

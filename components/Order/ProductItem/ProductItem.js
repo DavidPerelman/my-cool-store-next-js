@@ -3,7 +3,6 @@ import React from 'react';
 import classes from './ProductItem.module.css';
 
 const ProductItem = ({ product, amount, editable, onAdd, onRemove }) => {
-  console.log(product);
   const price = `$${product.product.price.toFixed(2)}`;
 
   return (

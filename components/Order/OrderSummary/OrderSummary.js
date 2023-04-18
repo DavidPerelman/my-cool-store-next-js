@@ -6,6 +6,7 @@ const OrderSummary = ({
   editable,
   onEditClick,
   onCancelEditClick,
+  onUpdateOrderClick,
   totalPayment,
 }) => {
   const orderCtx = useContext(OrderContext);
@@ -38,7 +39,7 @@ const OrderSummary = ({
         {!editable ? (
           <button className={classes.button}>Checkout</button>
         ) : (
-          <button className={classes.button} onClick={onCancelEditClick}>
+          <button className={classes.button} onClick={onUpdateOrderClick}>
             Save
           </button>
         )}

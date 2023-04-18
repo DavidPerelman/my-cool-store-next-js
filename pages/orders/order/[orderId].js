@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import classes from './OrderDetailsPage.module.css';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';
@@ -8,8 +8,7 @@ import OrderContext from '@/context/order-context';
 const OrderDetailsPage = ({ order, error }) => {
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
-
-  console.log(order);
+  const { data: session, status } = useSession();
 
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order[0].products);
@@ -20,8 +19,24 @@ const OrderDetailsPage = ({ order, error }) => {
     setEditable(false);
   };
 
-  const updateOrderHandler = () => {
-    console.log('fdf');
+  const updateOrderHandler = async () => {
+    const updateOrderData = {
+      totalPayment: orderCtx.totalAmount,
+      products: orderCtx.copyOrderProducts,
+    };
+
+    const response = await fetch(
+      `http://localhost:3000/api/orders/${order._id}`,
+      {
+        method: 'PUT',
+        headers: {
+          Cookie: session,
+        },
+        body: JSON.stringify(updateOrderData),
+      }
+    );
+
+    const data = await response.json();
   };
 
   let content;

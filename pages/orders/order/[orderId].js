@@ -10,7 +10,7 @@ const OrderDetailsPage = ({ order, error }) => {
   const [editable, setEditable] = useState(false);
 
   const editOrderHandler = () => {
-    orderCtx.makeOrderCopy(order.products);
+    orderCtx.makeOrderCopy(order[0].products);
     setEditable(true);
   };
 

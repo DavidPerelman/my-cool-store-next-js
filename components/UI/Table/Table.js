@@ -15,10 +15,6 @@ const Table = ({
     console.log(selectedRows);
   };
 
-  const onRowClicked = (row, event) => {
-    onMeetingTitleClick(event, row.id);
-  };
-
   const disabledCriteria = (selectedRows) => {
     if (selectedRows.isOpen === true) {
       return false;

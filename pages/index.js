@@ -3,10 +3,19 @@ import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryCon
 // import { getProducts } from '@/lib/mongo/products';
 import { getCategories } from '@/lib/mongo/categories';
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 export default function Home({ categories, products }) {
   const { data: session, status } = useSession();
-  console.log(session);
+
+  // useEffect(() => {
+  //   for (let i = 0; i < products.length; i++) {
+  //     if (products[i].title === 'Non-Alcoholic Concentrated Perfume Oil') {
+  //       console.log(products[i]);
+  //     }
+  //   }
+  // }, [products]);
+
   return (
     <>
       <Head>

@@ -4,11 +4,14 @@ import { getSession, useSession } from 'next-auth/react';
 import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';
+import getStripe from '@/utils/get-stripe';
 
 const OrderDetailsPage = ({ order, error }) => {
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
   const { data: session, status } = useSession();
+
+  console.log(order[0].products);
 
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order[0].products);
@@ -42,6 +45,27 @@ const OrderDetailsPage = ({ order, error }) => {
     const data = await response.json();
   };
 
+  const redirectToCheckout = async () => {
+    const items = order[0].products.map(({ _id, productQuantity }) => ({
+      price: _id,
+      productQuantity,
+    }));
+
+    const response = await fetch(
+      `http://localhost:3000/api/checkout_sessions`,
+      {
+        method: 'POST',
+        headers: {
+          Cookie: session,
+        },
+        body: JSON.stringify(items),
+      }
+    );
+
+    const stripe = await getStripe();
+    await stripe.redirectToCheckout({ sessionId: id });
+  };
+
   let content;
 
   if (order) {
@@ -57,6 +81,7 @@ const OrderDetailsPage = ({ order, error }) => {
           onEditClick={editOrderHandler}
           onCancelEditClick={cancelEditOrderHandler}
           onUpdateOrderClick={updateOrderHandler}
+          onCheckoutOrderClick={redirectToCheckout}
         />
       </div>
     );

@@ -14,6 +14,8 @@ const MyOrders = (props) => {
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
 
+  console.log(session);
+
   const columns = [
     {
       name: 'No.',

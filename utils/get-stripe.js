@@ -1,5 +1,4 @@
-const { loadStripe } = require('@stripe/stripe-js');
-
+import { loadStripe } from '@stripe/stripe-js';
 let stripePromise = null;
 
 const getStripe = () => {
@@ -7,7 +6,7 @@ const getStripe = () => {
     stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   }
 
-  return;
+  return stripePromise;
 };
 
 export default getStripe;

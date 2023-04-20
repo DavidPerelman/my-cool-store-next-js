@@ -47,7 +47,7 @@ const OrderDetailsPage = ({ order, error }) => {
   const redirectToCheckout = async () => {
     const items = order[0].products.map(({ _id, productQuantity }) => ({
       price: _id,
-      productQuantity,
+      quantity: productQuantity,
     }));
 
     const response = await fetch(
@@ -61,6 +61,8 @@ const OrderDetailsPage = ({ order, error }) => {
       }
     );
 
+    const { id } = await response.json();
+    console.log(id);
     const stripe = await getStripe();
     await stripe.redirectToCheckout({ sessionId: id });
   };

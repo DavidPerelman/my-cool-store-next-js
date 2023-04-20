@@ -11,7 +11,7 @@ const OrderDetailsPage = ({ order, error }) => {
   const [editable, setEditable] = useState(false);
   const { data: session, status } = useSession();
 
-  console.log(order[0].products);
+  // console.log(order[0].products);
 
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order[0].products);
@@ -23,7 +23,6 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const updateOrderHandler = async () => {
-    console.log(order[0]._id);
     const orderId = order[0]._id;
     const updateOrderData = {
       orderId: orderId,

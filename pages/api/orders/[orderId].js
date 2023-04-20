@@ -83,15 +83,14 @@ async function handler(req, res) {
       //   }
       // );
 
-      for (let i = 0; i < updateOrderData.products.length; i++) {
-        console.log(updateOrderData.products[i]._id);
-        for (let x = 0; x < order.length; x++) {
-          console.log(
-            order[x].products[i]._id.toString() ===
-              updateOrderData.products[i]._id
-          );
-        }
-      }
+      // for (let i = 0; i < updateOrderData.products.length; i++) {
+      //   for (let x = 0; x < order.length; x++) {
+      //     console.log(
+      //       order[x].products[i]._id.toString() ===
+      //         updateOrderData.products[i]._id
+      //     );
+      //   }
+      // }
 
       res.status(201).json({ order });
       client.close();

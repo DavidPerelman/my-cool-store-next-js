@@ -11,8 +11,6 @@ const OrderDetailsPage = ({ order, error }) => {
   const [editable, setEditable] = useState(false);
   const { data: session, status } = useSession();
 
-  // console.log(order[0].products);
-
   const editOrderHandler = () => {
     orderCtx.makeOrderCopy(order[0].products);
     setEditable(true);
@@ -62,7 +60,6 @@ const OrderDetailsPage = ({ order, error }) => {
     );
 
     const { id } = await response.json();
-    console.log(id);
     const stripe = await getStripe();
     await stripe.redirectToCheckout({ sessionId: id });
   };
@@ -132,7 +129,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      order: data.order,
+      order: data.order_order,
     },
   };
 }

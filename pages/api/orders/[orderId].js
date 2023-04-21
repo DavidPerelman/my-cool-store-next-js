@@ -20,6 +20,51 @@ async function handler(req, res) {
         })
         .toArray();
 
+      const order_order = await db
+        .collection('orders')
+        .aggregate([
+          {
+            $match: { _id: new ObjectId(orderId) },
+          },
+          {
+            $unwind: '$products',
+          },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'products.product',
+              foreignField: '_id',
+              as: 'products.product',
+            },
+          },
+          {
+            $unwind: '$products.product',
+          },
+          {
+            $group: {
+              _id: '$_id',
+              totalPayment: { $first: '$totalPayment' },
+              user: { $first: '$user' },
+              orderNumber: { $first: '$orderNumber' },
+              isPaid: { $first: '$isPaid' },
+              isOpen: { $first: '$isOpen' },
+              status: { $first: '$status' },
+              created: { $first: '$created' },
+              products: {
+                $push: {
+                  productQuantity: '$products.productQuantity',
+                  totalPrice: '$products.totalPrice',
+                  _id: '$products._id',
+                  product: '$products.product',
+                },
+              },
+            },
+          },
+        ])
+        .toArray();
+
+      // console.log(order_order[0].products);
+
       let productsOrder = [];
       let product;
 
@@ -54,7 +99,7 @@ async function handler(req, res) {
         client.close();
       }
 
-      res.status(201).json({ order });
+      res.status(201).json({ order_order });
       client.close();
     }
     if (req.method === 'PUT') {

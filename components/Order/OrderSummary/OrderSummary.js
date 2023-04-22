@@ -25,7 +25,7 @@ const OrderSummary = ({
         <span>{total}</span>
       </div>
       <div className={classes.actions}>
-        {/* {!editable ? (
+        {!editable ? (
           <button className={classes['button--alt']} onClick={onEditClick}>
             Edit
           </button>
@@ -36,7 +36,7 @@ const OrderSummary = ({
           >
             Cancel
           </button>
-        )} */}
+        )}
         {!editable ? (
           <button className={classes.button} onClick={onCheckoutOrderClick}>
             Checkout

@@ -14,16 +14,31 @@ import { AuthContextProvider } from '@/context/auth-context';
 import { SessionProvider } from 'next-auth/react';
 import { OrderContextProvider } from '@/context/order-context';
 
+MyApp.getInitialProps = async (ctx) => {
+  const productsRes = await fetch('http://localhost:3000/api/products');
+  const categoriesRes = await fetch('http://localhost:3000/api/categories');
+
+  const productsJson = await productsRes.json();
+  const categoriesJson = await categoriesRes.json();
+
+  return {
+    products: productsJson.products,
+    categories: categoriesJson.categories,
+  };
+};
+
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
+  products,
+  categories,
 }) {
   return (
     <SessionProvider session={session}>
       <OrderContextProvider>
         <AuthContextProvider>
           <CartContextProvider>
-            <Layout data={pageProps}>
+            <Layout products={products} categories={categories}>
               <Component {...pageProps} />
             </Layout>
           </CartContextProvider>

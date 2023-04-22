@@ -1,21 +1,7 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
-// import { getProducts } from '@/lib/mongo/products';
-import { getCategories } from '@/lib/mongo/categories';
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 
 export default function Home({ categories, products }) {
-  const { data: session, status } = useSession();
-
-  // useEffect(() => {
-  //   for (let i = 0; i < products.length; i++) {
-  //     if (products[i].title === 'Non-Alcoholic Concentrated Perfume Oil') {
-  //       console.log(products[i]);
-  //     }
-  //   }
-  // }, [products]);
-
   return (
     <>
       <Head>
@@ -34,10 +20,12 @@ export default function Home({ categories, products }) {
 
 export async function getStaticProps() {
   const productsResponse = await fetch('http://localhost:3000/api/products');
-  // const products = await getProducts();
-  const categories = await getCategories();
+  const categoriesResponse = await fetch(
+    'http://localhost:3000/api/categories'
+  );
 
-  const data = await productsResponse.json();
+  const products = await productsResponse.json();
+  const categories = await categoriesResponse.json();
 
   return {
     props: {
@@ -45,7 +33,7 @@ export async function getStaticProps() {
         _id: category._id.toString(),
         name: category.name,
       })),
-      products: data.products.map((product) => ({
+      products: products.products.map((product) => ({
         _id: product._id.toString(),
         title: product.title,
         price: product.price,

@@ -14,6 +14,7 @@ const SearchBar = ({ id, searchBar, searchBarInputRef, placeholder, data }) => {
         return value.name.toLowerCase().includes(searchWord.toLowerCase());
       }
     });
+
     setfilteredData(newFilter);
   };
 
@@ -43,7 +44,11 @@ const SearchBar = ({ id, searchBar, searchBarInputRef, placeholder, data }) => {
           {filteredData.map((value, key) => (
             <Link
               key={key}
-              href={`/products/${value._id}`}
+              href={
+                id === 'products'
+                  ? `/products/${value._id}`
+                  : `/products/category/${value._id}`
+              }
               className={classes.dataItem}
             >
               {id === 'products' ? value.title : value.name}

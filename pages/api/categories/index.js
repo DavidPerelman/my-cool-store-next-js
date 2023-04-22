@@ -1,19 +1,16 @@
-import { getCategories } from '@/lib/mongo/categories';
+import { connectToDatabase } from '@/lib/db';
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {
-    try {
-      const { categories, error } = await getCategories();
-      if (error) throw new Error(error);
+    const client = await connectToDatabase();
 
-      return res.status(200).json({ categories });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    const db = client.db();
+
+    const categories = await db.collection('categories').find().toArray();
+
+    res.status(201).json({ categories });
+    client.close();
   }
-
-  res.setHeader('Allow', ['GET']);
-  res.status(425).end(`Method ${req.method} is not allowed.`);
 };
 
 export default handler;

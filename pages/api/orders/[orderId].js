@@ -106,6 +106,8 @@ async function handler(req, res) {
       const { orderId } = req.query;
       const updateOrderData = JSON.parse(req.body);
 
+      console.log(updateOrderData);
+
       const client = await connectToDatabase();
 
       const db = client.db();
@@ -117,6 +119,26 @@ async function handler(req, res) {
         })
         .toArray();
 
+      const order_1 = await db
+        .collection('orders')
+        .find({ _id: new ObjectId(orderId) })
+        .forEach(function (doc) {
+          console.log(doc.products);
+          // doc.products.forEach(function (product) {
+          //   if (products.profile === 10) {
+          //     products.handled = 0;
+          //   }
+          // });
+          db.collection('users').save(doc);
+        });
+      // .toArray();
+
+      db.collection;
+
+      // for (let i = 0; i < order[0].products.length; i++) {
+      //   console.log(order[0].products[i]);
+      // }
+
       // const order = await db.collection('orders').updateOne(
       //   {
       //     _id: new ObjectId(orderId),
@@ -124,7 +146,6 @@ async function handler(req, res) {
 
       //   {
       //     $set: { totalPayment: updateOrderData.totalPayment },
-      //     // $currentDate: { lastModified: true },
       //   }
       // );
 

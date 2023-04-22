@@ -7,6 +7,7 @@ import OrderContext from '@/context/order-context';
 import getStripe from '@/utils/get-stripe';
 import { useRouter } from 'next/router';
 import OrderModal from '@/components/Layout/OrderModal/OrderModal';
+import Link from 'next/link';
 
 const OrderDetailsPage = ({ order, error }) => {
   const router = useRouter();
@@ -115,6 +116,10 @@ const OrderDetailsPage = ({ order, error }) => {
 
   return (
     <div className={classes.OrderDetailsPage}>
+      <Link href={`/orders/user/user-orders`} legacyBehavior>
+        <button className='btn btn-primary'>My Orders</button>
+      </Link>
+
       <section>{content}</section>
     </div>
   );

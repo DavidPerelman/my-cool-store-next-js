@@ -12,6 +12,7 @@ const PaymentSuccessPage = () => {
     const data = await response.json();
     return data;
   }, [session_id]);
+
   useEffect(() => {
     check();
   }, [check]);

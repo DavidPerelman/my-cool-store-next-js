@@ -106,57 +106,50 @@ async function handler(req, res) {
       const { orderId } = req.query;
       const updateOrderData = JSON.parse(req.body);
 
-      console.log(updateOrderData);
+      console.log(updateOrderData.totalPayment);
 
       const client = await connectToDatabase();
 
       const db = client.db();
 
-      const order = await db
-        .collection('orders')
-        .find({
+      const order = await db.collection('orders').updateOne(
+        {
           _id: new ObjectId(orderId),
-        })
-        .toArray();
+        },
+        { $set: { totalPayment: updateOrderData.totalPayment } }
+      );
 
-      const order_1 = await db
-        .collection('orders')
-        .find({ _id: new ObjectId(orderId) })
-        .forEach(function (doc) {
-          console.log(doc.products);
-          // doc.products.forEach(function (product) {
-          //   if (products.profile === 10) {
-          //     products.handled = 0;
-          //   }
-          // });
-          db.collection('users').save(doc);
-        });
-      // .toArray();
+      // const order_1 = await db
+      //   .collection('orders')
+      //   .find({ _id: new ObjectId(orderId) })
+      //   .forEach(function (doc) {
+      //     console.log(doc.products);
+      //     // doc.products.forEach(function (product) {
+      //     //   if (products.profile === 10) {
+      //     //     products.handled = 0;
+      //     //   }
+      //     // });
+      //     db.collection('users').save(doc);
+      //   });
+      // // .toArray();
 
-      db.collection;
+      let result;
 
-      // for (let i = 0; i < order[0].products.length; i++) {
-      //   console.log(order[0].products[i]);
-      // }
+      for (let i = 0; i < updateOrderData.products.length; i++) {
+        const query = {
+          _id: new ObjectId(orderId),
+          'products._id': updateOrderData.products[i]._id,
+        };
 
-      // const order = await db.collection('orders').updateOne(
-      //   {
-      //     _id: new ObjectId(orderId),
-      //   },
+        const updateDocument = {
+          $set: {
+            'products.$.productQuantity':
+              updateOrderData.products[i].productQuantity,
+          },
+        };
 
-      //   {
-      //     $set: { totalPayment: updateOrderData.totalPayment },
-      //   }
-      // );
-
-      // for (let i = 0; i < updateOrderData.products.length; i++) {
-      //   for (let x = 0; x < order.length; x++) {
-      //     console.log(
-      //       order[x].products[i]._id.toString() ===
-      //         updateOrderData.products[i]._id
-      //     );
-      //   }
-      // }
+        result = await db.collection('orders').updateOne(query, updateDocument);
+      }
 
       res.status(201).json({ order });
       client.close();

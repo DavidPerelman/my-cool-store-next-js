@@ -5,8 +5,10 @@ import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';
 import getStripe from '@/utils/get-stripe';
+import { useRouter } from 'next/router';
 
 const OrderDetailsPage = ({ order, error }) => {
+  const router = useRouter();
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
   const { data: session, status } = useSession();
@@ -21,6 +23,7 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const updateOrderHandler = async () => {
+    console.log(orderCtx.copyOrderProducts);
     const orderId = order[0]._id;
     const updateOrderData = {
       orderId: orderId,
@@ -40,6 +43,11 @@ const OrderDetailsPage = ({ order, error }) => {
     );
 
     const data = await response.json();
+    if (data.order) {
+      router.reload(window.location.pathname);
+
+      console.log('Succes');
+    }
   };
 
   const redirectToCheckout = async () => {

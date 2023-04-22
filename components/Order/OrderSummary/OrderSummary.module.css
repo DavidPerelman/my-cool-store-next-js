@@ -73,3 +73,9 @@
   background-color: #8a2b06;
   color: white;
 }
+
+.orderStatus {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

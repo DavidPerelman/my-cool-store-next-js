@@ -6,11 +6,13 @@ import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';
 import getStripe from '@/utils/get-stripe';
 import { useRouter } from 'next/router';
+import OrderModal from '@/components/Layout/OrderModal/OrderModal';
 
 const OrderDetailsPage = ({ order, error }) => {
   const router = useRouter();
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
 
   const editOrderHandler = () => {
@@ -23,6 +25,7 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const updateOrderHandler = async () => {
+    setLoading(true);
     let productsData = [];
 
     for (let i = 0; i < orderCtx.copyOrderProducts.length; i++) {
@@ -56,6 +59,7 @@ const OrderDetailsPage = ({ order, error }) => {
     if (data.order) {
       router.reload(window.location.pathname);
     }
+    setLoading(false);
   };
 
   const redirectToCheckout = async () => {
@@ -85,11 +89,15 @@ const OrderDetailsPage = ({ order, error }) => {
   if (order) {
     content = (
       <div className={classes.container}>
+        {loading && <OrderModal onCloseCart={() => setLoading(false)} />}
+
         <OrderProducts
           products={editable ? orderCtx.copyOrderProducts : order[0].products}
           editable={editable}
         />
         <OrderSummary
+          isOpen={order[0].isOpen}
+          status={order[0].status}
           editable={editable}
           totalPayment={order[0].totalPayment}
           onEditClick={editOrderHandler}

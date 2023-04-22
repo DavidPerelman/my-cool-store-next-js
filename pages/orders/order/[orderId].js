@@ -23,16 +23,26 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const updateOrderHandler = async () => {
-    console.log(orderCtx.copyOrderProducts);
+    let productsData = [];
+
+    for (let i = 0; i < orderCtx.copyOrderProducts.length; i++) {
+      productsData.push({
+        _id: orderCtx.copyOrderProducts[i]._id,
+        product: orderCtx.copyOrderProducts[i].product._id,
+        totalPrice: orderCtx.copyOrderProducts[i].product.price,
+        productQuantity: orderCtx.copyOrderProducts[i].productQuantity,
+      });
+    }
+
     const orderId = order[0]._id;
+
     const updateOrderData = {
-      orderId: orderId,
       totalPayment: orderCtx.totalAmount,
-      products: orderCtx.copyOrderProducts,
+      products: productsData,
     };
 
     const response = await fetch(
-      `http://localhost:3000/api/orders/${order[0]._id}`,
+      `http://localhost:3000/api/orders/${orderId}`,
       {
         method: 'PUT',
         headers: {
@@ -45,8 +55,6 @@ const OrderDetailsPage = ({ order, error }) => {
     const data = await response.json();
     if (data.order) {
       router.reload(window.location.pathname);
-
-      console.log('Succes');
     }
   };
 

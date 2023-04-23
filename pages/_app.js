@@ -5,8 +5,8 @@ import '@/styles/globals.css';
 config.autoAddCss = false;
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import '/static/styles.css';
-import '/static/nprogress.css';
+import '/public/static/styles.css';
+import '/public/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
@@ -15,12 +15,8 @@ import { SessionProvider } from 'next-auth/react';
 import { OrderContextProvider } from '@/context/order-context';
 
 MyApp.getInitialProps = async () => {
-  const productsRes = await fetch(
-    'https://my-cool-store-next-7ksstj79o-davidperelman.vercel.app/api/products'
-  );
-  const categoriesRes = await fetch(
-    'https://my-cool-store-next-7ksstj79o-davidperelman.vercel.app/api/categories'
-  );
+  const productsRes = await fetch('http://localhost:3000/api/products');
+  const categoriesRes = await fetch('http://localhost:3000/api/categories');
 
   const productsJson = await productsRes.json();
   const categoriesJson = await categoriesRes.json();

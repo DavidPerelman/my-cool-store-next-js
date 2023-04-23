@@ -14,18 +14,18 @@ import { AuthContextProvider } from '@/context/auth-context';
 import { SessionProvider } from 'next-auth/react';
 import { OrderContextProvider } from '@/context/order-context';
 
-MyApp.getInitialProps = async (ctx) => {
-  const productsRes = await fetch('http://localhost:3000/api/products');
-  const categoriesRes = await fetch('http://localhost:3000/api/categories');
+// MyApp.getInitialProps = async (ctx) => {
+//   const productsRes = await fetch('http://localhost:3000/api/products');
+//   const categoriesRes = await fetch('http://localhost:3000/api/categories');
 
-  const productsJson = await productsRes.json();
-  const categoriesJson = await categoriesRes.json();
+//   const productsJson = await productsRes.json();
+//   const categoriesJson = await categoriesRes.json();
 
-  return {
-    products: productsJson.products,
-    categories: categoriesJson.categories,
-  };
-};
+//   return {
+//     products: productsJson.products,
+//     categories: categoriesJson.categories,
+//   };
+// };
 
 export default function MyApp({
   Component,
@@ -47,3 +47,19 @@ export default function MyApp({
     </SessionProvider>
   );
 }
+
+MyApp.getInitialProps = async (context) => {
+  const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
+
+  const productsRes = await fetch('http://localhost:3000/api/products');
+  const categoriesRes = await fetch('http://localhost:3000/api/categories');
+
+  const productsJson = await productsRes.json();
+  const categoriesJson = await categoriesRes.json();
+
+  return {
+    ...pageProps,
+    products: productsJson,
+    categories: categoriesJson,
+  };
+};

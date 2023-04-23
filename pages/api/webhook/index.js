@@ -1,5 +1,5 @@
 const { Stripe } = require('stripe');
-const { buffer } = require('micro');
+const { buffer } = require('micro/types/src/lib');
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET);
 

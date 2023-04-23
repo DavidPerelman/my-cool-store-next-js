@@ -46,7 +46,7 @@ const OrderDetailsPage = ({ order, error }) => {
     };
 
     const response = await fetch(
-      `http://localhost:3000/api/orders/${orderId}/`,
+      `http://localhost:3000/api/orders/${orderId}`,
       {
         method: 'PUT',
         headers: {
@@ -70,7 +70,7 @@ const OrderDetailsPage = ({ order, error }) => {
     }));
 
     const response = await fetch(
-      `http://localhost:3000/api/checkout_sessions/`,
+      `http://localhost:3000/api/checkout_sessions`,
       {
         method: 'POST',
         headers: {
@@ -139,7 +139,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const response = await fetch(`http://localhost:3000/api/orders/${orderId}/`, {
+  const response = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
     headers: {
       Cookie: context.req.headers.cookie,
     },

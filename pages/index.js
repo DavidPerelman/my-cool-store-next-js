@@ -43,9 +43,6 @@ export async function getStaticProps() {
   const products = await loadProducts();
   const categories = await loadCategories();
 
-  // const products = await productsResponse.json();
-  // const categories = await categoriesResponse.json();
-
   return {
     props: {
       categories: categories.categories.map((category) => ({

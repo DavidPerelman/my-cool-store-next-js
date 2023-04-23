@@ -30,15 +30,19 @@ import { OrderContextProvider } from '@/context/order-context';
 export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-  products,
-  categories,
+  // products,
+  // categories,
 }) {
+  console.log(pageProps);
   return (
     <SessionProvider session={session}>
       <OrderContextProvider>
         <AuthContextProvider>
           <CartContextProvider>
-            <Layout products={products} categories={categories}>
+            <Layout
+              products={pageProps.products}
+              categories={pageProps.categories}
+            >
               <Component {...pageProps} />
             </Layout>
           </CartContextProvider>
@@ -48,18 +52,18 @@ export default function MyApp({
   );
 }
 
-MyApp.getInitialProps = async (context) => {
-  const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
+// MyApp.getInitialProps = async (context) => {
+//   const productsRes = await fetch('http://localhost:3000/api/products');
+//   const categoriesRes = await fetch('http://localhost:3000/api/categories');
 
-  const productsRes = await fetch('http://localhost:3000/api/products');
-  const categoriesRes = await fetch('http://localhost:3000/api/categories');
+//   const productsJson = await productsRes.json();
+//   const categoriesJson = await categoriesRes.json();
 
-  const productsJson = await productsRes.json();
-  const categoriesJson = await categoriesRes.json();
+//   const pageProps = await App.getInitialProps(context); // Retrieves page's `getInitialProps`
 
-  return {
-    ...pageProps,
-    products: productsJson,
-    categories: categoriesJson,
-  };
-};
+//   return {
+//     ...pageProps,
+//     products: productsJson,
+//     categories: categoriesJson,
+//   };
+// };

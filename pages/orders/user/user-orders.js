@@ -122,11 +122,14 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const response = await fetch('http://localhost:3000/api/orders/user-orders', {
-    headers: {
-      Cookie: context.req.headers.cookie,
-    },
-  });
+  const response = await fetch(
+    'http://localhost:3000/api/orders/user-orders/',
+    {
+      headers: {
+        Cookie: context.req.headers.cookie,
+      },
+    }
+  );
 
   const data = await response.json();
 

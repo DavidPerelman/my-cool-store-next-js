@@ -1,4 +1,3 @@
-import { buffer } from 'micro/types/src/lib';
 const { Stripe } = require('stripe');
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET);
@@ -14,7 +13,7 @@ export default async function handler(req, res) {
     let event;
 
     try {
-      const rawBody = await buffer(req);
+      const rawBody = await Buffer(req);
       const signature = req.header['stripe-signature'];
 
       event = stripe.webhooks.constructEvent(

@@ -1,22 +1,6 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
-export async function loadProducts() {
-  // Call an external API endpoint to get posts
-  const res = await fetch('http://localhost:3000/api/products');
-  const data = await res.json();
-
-  return data;
-}
-
-export async function loadCategories() {
-  // Call an external API endpoint to get posts
-  const res = await fetch('http://localhost:3000/api/categories');
-  const data = await res.json();
-
-  return data;
-}
-
 export default function Home({ categories, products }) {
   return (
     <>
@@ -35,9 +19,11 @@ export default function Home({ categories, products }) {
 }
 
 Home.getInitialProps = async (ctx) => {
-  const productsResponse = await fetch('http://localhost:3000/api/products');
+  const productsResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER}/api/products`
+  );
   const categoriesResponse = await fetch(
-    'http://localhost:3000/api/categories'
+    `${process.env.NEXT_PUBLIC_SERVER}/api/categories`
   );
 
   const products = await productsResponse.json();

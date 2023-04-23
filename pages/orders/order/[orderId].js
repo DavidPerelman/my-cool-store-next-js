@@ -45,16 +45,13 @@ const OrderDetailsPage = ({ order, error }) => {
       products: productsData,
     };
 
-    const response = await fetch(
-      `http://localhost:3000/api/orders/${orderId}`,
-      {
-        method: 'PUT',
-        headers: {
-          Cookie: session,
-        },
-        body: JSON.stringify(updateOrderData),
-      }
-    );
+    const response = await fetch(`/api/orders/${orderId}`, {
+      method: 'PUT',
+      headers: {
+        Cookie: session,
+      },
+      body: JSON.stringify(updateOrderData),
+    });
 
     const data = await response.json();
     if (data.order) {
@@ -69,16 +66,13 @@ const OrderDetailsPage = ({ order, error }) => {
       quantity: productQuantity,
     }));
 
-    const response = await fetch(
-      `http://localhost:3000/api/checkout_sessions`,
-      {
-        method: 'POST',
-        headers: {
-          Cookie: session,
-        },
-        body: JSON.stringify(items),
-      }
-    );
+    const response = await fetch(`/api/checkout_sessions`, {
+      method: 'POST',
+      headers: {
+        Cookie: session,
+      },
+      body: JSON.stringify(items),
+    });
 
     const { id } = await response.json();
     const stripe = await getStripe();
@@ -139,7 +133,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const response = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+  const response = await fetch(`/api/orders/${orderId}`, {
     headers: {
       Cookie: context.req.headers.cookie,
     },

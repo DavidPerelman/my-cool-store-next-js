@@ -4,13 +4,13 @@ import useSWR from 'swr';
 import Header from './Header';
 import classes from './Header.module.css';
 
-const Layout = ({ children, products, categories }) => {
+const Layout = ({ pageProps, children }) => {
   return (
     <>
       <Head>
         <title>MyCoolStore</title>
       </Head>
-      <Header categories={categories} products={products} />
+      <Header categories={pageProps.categories} products={pageProps.products} />
       <main style={{ marginTop: '4rem' }} className={classes.main}>
         {children}
       </main>

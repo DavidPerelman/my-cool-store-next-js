@@ -22,10 +22,7 @@ export default function MyApp({
       <OrderContextProvider>
         <AuthContextProvider>
           <CartContextProvider>
-            <Layout
-              products={pageProps.products}
-              categories={pageProps.categories}
-            >
+            <Layout pageProps={pageProps}>
               <Component {...pageProps} />
             </Layout>
           </CartContextProvider>

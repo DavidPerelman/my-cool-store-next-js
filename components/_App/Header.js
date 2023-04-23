@@ -64,7 +64,7 @@ const Header = ({ categories, products }) => {
     setShowLinks(false);
 
     setCartItemsAmount(cartCtx.items.length);
-  }, [cartCtx.items.length, router.pathname]);
+  }, [cartCtx.items.length, router.pathname, handleSearchBar]);
 
   const showCartHandler = () => {
     cartCtx.showCart();

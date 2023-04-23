@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import classes from './CartItem.module.css';
 
 const CartItem = ({ item, onAdd, onRemove }) => {
@@ -6,11 +7,13 @@ const CartItem = ({ item, onAdd, onRemove }) => {
   return (
     <li key={item._id} className={classes['cart-item']}>
       <div className={classes['cart-product-details']}>
-        <img
+        <Image
           alt={item.product.title}
           className={classes['cart-image']}
           src={item.product.thumbnail}
           loading='lazy'
+          width={80}
+          height={80}
         />
         <div>
           <h3>{item.product.title}</h3>

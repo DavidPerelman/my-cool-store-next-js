@@ -1,6 +1,22 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
+export async function loadProducts() {
+  // Call an external API endpoint to get posts
+  const res = await fetch('http://localhost:3000/api/products');
+  const data = await res.json();
+
+  return data;
+}
+
+export async function loadCategories() {
+  // Call an external API endpoint to get posts
+  const res = await fetch('http://localhost:3000/api/categories');
+  const data = await res.json();
+
+  return data;
+}
+
 export default function Home({ categories, products }) {
   return (
     <>
@@ -24,8 +40,11 @@ export async function getStaticProps() {
     'http://localhost:3000/api/categories'
   );
 
-  const products = await productsResponse.json();
-  const categories = await categoriesResponse.json();
+  const products = await loadProducts();
+  const categories = await loadCategories();
+
+  // const products = await productsResponse.json();
+  // const categories = await categoriesResponse.json();
 
   return {
     props: {

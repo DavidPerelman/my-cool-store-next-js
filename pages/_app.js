@@ -5,8 +5,8 @@ import '@/styles/globals.css';
 config.autoAddCss = false;
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import '/public/static/styles.css';
-import '/public/static/nprogress.css';
+import 'public/static/styles.css';
+import 'public/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';
@@ -14,7 +14,7 @@ import { AuthContextProvider } from '@/context/auth-context';
 import { SessionProvider } from 'next-auth/react';
 import { OrderContextProvider } from '@/context/order-context';
 
-MyApp.getInitialProps = async () => {
+MyApp.getInitialProps = async (ctx) => {
   const productsRes = await fetch('http://localhost:3000/api/products');
   const categoriesRes = await fetch('http://localhost:3000/api/categories');
 

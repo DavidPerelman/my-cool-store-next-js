@@ -15,6 +15,7 @@ const PaymentSuccessPage = () => {
 
   useEffect(() => {
     check();
+    console.log('fdf');
   }, [check]);
 
   return <div>Success</div>;

@@ -15,6 +15,14 @@ const nextConfig = {
   images: {
     domains: ['i.dummyjson.com', 'd3t32hsnjxo7q6.cloudfront.net'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://my-cool-store-next-js.vercel.app/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

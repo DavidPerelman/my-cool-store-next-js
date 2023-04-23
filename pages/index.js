@@ -34,31 +34,14 @@ export default function Home({ categories, products }) {
   );
 }
 
-export async function getStaticProps() {
+Home.getInitialProps = async (ctx) => {
   const productsResponse = await fetch('http://localhost:3000/api/products');
   const categoriesResponse = await fetch(
     'http://localhost:3000/api/categories'
   );
 
-  const products = await loadProducts();
-  const categories = await loadCategories();
+  const products = await productsResponse.json();
+  const categories = await categoriesResponse.json();
 
-  return {
-    props: {
-      categories: categories.categories.map((category) => ({
-        _id: category._id.toString(),
-        name: category.name,
-      })),
-      products: products.products.map((product) => ({
-        _id: product._id.toString(),
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        brand: product.brand,
-        category: product.category.toString(),
-        thumbnail: product.thumbnail,
-      })),
-    },
-    revalidate: 1,
-  };
-}
+  return { products: products.products, categories: categories.categories };
+};

@@ -19,7 +19,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://my-cool-store-next-js.vercel.app/:path*',
+        destination: 'https://my-cool-store-next-js.netlify.app/:path*',
       },
     ];
   },

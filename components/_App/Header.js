@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from 'react';
+import { useContext, useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import Hamburger from '../UI/Hamburger/Hamburger';
@@ -39,21 +39,23 @@ const Header = ({ categories, products }) => {
   const isLoggedIn = session && status === 'authenticated';
   const router = useRouter();
 
-  const handleSearchBar = (id) => {
-    if (searchBar === id || (searchBar && id === undefined)) {
-      setSearchBar(null);
-    }
-    if (searchBar !== id) {
-      setSearchBar(id);
-    }
+  const handleSearchBar = useCallback(
+    (id) => {
+      if (searchBar === id || (searchBar && id === undefined)) {
+        setSearchBar(null);
+      }
+      if (searchBar !== id) {
+        setSearchBar(id);
+      }
 
-    if (id === 'categories') {
-      searchProductsInputRef.current.value = '';
-    } else {
-      searchCategoriesInputRef.current.value = '';
-    }
-  };
-
+      if (id === 'categories') {
+        searchProductsInputRef.current.value = '';
+      } else {
+        searchCategoriesInputRef.current.value = '';
+      }
+    },
+    [searchBar]
+  );
   useEffect(() => {
     const handleClick = ({ target }) => {
       handleSearchBar(target.dataset.id);

@@ -2,6 +2,7 @@ import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
 export default function Home({ categories, products }) {
+  console.log(products);
   return (
     <>
       <Head>

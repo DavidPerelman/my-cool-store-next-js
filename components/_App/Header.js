@@ -4,7 +4,6 @@ import Router from 'next/router';
 import Hamburger from '../UI/Hamburger/Hamburger';
 import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';
-import nProgress from 'nprogress';
 import CartContext from '@/context/cart-context';
 import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
@@ -12,20 +11,6 @@ import AuthContext from '@/context/auth-context';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
 import { useSession } from 'next-auth/react';
-
-nProgress.configure({ showSpinner: false });
-
-Router.onRouteChangeStart = () => {
-  nProgress.start();
-};
-
-Router.onRouteChangeComplete = () => {
-  nProgress.done();
-};
-
-Router.onRouteChangeError = function () {
-  NProgress.done();
-};
 
 const Header = ({ categories, products }) => {
   const { data: session, status } = useSession();

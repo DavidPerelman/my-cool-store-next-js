@@ -5,7 +5,6 @@ config.autoAddCss = false;
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'public/static/styles.css';
-import 'public/static/nprogress.css';
 
 import Layout from '@/components/_App/Layout';
 import { CartContextProvider } from '@/context/cart-context';

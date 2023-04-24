@@ -2,7 +2,6 @@ import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
 export default function Home({ categories, products }) {
-  console.log(categories);
   return (
     <>
       <Head>
@@ -35,5 +34,5 @@ Home.getInitialProps = async (ctx) => {
   const products = await productsResponse.json();
   const categories = await categoriesResponse.json();
 
-  return { products: products, categories: categories.categories };
+  return { products: products, categories: categories };
 };

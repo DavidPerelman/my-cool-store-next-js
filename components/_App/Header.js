@@ -48,7 +48,7 @@ const Header = ({ categories, products }) => {
 
     document.addEventListener('click', handleClick);
 
-    setShowLinks(false);
+    // setShowLinks(false);
 
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname, handleSearchBar]);

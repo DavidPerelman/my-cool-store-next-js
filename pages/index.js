@@ -4,7 +4,6 @@ import { loadProducts } from '@/lib/load-producs';
 import { loadCategories } from '@/lib/load-categories';
 
 export default function Home({ categories, products }) {
-  console.log(categories);
   return (
     <>
       <Head>

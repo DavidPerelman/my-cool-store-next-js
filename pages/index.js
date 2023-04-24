@@ -20,9 +20,16 @@ export default function Home({ categories, products }) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const products = await loadProducts();
+//   const categories = await loadCategories();
+
+//   return { props: { products, categories } };
+// }
+
+Home.getInitialProps = async () => {
   const products = await loadProducts();
   const categories = await loadCategories();
 
-  return { props: { products, categories } };
-}
+  return { products: products, categories: categories };
+};

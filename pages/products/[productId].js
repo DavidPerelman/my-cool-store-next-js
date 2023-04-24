@@ -5,6 +5,8 @@ import CartContext from '@/context/cart-context';
 import { useState, useEffect, useContext } from 'react';
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
 import classes from './ProductDetailsPage.module.css';
+import { loadProduct, loadProducts } from '@/lib/load-producs';
+
 export default function ProductDetail({ product }) {
   const [inCartHtml, setInCartHtml] = useState();
   const cartCtx = useContext(CartContext);
@@ -91,14 +93,39 @@ export default function ProductDetail({ product }) {
   return <div className={classes.ProductDetailsPage}>{content}</div>;
 }
 
-ProductDetail.getInitialProps = async (ctx) => {
-  const productId = ctx.query.productId;
+// ProductDetail.getInitialProps = async (ctx) => {
+//   const productId = ctx.query.productId;
 
-  const productResponse = await fetch(
-    `${process.env.DB_HOST}/api/products/${productId}`
-  );
+//   const productResponse = await fetch(
+//     `${process.env.DB_HOST}/api/products/${productId}`
+//   );
 
-  const product = await productResponse.json();
+//   const product = await productResponse.json();
 
-  return { product: product[0] };
-};
+//   return { product: product[0] };
+// };
+
+export async function getStaticPaths() {
+  const products = await loadProducts();
+
+  const paths = products.map((product) => {
+    return {
+      params: { productId: product._id.toString() },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context) {
+  const productId = context.params.productId;
+  const product = await loadProduct(productId);
+
+  return {
+    props: {
+      product: product[0],
+    },
+  };
+}

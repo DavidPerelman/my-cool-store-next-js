@@ -2,6 +2,7 @@ import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
 
 export default function Home({ categories, products }) {
+  console.log(categories);
   return (
     <>
       <Head>
@@ -11,9 +12,9 @@ export default function Home({ categories, products }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      {/* {categories.map((category, i) => (
+      {categories.map((category, i) => (
         <CategoryContainer category={category} products={products} key={i} />
-      ))} */}
+      ))}
     </>
   );
 }
@@ -21,9 +22,9 @@ export default function Home({ categories, products }) {
 Home.getInitialProps = async (ctx) => {
   // const productsResponse = await fetch(`http://localhost:3000/api/products`);
   const productsResponse = await fetch(`${process.env.DB_HOST}/api/products`);
-  // const categoriesResponse = await fetch(
-  //   `${process.env.DB_HOST}/api/categories`
-  // );
+  const categoriesResponse = await fetch(
+    `${process.env.DB_HOST}/api/categories`
+  );
   // const productsResponse = await fetch(
   //   `${process.env.NEXT_PUBLIC_SERVER}/api/products`
   // );
@@ -32,7 +33,7 @@ Home.getInitialProps = async (ctx) => {
   // );
 
   const products = await productsResponse.json();
-  // const categories = await categoriesResponse.json();
+  const categories = await categoriesResponse.json();
 
-  return { products: products, categories: [] };
+  return { products: products, categories: categories.categories };
 };

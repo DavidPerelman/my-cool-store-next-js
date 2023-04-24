@@ -19,17 +19,10 @@ export default function Home({ categories, products }) {
 }
 
 Home.getInitialProps = async (ctx) => {
-  // const productsResponse = await fetch(`http://localhost:3000/api/products`);
   const productsResponse = await fetch(`${process.env.DB_HOST}/api/products`);
   const categoriesResponse = await fetch(
     `${process.env.DB_HOST}/api/categories`
   );
-  // const productsResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_SERVER}/api/products`
-  // );
-  // const categoriesResponse = await fetch(
-  //   `http://localhost:3000/api/categories`
-  // );
 
   const products = await productsResponse.json();
   const categories = await categoriesResponse.json();

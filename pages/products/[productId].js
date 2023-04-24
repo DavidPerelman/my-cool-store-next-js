@@ -2,37 +2,9 @@ import Carousel from '@/components/UI/Carousel/Carousel';
 import Icon from '@/components/UI/Icon/Icon';
 import Rating from '@/components/UI/Rating/Rating';
 import CartContext from '@/context/cart-context';
-import { getProducts, getProduct } from '@/lib/mongo/products';
 import { useState, useEffect, useContext } from 'react';
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
 import classes from './ProductDetailsPage.module.css';
-
-export async function getStaticPaths() {
-  const products = await getProducts();
-
-  const paths = products.products.map((product) => {
-    return {
-      params: { productId: product._id.toString() },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps(context) {
-  const productId = context.params.productId;
-  const res = await getProduct(productId);
-
-  return {
-    props: {
-      product: JSON.parse(res.product),
-    },
-  };
-}
-
 export default function ProductDetail({ product }) {
   const [inCartHtml, setInCartHtml] = useState();
   const cartCtx = useContext(CartContext);
@@ -118,3 +90,17 @@ export default function ProductDetail({ product }) {
 
   return <div className={classes.ProductDetailsPage}>{content}</div>;
 }
+
+ProductDetail.getInitialProps = async (ctx) => {
+  const productId = ctx.query.productId;
+
+  console.log(productId);
+
+  const productResponse = await fetch(
+    `http://localhost:3000/api/products/${productId}`
+  );
+
+  const product = await productResponse.json();
+
+  return { product: product[0] };
+};

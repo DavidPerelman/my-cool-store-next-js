@@ -11,23 +11,28 @@ export default function Home({ categories, products }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      {categories.map((category, i) => (
+      {/* {categories.map((category, i) => (
         <CategoryContainer category={category} products={products} key={i} />
-      ))}
+      ))} */}
     </>
   );
 }
 
 Home.getInitialProps = async (ctx) => {
-  const productsResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/api/products`
-  );
-  const categoriesResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/api/categories`
-  );
+  const productsResponse = await fetch(`http://localhost:3000/api/products`);
+  // const productsResponse = await fetch(`${process.env.DB_HOST}/api/products`);
+  // const categoriesResponse = await fetch(
+  //   `${process.env.DB_HOST}/api/categories`
+  // );
+  // const productsResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SERVER}/api/products`
+  // );
+  // const categoriesResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_SERVER}/api/categories`
+  // );
 
   const products = await productsResponse.json();
   const categories = await categoriesResponse.json();
 
-  return { products: products.products, categories: categories.categories };
+  return { products: products, categories: categories };
 };

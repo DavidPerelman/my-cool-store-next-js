@@ -1,16 +1,21 @@
 import { connectToDatabase } from '@/lib/db';
 
-async function handler(req, res) {
+import clientPromise from '@/lib/mongodb';
+
+export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const client = await connectToDatabase();
+    try {
+      const mongoClient = await clientPromise;
 
-    const db = client.db();
+      const db = mongoClient.db('myFirstDatabase');
 
-    const products = await db.collection('products').find().toArray();
+      const collection = db.collection('products');
 
-    res.status(201).json({ products });
-    client.close();
+      const results = await collection.find({}).toArray();
+
+      res.status(200).json(results);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
-
-export default handler;

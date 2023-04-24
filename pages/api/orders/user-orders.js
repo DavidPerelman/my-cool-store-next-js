@@ -1,43 +1,42 @@
-import { connectToDatabase } from '@/lib/db';
+import clientPromise from '@/lib/mongodb';
 import { getSession } from 'next-auth/react';
 
 async function handler(req, res) {
   const session = await getSession({ req });
 
   if (req.method === 'GET') {
-    const client = await connectToDatabase();
+    try {
+      if (!session) {
+        res.status(401).json({
+          message:
+            'You must be signed in to view the protected content on this page.',
+        });
+      } else {
+        const mongoClient = await clientPromise;
 
-    const db = client.db();
+        const db = mongoClient.db('myFirstDatabase');
 
-    const orders = await db
-      .collection('orders')
-      .find({ user: session.user._id })
-      .toArray();
+        const collection = db.collection('orders');
 
-    res.status(201).json({ orders });
-    client.close();
+        const results = await collection
+          .find({
+            user: session.user._id,
+          })
+          .toArray();
+
+        if (results[0].user !== session.user._id) {
+          res.status(401).json({
+            message:
+              'You must be signed in to view the protected content on this page.',
+          });
+        } else {
+          res.status(200).json(results);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  // if (session) {
-  //   if (req.method === 'GET') {
-  //     const client = await connectToDatabase();
-
-  //     const db = client.db();
-
-  //     const orders = await db
-  //       .collection('orders')
-  //       .find({ user: session.user._id })
-  //       .toArray();
-
-  //     res.status(201).json({ orders });
-  //     client.close();
-  //   }
-  // } else {
-  //   res.send({
-  //     error:
-  //       'You must be signed in to view the protected content on this page.',
-  //   });
-  // }
 }
 
 export default handler;

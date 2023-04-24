@@ -94,10 +94,8 @@ export default function ProductDetail({ product }) {
 ProductDetail.getInitialProps = async (ctx) => {
   const productId = ctx.query.productId;
 
-  console.log(productId);
-
   const productResponse = await fetch(
-    `http://localhost:3000/api/products/${productId}`
+    `${process.env.DB_HOST}/api/products/${productId}`
   );
 
   const product = await productResponse.json();

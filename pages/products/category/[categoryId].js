@@ -42,7 +42,7 @@ CategoryProductsPage.getInitialProps = async (ctx) => {
   const categoryId = ctx.query.categoryId;
 
   const productsResponse = await fetch(
-    `http://localhost:3000/api/categories/${categoryId}`
+    `${process.env.DB_HOST}/api/categories/${categoryId}`
   );
 
   const data = await productsResponse.json();

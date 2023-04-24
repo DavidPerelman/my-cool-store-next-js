@@ -14,8 +14,6 @@ const MyOrders = (props) => {
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
 
-  console.log(session);
-
   const columns = [
     {
       name: 'No.',
@@ -72,8 +70,6 @@ const MyOrders = (props) => {
   const rowClickedHandler = (row, e) => {
     // e.preventDefault();
     router.push(`/orders/order/${row._id}`);
-    console.log(e);
-    console.log(row._id);
     // navigate(`/order/${e.id}`);
   };
 
@@ -123,7 +119,7 @@ export async function getServerSideProps(context) {
   }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/api/orders/user-orders`,
+    `${process.env.DB_HOST}/api/orders/user-orders`,
     {
       headers: {
         Cookie: context.req.headers.cookie,
@@ -131,13 +127,13 @@ export async function getServerSideProps(context) {
     }
   );
 
-  const data = await response.json();
+  const results = await response.json();
 
   return {
     props: {
       session: await getServerSession(context.req, context.res, authOptions),
-      orders: data.orders,
-      data,
+      orders: results,
+      // data,
     },
   };
 }

@@ -4,6 +4,7 @@ import { loadProducts } from '@/lib/load-producs';
 import { loadCategories } from '@/lib/load-categories';
 
 export default function Home({ categories, products }) {
+  console.log(categories);
   return (
     <>
       <Head>
@@ -20,16 +21,16 @@ export default function Home({ categories, products }) {
   );
 }
 
-// export async function getStaticProps() {
-//   const products = await loadProducts();
-//   const categories = await loadCategories();
-
-//   return { props: { products, categories } };
-// }
-
-Home.getInitialProps = async () => {
+export async function getServerSideProps() {
   const products = await loadProducts();
   const categories = await loadCategories();
 
-  return { products: products, categories: categories };
-};
+  return { props: { products, categories } };
+}
+
+// Home.getInitialProps = async () => {
+//   const products = await loadProducts();
+//   const categories = await loadCategories();
+
+//   return { products: products, categories: categories };
+// };

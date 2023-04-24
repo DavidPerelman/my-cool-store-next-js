@@ -93,18 +93,6 @@ export default function ProductDetail({ product }) {
   return <div className={classes.ProductDetailsPage}>{content}</div>;
 }
 
-// ProductDetail.getInitialProps = async (ctx) => {
-//   const productId = ctx.query.productId;
-
-//   const productResponse = await fetch(
-//     `${process.env.DB_HOST}/api/products/${productId}`
-//   );
-
-//   const product = await productResponse.json();
-
-//   return { product: product[0] };
-// };
-
 export async function getStaticPaths() {
   const products = await loadProducts();
 

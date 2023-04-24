@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap';
 import classes from './CategoryProductsPage.module.css';
 import LoadingSpinner from '@/components/UI/LoadingSpinner/LoadingSpinner';
 import ProductCard from '@/components/Layout/ProductCard/ProductCard';
+import { loadCategories, loadProductsByCategory } from '@/lib/load-categories';
+
 export default function CategoryProductsPage({ data }) {
   const { category, products } = data;
   const [isLoading, setIsLoading] = useState(false);
@@ -38,14 +40,40 @@ export default function CategoryProductsPage({ data }) {
   );
 }
 
-CategoryProductsPage.getInitialProps = async (ctx) => {
-  const categoryId = ctx.query.categoryId;
+// CategoryProductsPage.getInitialProps = async (ctx) => {
+//   const categoryId = ctx.query.categoryId;
 
-  const productsResponse = await fetch(
-    `${process.env.DB_HOST}/api/categories/${categoryId}`
-  );
+//   const productsResponse = await fetch(
+//     `${process.env.DB_HOST}/api/categories/${categoryId}`
+//   );
 
-  const data = await productsResponse.json();
+//   const data = await productsResponse.json();
 
-  return { data: data };
-};
+//   return { data: data };
+// };
+
+export async function getStaticPaths() {
+  const categories = await loadCategories();
+
+  const paths = categories.map((category) => {
+    return {
+      params: { categoryId: category._id.toString() },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context) {
+  const categoryId = context.params.categoryId;
+
+  const data = await loadProductsByCategory(categoryId);
+
+  return {
+    props: {
+      data: data,
+    },
+  };
+}

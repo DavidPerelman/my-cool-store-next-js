@@ -1,19 +1,8 @@
 import Head from 'next/head';
 import CategoryContainer from '@/components/Layout/CategoryContainer/CategoryContainer';
+import { loadProducts } from '@/lib/load-producs';
+import { loadCategories } from '@/lib/load-categories';
 
-export async function loadProducts() {
-  const res = await fetch(`${process.env.DB_HOST}/api/products`);
-  const data = await res.json();
-
-  return data;
-}
-
-export async function loadCategories() {
-  const res = await fetch(`${process.env.DB_HOST}/api/categories`);
-  const data = await res.json();
-
-  return data;
-}
 export default function Home({ categories, products }) {
   return (
     <>
@@ -30,18 +19,6 @@ export default function Home({ categories, products }) {
     </>
   );
 }
-
-// Home.getInitialProps = async (ctx) => {
-//   const productsResponse = await fetch(`${process.env.DB_HOST}/api/products`);
-//   const categoriesResponse = await fetch(
-//     `${process.env.DB_HOST}/api/categories`
-//   );
-
-//   const products = await productsResponse.json();
-//   const categories = await categoriesResponse.json();
-
-//   return { products: products, categories: categories };
-// };
 
 export async function getStaticProps() {
   const products = await loadProducts();

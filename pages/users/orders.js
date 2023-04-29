@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext, useEffect, useMemo } from 'react';
 import classes from './orders.module.css';
 import Table from '@/components/UI/Table/Table';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
@@ -15,7 +15,6 @@ const UserOrders = (props) => {
   const [filterText, setFilterText] = useState('');
   const isLoggedIn = session && status === 'authenticated';
 
-  console.log(orders);
   const data = useMemo(() => orders, [orders]);
   const columns = useMemo(
     () => [
@@ -108,6 +107,7 @@ const UserOrders = (props) => {
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
+  console.log(session);
   if (session) {
     const response = await fetch(`${process.env.DB_HOST}/api/user/orders`, {
       credentials: 'include',
@@ -116,7 +116,7 @@ export async function getServerSideProps(context) {
       },
     });
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
 
     return { props: { orders: data } };
   } else {

@@ -2,7 +2,6 @@ import ProfileForm from '@/components/Auth/ProfileForm/ProfileForm';
 import { getSession, useSession } from 'next-auth/react';
 
 function ProfilePage(props) {
-  const { data } = props;
   const { data: session, status } = useSession();
 
   async function changePasswordHandler(passwordData) {

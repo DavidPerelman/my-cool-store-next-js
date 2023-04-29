@@ -24,14 +24,16 @@ async function handler(req, res) {
           })
           .toArray();
 
-        if (results[0].user !== session.user._id) {
-          res.status(401).json({
-            message:
-              'You must be signed in to view the protected content on this page.',
-          });
-        } else {
-          res.status(200).json(results);
-        }
+        res.status(200).json(results);
+
+        // if (results[0].user !== session.user._id) {
+        //   res.status(401).json({
+        //     message:
+        //       'You must be signed in to view the protected content on this page.',
+        //   });
+        // } else {
+        //   res.status(200).json(results);
+        // }
       }
     } catch (error) {
       console.error(error);

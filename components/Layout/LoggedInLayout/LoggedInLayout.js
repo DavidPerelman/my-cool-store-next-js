@@ -8,12 +8,11 @@ import classes from './LoggedInLayout.module.css';
 
 const LoggedInLayout = ({ onCloseUserModal }) => {
   const router = useRouter();
-  const authCtx = useContext(AuthContext);
-  const displayName = 'name';
+  const { data: session, status } = useSession();
 
   const onMyOrdersHandler = () => {
     onCloseUserModal();
-    router.replace(`/orders/user/user-orders`);
+    router.replace(`/users/orders`);
   };
 
   const onEditProfileHandler = () => {
@@ -30,7 +29,7 @@ const LoggedInLayout = ({ onCloseUserModal }) => {
 
   return (
     <div className={classes.LoggedInLayout}>
-      <h1>Hello {displayName !== null ? displayName : ''}!</h1>
+      <h1>Hello {session.user.name}!</h1>
       {/* <Button className={classes.button} background='#540d83' color='white'>
         <Link href={`/orders/user/${authCtx.currentUser}`} legacyBehavior>
           <a className={classes['buttons-link']}>My Orders</a>

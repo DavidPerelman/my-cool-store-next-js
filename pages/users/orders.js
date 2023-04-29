@@ -16,7 +16,7 @@ const UserOrders = (props) => {
   const isLoggedIn = session && status === 'authenticated';
 
   console.log(orders);
-  const data = useMemo(() => [], [orders]);
+  const data = useMemo(() => orders, [orders]);
   const columns = useMemo(
     () => [
       {

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import classes from './OrderDetailsPage.module.css';
+import classes from './orders.module.css';
 import { getSession, useSession } from 'next-auth/react';
 import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';

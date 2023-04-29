@@ -3,7 +3,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/styles/globals.css';
 config.autoAddCss = false;
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './users/orders.css';
 
 import 'public/static/styles.css';
 

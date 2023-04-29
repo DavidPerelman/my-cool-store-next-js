@@ -7,8 +7,11 @@ import getStripe from '@/utils/get-stripe';
 import { useRouter } from 'next/router';
 import OrderModal from '@/components/Layout/OrderModal/OrderModal';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const OrderDetailsPage = ({ order, error }) => {
+  console.log(order);
   const router = useRouter();
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);
@@ -109,7 +112,7 @@ const OrderDetailsPage = ({ order, error }) => {
 
   return (
     <div>
-      <Link href={`/orders/user/user-orders`} legacyBehavior>
+      <Link href={`/users/orders`} legacyBehavior>
         <button className='btn btn-primary'>My Orders</button>
       </Link>
 
@@ -117,5 +120,45 @@ const OrderDetailsPage = ({ order, error }) => {
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const orderId = context.params.orderId;
+
+  if (session) {
+    const response = await fetch(
+      `${process.env.DB_HOST}/api/orders/${orderId}`,
+      {
+        credentials: 'include',
+        headers: {
+          Cookie: context.req.headers.cookie,
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (data.error) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      props: {
+        order: data.order_order,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+}
 
 export default OrderDetailsPage;

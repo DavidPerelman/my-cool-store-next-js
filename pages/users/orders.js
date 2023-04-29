@@ -64,7 +64,7 @@ const UserOrders = (props) => {
   //     useTable({ columns, data });
 
   const rowClickedHandler = (row, e) => {
-    router.push(`/users/${row._id}`);
+    router.push(`/users/orders/${row._id}`);
   };
 
   const handleChange = (e) => {};

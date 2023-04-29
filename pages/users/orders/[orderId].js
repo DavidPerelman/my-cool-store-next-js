@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import OrderModal from '@/components/Layout/OrderModal/OrderModal';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]';
+import { authOptions } from '../../api/auth/[...nextauth]';
 
 const OrderDetailsPage = ({ order, error }) => {
   console.log(order);

@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import classes from './orders.module.css';
 import { getSession, useSession } from 'next-auth/react';
 import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
@@ -83,7 +82,7 @@ const OrderDetailsPage = ({ order, error }) => {
 
   if (order) {
     content = (
-      <div className={classes.container}>
+      <div>
         {loading && <OrderModal onCloseCart={() => setLoading(false)} />}
 
         <OrderProducts
@@ -109,7 +108,7 @@ const OrderDetailsPage = ({ order, error }) => {
   }
 
   return (
-    <div className={classes.OrderDetailsPage}>
+    <div>
       <Link href={`/orders/user/user-orders`} legacyBehavior>
         <button className='btn btn-primary'>My Orders</button>
       </Link>

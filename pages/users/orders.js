@@ -68,14 +68,14 @@ export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (session) {
-    const response = await fetch('http://localhost:3000/api/user/orders', {
+    const response = await fetch(`${process.env.DB_HOST}/api/user/orders`, {
       credentials: 'include',
       headers: {
         Cookie: context.req.headers.cookie,
       },
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     return { props: { orders: data } };
   } else {

@@ -4,6 +4,7 @@ import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';
 import getStripe from '@/utils/get-stripe';
+import classes from './OrderDetailsPage.module.css';
 import { useRouter } from 'next/router';
 import OrderModal from '@/components/Layout/OrderModal/OrderModal';
 import Link from 'next/link';
@@ -111,9 +112,11 @@ const OrderDetailsPage = ({ order, error }) => {
 
   return (
     <div>
-      <Link href={`/users/orders`} legacyBehavior>
-        <button className='btn btn-primary'>My Orders</button>
-      </Link>
+      <div className={classes.buttons}>
+        <Link href={`/users/orders`} legacyBehavior>
+          <button className='btn btn-primary'>My Orders</button>
+        </Link>
+      </div>
 
       <section>{content}</section>
     </div>

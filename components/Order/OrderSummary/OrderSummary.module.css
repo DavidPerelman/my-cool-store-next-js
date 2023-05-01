@@ -79,3 +79,11 @@
   flex-direction: row;
   gap: 20px;
 }
+
+@media only screen and (max-width: 800px) {
+  .OrderSummary {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+  }
+}

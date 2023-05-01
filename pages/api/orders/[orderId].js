@@ -45,7 +45,6 @@ async function handler(req, res) {
               _id: '$_id',
               totalPayment: { $first: '$totalPayment' },
               user: { $first: '$user' },
-              orderNumber: { $first: '$orderNumber' },
               isPaid: { $first: '$isPaid' },
               isOpen: { $first: '$isOpen' },
               status: { $first: '$status' },

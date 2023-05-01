@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import useSWR from 'swr';
 import Header from './Header';
 import classes from './Header.module.css';
 

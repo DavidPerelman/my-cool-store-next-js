@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
 import Hamburger from '../UI/Hamburger/Hamburger';
 import Icon from '../UI/Icon/Icon';
 import classes from './Header.module.css';

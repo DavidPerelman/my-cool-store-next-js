@@ -12,7 +12,7 @@ const Table = ({
   rowClickedHandler,
 }) => {
   const handleSelected = ({ selectedRows }) => {
-    console.log(selectedRows);
+    // console.log(selectedRows);
   };
 
   const disabledCriteria = (selectedRows) => {

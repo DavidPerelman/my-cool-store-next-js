@@ -3,8 +3,13 @@ import CartContext from '@/context/cart-context';
 import Modal from '@/components/UI/Modal/Modal';
 import classes from './CartModal.module.css';
 import CartItem from '../CartItem/CartItem';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import useLocalStorage from '@/hooks/use-local-storage';
 
 const CartModal = ({ onCloseCart }) => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const cartCtx = useContext(CartContext);
 
   if (cartCtx.totalAmount < 0) {
@@ -20,6 +25,34 @@ const CartModal = ({ onCloseCart }) => {
 
   const cartItemRemoveHandler = (item) => {
     cartCtx.removeCartItemAmount(item);
+  };
+
+  const makeAnOrderClick = async (session, cartItems) => {
+    const orderData = {
+      userId: session.user._id,
+      items: cartItems,
+      totalAmount: cartCtx.totalAmount,
+    };
+
+    try {
+      const response = await fetch(`/api/orders/create-order`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Cookie: session,
+        },
+        body: JSON.stringify(orderData),
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        cartCtx.resetCart();
+        onCloseCart();
+        router.push(`/users/orders/${data.order.insertedId}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const cartItems = (
@@ -39,7 +72,7 @@ const CartModal = ({ onCloseCart }) => {
 
   return (
     <Modal onClose={onCloseCart}>
-      {/* {!authCtx.authorized && <p>You must be logged in to place an order!</p>} */}
+      {!session && <p>You must be logged in to place an order!</p>}
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -49,14 +82,16 @@ const CartModal = ({ onCloseCart }) => {
         <button className={classes['button--alt']} onClick={onCloseCart}>
           Close
         </button>
-        {/* {hasItems && authCtx.authorized && (
+        {hasItems && session && (
           <button
             className={classes.button}
-            onClick={() => cartCtx.makeAnOrderClick(authCtx, cartCtx.items)}
+            onClick={() =>
+              makeAnOrderClick(session, cartCtx.items, totalAmount)
+            }
           >
             Order
           </button>
-        )} */}
+        )}
       </div>
     </Modal>
   );

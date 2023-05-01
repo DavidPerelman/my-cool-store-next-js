@@ -11,6 +11,7 @@ const cartCtx = createContext({
   addCartItemAmount: (id) => {},
   removeCartItemAmount: (id) => {},
   makeAnOrderClick: (userId) => {},
+  resetCart: () => {},
 });
 
 export const CartContextProvider = (props) => {
@@ -18,8 +19,6 @@ export const CartContextProvider = (props) => {
   const [cartIsShown, setCartIsShown] = useState(false);
   const [cartItems, setCartItems] = useLocalStorage('cartItems', []);
   const [existingCartItemId, setExistingCartItemId] = useState();
-  const [existingCartItem, setExistingCartItem] = useState();
-  const [existingCartItemIndex, setExistingCartItemIndex] = useState();
 
   const calculateTotalCost = useCallback(() => {
     const itemsPrice = cartItems.reduce(
@@ -108,12 +107,41 @@ export const CartContextProvider = (props) => {
     setCartItems(updatedItems);
   };
 
-  // const makeAnOrderClick = (currentUser, cartItems) => {
-  //   console.log(currentUser.currentUser.uid);
-  //   createOrder(currentUser.currentUser.uid, cartItems);
-  // };
+  const resetCart = () => {
+    setCartItems([]);
+  };
+
+  const makeAnOrderClick = async (session, cartItems, totalAmount) => {
+    const orderData = {
+      userId: session.user._id,
+      items: cartItems,
+      totalAmount: totalAmount,
+    };
+
+    try {
+      const response = await fetch(
+        `${process.env.DB_HOST}/api/orders/create-order`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            Cookie: context.req.headers.cookie,
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
+      const data = await response.json();
+
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const contextValue = {
+    resetCart: resetCart,
     cartIsShown: cartIsShown,
     showCart: onShowCart,
     hideCart: onHideCart,
@@ -122,7 +150,7 @@ export const CartContextProvider = (props) => {
     addItem: addCartItem,
     addCartItemAmount: addCartItemAmount,
     removeCartItemAmount: removeCartItemAmount,
-    // makeAnOrderClick: makeAnOrderClick,
+    makeAnOrderClick: makeAnOrderClick,
     existingCartItemId: existingCartItemId,
   };
 

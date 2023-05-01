@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect, useMemo } from 'react';
+import React, { useRef, useState } from 'react';
 // import classes from './orders.module.css';
 import Table from '@/components/UI/Table/Table';
 import { useSession } from 'next-auth/react';
@@ -40,7 +40,7 @@ const UserOrders = (props) => {
   const columns = [
     {
       name: 'No.',
-      selector: (row) => row.orderNumber,
+      selector: (row) => row._id,
     },
     {
       name: 'Created',

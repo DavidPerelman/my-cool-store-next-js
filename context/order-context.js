@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 
 const OrderContext = createContext({
   editable: false,
@@ -17,7 +17,7 @@ export const OrderContextProvider = (props) => {
     setCopyOrderProducts(order);
   };
 
-  const calculateTotalCost = () => {
+  const calculateTotalCost = useCallback(() => {
     let itemsPrice = 0;
     for (let i = 0; i < copyOrderProducts.length; i++) {
       itemsPrice +=
@@ -26,11 +26,10 @@ export const OrderContextProvider = (props) => {
     }
 
     setTotalOrderCost(itemsPrice);
-  };
-
+  }, [copyOrderProducts]);
   useEffect(() => {
     calculateTotalCost();
-  }, [totalOrderCost, copyOrderProducts]);
+  }, [calculateTotalCost]);
 
   const addOrderItemAmount = (item) => {
     const existingOrderItemIndex = copyOrderProducts.findIndex((cartItem) => {

@@ -11,7 +11,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../api/auth/[...nextauth]';
 
 const OrderDetailsPage = ({ order, error }) => {
-  console.log(order);
   const router = useRouter();
   const orderCtx = useContext(OrderContext);
   const [editable, setEditable] = useState(false);

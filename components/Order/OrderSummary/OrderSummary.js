@@ -12,7 +12,6 @@ const OrderSummary = ({
   totalPayment,
   onCheckoutOrderClick,
 }) => {
-  console.log(isOpen);
   const orderCtx = useContext(OrderContext);
 
   const total = `$${

@@ -63,8 +63,8 @@ const OrderDetailsPage = ({ order, error }) => {
   };
 
   const redirectToCheckout = async () => {
-    const items = order[0].products.map(({ _id, productQuantity }) => ({
-      price: _id,
+    const items = order[0].products.map(({ product, productQuantity }) => ({
+      price: product.stripe_id,
       quantity: productQuantity,
     }));
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import OrderProducts from '@/components/Order/OrderProducts/OrderProducts';
 import OrderSummary from '@/components/Order/OrderSummary/OrderSummary';
 import OrderContext from '@/context/order-context';

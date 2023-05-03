@@ -1,67 +1,58 @@
 import React, { useRef, useState } from 'react';
 // import classes from './orders.module.css';
 import Table from '@/components/UI/Table/Table';
-import { useSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { useRouter } from 'next/router';
-import { useTable } from 'react-table';
 
 const UserOrders = (props) => {
   const router = useRouter();
   const { orders } = props;
-  const { data: session, status } = useSession();
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
-  const isLoggedIn = session && status === 'authenticated';
 
-  //   const data = useMemo(() => orders, []);
-  //   const columns = useMemo(
-  //     () => [
-  //       {
-  //         Header: 'No.',
-  //         accessor: 'orderNumber',
-  //       },
-  //       {
-  //         Header: 'Created',
-  //         accessor: 'created',
-  //       },
-  //       {
-  //         Header: 'Total',
-  //         accessor: 'totalPayment',
-  //       },
-  //       {
-  //         Header: 'Status',
-  //         accessor: 'status',
-  //       },
-  //     ],
-  //     []
-  //   );
+  console.log(orders[0]);
   const columns = [
     {
       name: 'No.',
-      selector: (row) => row._id,
+      selector: (row, index) => index + 1,
+      center: true,
+      width: '60px',
+    },
+    {
+      name: 'Products No.',
+      selector: (row) => row.products.length,
+      sortable: true,
+      center: true,
+      width: '150px',
     },
     {
       name: 'Created',
-      selector: (row) => row.created,
+      selector: (row) => row.created.slice(0, 10),
       sortable: true,
-      // id: 1,
+      center: true,
+      width: '110px',
     },
     {
-      name: 'Total',
-      selector: (row) => row.totalPayment,
+      name: 'Total Payment',
+      selector: (row) => `${row.totalPayment.toFixed(2)} $`,
       sortable: true,
+      center: true,
+      width: '160px',
     },
     {
       name: 'Status',
       selector: (row) => row.status,
+      center: true,
+      sortable: true,
+    },
+    {
+      name: 'Paid',
+      selector: (row) => (row.isPaid.isPaid !== true ? 'No' : 'Yes'),
+      center: true,
       sortable: true,
     },
   ];
-
-  //   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-  //     useTable({ columns, data });
 
   const rowClickedHandler = (row, e) => {
     router.push(`/users/orders/${row._id}`);

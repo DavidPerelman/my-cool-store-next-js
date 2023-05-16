@@ -1,36 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './SearchBar.module.css';
 import { BsSearch } from 'react-icons/bs';
 import SearchResultsList from './SearchResultsList';
 import { useRouter } from 'next/router';
-import { useOutsideAlerter } from '@/hooks/useOutsideAlerter';
-
-// function useOutsideAlerter(ref, results, setResults) {
-//   useEffect(() => {
-//     function handleClickOutside(event) {
-//       if (ref.current && !ref.current.contains(event.target)) {
-//         ref.current.children[0].children[1].value = '';
-//         setResults([]);
-//       }
-//     }
-
-//     document.addEventListener('mousedown', handleClickOutside);
-
-//     return () => {
-//       // Unbind the event listener on clean up
-//       document.removeEventListener('mousedown', handleClickOutside);
-//     };
-//   }, [ref, setResults]);
-//   return results;
-// }
+import { useOutsideClicker } from '@/hooks/useOutsideClicker';
 
 const SearchBar = ({ id, placeholder, showLinks, setShowLinks }) => {
   const [results, setResults] = useState([]);
   const inputRef = useRef();
   const wrapperRef = useRef(null);
   const router = useRouter();
-
-  useOutsideAlerter(wrapperRef, results, setResults);
+  useOutsideClicker(wrapperRef, results, setResults);
 
   const fetchData = async (value) => {
     fetch(`/api/${id}`).then((response) =>

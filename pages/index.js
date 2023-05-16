@@ -26,10 +26,3 @@ export async function getServerSideProps() {
 
   return { props: { products, categories } };
 }
-
-// Home.getInitialProps = async () => {
-//   const products = await loadProducts();
-//   const categories = await loadCategories();
-
-//   return { products: products, categories: categories };
-// };

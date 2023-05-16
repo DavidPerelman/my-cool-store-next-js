@@ -5,7 +5,6 @@ import classes from './UserModal.module.css';
 import AuthContext from '@/context/auth-context';
 import AuthForm from '@/components/Auth/AuthForm/AuthForm';
 import LoggedInLayout from '../LoggedInLayout/LoggedInLayout';
-// import AuthForm from '@/components/Auth/AuthForm/auth-form';
 
 const UserModal = ({ onCloseUserModal }) => {
   const authCtx = useContext(AuthContext);

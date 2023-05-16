@@ -17,19 +17,12 @@ const Header = ({ categories, products }) => {
   const authCtx = useContext(AuthContext);
   const [cartItemsAmount, setCartItemsAmount] = useState(false);
   const [showLinks, setShowLinks] = useState(false);
-  const [searchBar, setSearchBar] = useState(null);
-  const searchProductsInputRef = useRef();
-  const searchCategoriesInputRef = useRef();
   const isLoggedIn = session && status === 'authenticated';
   const router = useRouter();
 
   useEffect(() => {
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
-
-  useEffect(() => {
-    // setShowLinks(!showLinks);
-  }, [router.pathname, showLinks]);
 
   const showCartHandler = () => {
     cartCtx.showCart();

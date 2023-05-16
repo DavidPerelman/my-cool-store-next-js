@@ -33,6 +33,10 @@ const AuthForm = ({ onCloseUserModal }) => {
   const isLoggedIn = session && status === 'authenticated';
   const [error, setError] = useState(null);
 
+  console.log(usernameInputRef);
+  console.log(emailInputRef);
+  console.log(passwordInputRef);
+
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -86,6 +90,7 @@ const AuthForm = ({ onCloseUserModal }) => {
         console.log(error);
       }
     } else {
+      console.log('check');
       try {
         const result = await createUser(
           enteredUserName,
@@ -134,7 +139,7 @@ const AuthForm = ({ onCloseUserModal }) => {
               {!isLoading && !authCtx.error && (
                 <button>{isLogin ? 'Login' : 'Create Account'}</button>
               )}
-              {isLoading && <p>Sending request...</p>}
+              {isLoading && <p>Loading...</p>}
               <button
                 type='button'
                 className={classes.toggle}

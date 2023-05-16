@@ -51,7 +51,7 @@ const Table = ({
       <DataTable
         columns={columns}
         data={tableData}
-        fixedHeader={true}
+        // fixedHeader={true}
         fixedHeaderScrollHeight='300px'
         progressPending={isLoading}
         // defaultSortFieldId={1}

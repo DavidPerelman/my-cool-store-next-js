@@ -11,7 +11,6 @@ const UserOrders = (props) => {
   const filterInputRef = useRef();
   const [filterText, setFilterText] = useState('');
 
-  console.log(orders[0]);
   const columns = [
     {
       name: 'No.',
@@ -63,49 +62,17 @@ const UserOrders = (props) => {
   const handleClear = () => {};
 
   return (
-    <>
-      <div>
-        {/* <div className='container'>
-          <table {...getTableProps()}>
-            <thead>
-              {headerGroups.map((headerGroup, i) => (
-                <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th key={i} {...column.getHeaderProps()}>
-                      {column.render('Header')}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr key={i} {...row.getRowProps()}>
-                    {row.cells.map((cell) => (
-                      <td key={i} {...cell.getCellProps()}>
-                        {' '}
-                        {cell.render('Cell')}{' '}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div> */}
-        <Table
-          filterInputRef={filterInputRef}
-          columns={columns}
-          tableData={orders}
-          // filterText={filterText}
-          handleChange={handleChange}
-          handleClear={handleClear}
-          rowClickedHandler={rowClickedHandler}
-        />
-      </div>
-    </>
+    <div>
+      <Table
+        filterInputRef={filterInputRef}
+        columns={columns}
+        tableData={orders}
+        // filterText={filterText}
+        handleChange={handleChange}
+        handleClear={handleClear}
+        rowClickedHandler={rowClickedHandler}
+      />
+    </div>
   );
 };
 

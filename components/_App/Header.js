@@ -92,7 +92,16 @@ const Header = ({ categories, products }) => {
             className={classes.links}
             id={showLinks ? classes['hidden'] : ''}
           >
-            <Search />
+            <Search
+              data={categories}
+              placeholder='Search Category...'
+              id='categories'
+            />
+            <Search
+              data={products}
+              placeholder='Search Product...'
+              id='products'
+            />
             {/* <SearchBar
               searchBarInputRef={searchCategoriesInputRef}
               searchBar={searchBar}

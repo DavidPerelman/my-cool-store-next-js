@@ -1,5 +1,5 @@
 import { hashPassword } from '@/lib/auth';
-import { connectToDatabase } from '@/lib/db';
+import clientPromise from '@/lib/mongodb';
 
 async function handler(req, res) {
   if (req.method === 'POST') {
@@ -17,11 +17,13 @@ async function handler(req, res) {
       return;
     }
 
-    const client = await connectToDatabase();
+    const mongoClient = await clientPromise;
 
-    const db = client.db();
+    const db = mongoClient.db('myFirstDatabase');
 
-    const existingUser = await db.collection('users').findOne({ email: email });
+    const collection = db.collection('users');
+
+    const existingUser = await collection.findOne({ email: email });
 
     if (existingUser) {
       res.status(422).json({ message: 'User exists already!' });
@@ -38,7 +40,6 @@ async function handler(req, res) {
     });
 
     res.status(201).json({ message: 'Created user!', result });
-    client.close();
   }
 }
 

@@ -10,6 +10,7 @@ import AuthContext from '@/context/auth-context';
 import { useRouter } from 'next/router';
 import SearchBar from '../Layout/SearchBar/SearchBar';
 import { useSession } from 'next-auth/react';
+import Search from '../Layout/SearchBar/Search';
 
 const Header = ({ categories, products }) => {
   const { data: session, status } = useSession();
@@ -23,34 +24,40 @@ const Header = ({ categories, products }) => {
   const isLoggedIn = session && status === 'authenticated';
   const router = useRouter();
 
-  const handleSearchBar = useCallback(
-    (id) => {
-      if (searchBar === id || (searchBar && id === undefined)) {
-        setSearchBar(null);
-      }
-      if (searchBar !== id) {
-        setSearchBar(id);
-      }
+  // const handleSearchBar = useCallback(
+  //   (id) => {
+  //     if (searchBar === id || (searchBar && id === undefined)) {
+  //       setSearchBar(null);
+  //     }
+  //     if (searchBar !== id) {
+  //       setSearchBar(id);
+  //     }
 
-      if (id === 'categories') {
-        searchProductsInputRef.current.value = '';
-      } else {
-        searchCategoriesInputRef.current.value = '';
-      }
-    },
-    [searchBar]
-  );
+  //     if (id === 'categories') {
+  //       searchProductsInputRef.current.value = '';
+  //     } else {
+  //       searchCategoriesInputRef.current.value = '';
+  //     }
+  //   },
+  //   [searchBar]
+  // );
+
+  // const handleClick = useCallback(
+  //   (e) => {
+  //     handleSearchBar(e.target.dataset.id);
+  //   },
+  //   [handleSearchBar]
+  // );
+
   useEffect(() => {
-    const handleClick = ({ target }) => {
-      handleSearchBar(target.dataset.id);
-    };
+    console.log('check');
 
-    document.addEventListener('click', handleClick);
+    // document.addEventListener('click', handleClick);
 
     // setShowLinks(false);
 
     setCartItemsAmount(cartCtx.items.length);
-  }, [cartCtx.items.length, router.pathname, handleSearchBar]);
+  }, [cartCtx.items.length, router.pathname]);
 
   const showCartHandler = () => {
     cartCtx.showCart();
@@ -85,23 +92,24 @@ const Header = ({ categories, products }) => {
             className={classes.links}
             id={showLinks ? classes['hidden'] : ''}
           >
-            <SearchBar
+            <Search />
+            {/* <SearchBar
               searchBarInputRef={searchCategoriesInputRef}
               searchBar={searchBar}
               setSearchBar={setSearchBar}
               id='categories'
               data={categories}
               placeholder='Search Category...'
-            />
+            /> */}
 
-            <SearchBar
+            {/* <SearchBar
               id='products'
               searchBar={searchBar}
               setSearchBar={setSearchBar}
               searchBarInputRef={searchProductsInputRef}
               data={products}
               placeholder='Search Product...'
-            />
+            /> */}
           </div>
           <div className={classes.icons}>
             <Icon

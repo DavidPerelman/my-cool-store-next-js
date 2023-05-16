@@ -5,6 +5,8 @@ import classes from './SearchBar.module.css';
 const SearchBar = ({ id, searchBar, searchBarInputRef, placeholder, data }) => {
   const [filteredData, setfilteredData] = useState(data);
 
+  console.log(filteredData);
+  console.log(data);
   const handleFilter = (e) => {
     const searchWord = e.target.value;
     const newFilter = data.filter((value) => {

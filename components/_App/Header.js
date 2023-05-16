@@ -109,9 +109,9 @@ const Header = ({ categories, products }) => {
               id='categories'
               data={categories}
               placeholder='Search Category...'
-            /> */}
+            />
 
-            {/* <SearchBar
+            <SearchBar
               id='products'
               searchBar={searchBar}
               setSearchBar={setSearchBar}

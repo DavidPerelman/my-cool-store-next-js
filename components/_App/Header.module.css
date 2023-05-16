@@ -97,6 +97,13 @@
   text-align-last: right;
 }
 
+.searchBar {
+  margin-right: 5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 @media only screen and (max-width: 800px) {
   .MyNavbar .right-side {
     padding-right: 25px;
@@ -145,5 +152,12 @@
 
   .MyNavbar .left-side {
     margin-right: 0;
+  }
+
+  .searchBar {
+    margin-right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 }

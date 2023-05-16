@@ -14,11 +14,14 @@ const SearchBar = ({ id, placeholder, showLinks, setShowLinks }) => {
       response.json().then((json) => {
         const results = json.filter((val) => {
           return id === 'categories'
-            ? value && val && val.name && val.name.toLowerCase().includes(value)
+            ? value &&
+                val &&
+                val.name &&
+                val.name.toLowerCase().includes(value.toLowerCase())
             : value &&
                 val &&
                 val.title &&
-                val.title.toLowerCase().includes(value);
+                val.title.toLowerCase().includes(value.toLowerCase());
         });
         setResults(results);
       })

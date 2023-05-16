@@ -8,9 +8,8 @@ import CartModal from '../Layout/CartModal/CartModal';
 import UserModal from '../Layout/UserModal/UserModal';
 import AuthContext from '@/context/auth-context';
 import { useRouter } from 'next/router';
-import SearchBar from '../Layout/SearchBar/SearchBar';
 import { useSession } from 'next-auth/react';
-import Search from '../Layout/SearchBar/SearchBar/Search';
+import SearchBar from '../Layout/SearchBar/SearchBar/SearchBar';
 
 const Header = ({ categories, products }) => {
   const { data: session, status } = useSession();
@@ -27,6 +26,10 @@ const Header = ({ categories, products }) => {
   useEffect(() => {
     setCartItemsAmount(cartCtx.items.length);
   }, [cartCtx.items.length, router.pathname]);
+
+  useEffect(() => {
+    // setShowLinks(!showLinks);
+  }, [router.pathname, showLinks]);
 
   const showCartHandler = () => {
     cartCtx.showCart();
@@ -62,15 +65,19 @@ const Header = ({ categories, products }) => {
             id={showLinks ? classes['hidden'] : ''}
           >
             <div className={classes.searchBar}>
-              <Search
+              <SearchBar
                 data={categories}
                 placeholder='Search Category...'
                 id='categories'
+                showLinks={showLinks}
+                setShowLinks={setShowLinks}
               />
-              <Search
+              <SearchBar
                 data={products}
                 placeholder='Search Product...'
                 id='products'
+                showLinks={showLinks}
+                setShowLinks={setShowLinks}
               />
             </div>
           </div>

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import classes from './Search.module.css';
+import React, { useRef, useState } from 'react';
+import classes from './SearchBar.module.css';
 import { BsSearch } from 'react-icons/bs';
 import SearchResultsList from './SearchResultsList';
+import { useRouter } from 'next/router';
 
-const Search = ({ id, placeholder }) => {
-  const [input, setInput] = useState('');
+const SearchBar = ({ id, placeholder, showLinks, setShowLinks }) => {
   const [results, setResults] = useState([]);
+  const inputRef = useRef();
+  const router = useRouter();
 
   const fetchData = async (value) => {
     fetch(`/api/${id}`).then((response) =>
@@ -23,14 +25,22 @@ const Search = ({ id, placeholder }) => {
     );
   };
 
-  const handleChange = (value) => {
-    console.log(input);
-    if (value === '') {
+  const handleChange = () => {
+    if (inputRef.current.value === '') {
       setResults([]);
     } else {
-      fetchData(value);
-      setInput(value);
+      fetchData(inputRef.current.value);
     }
+  };
+
+  const clickHandler = (_id) => {
+    inputRef.current.value = '';
+    setResults([]);
+    setShowLinks(!showLinks);
+
+    id === 'products'
+      ? router.push(`/products/${_id}`)
+      : router.push(`/products/category/${_id}`);
   };
 
   return (
@@ -43,18 +53,19 @@ const Search = ({ id, placeholder }) => {
           placeholder={placeholder}
           className={classes['input']}
           type='text'
+          ref={inputRef}
           onChange={(e) => handleChange(e.target.value)}
-          value={input}
         />
       </div>
       <SearchResultsList
         id={id}
+        onClickHandler={clickHandler}
         results={results}
         setResults={setResults}
-        setInput={setInput}
+        inputRef={inputRef}
       />
     </div>
   );
 };
 
-export default Search;
+export default SearchBar;

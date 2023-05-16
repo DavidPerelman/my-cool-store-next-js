@@ -1,23 +1,11 @@
 import React from 'react';
-import classes from './Search.module.css';
-import { useRouter } from 'next/router';
+import classes from './SearchBar.module.css';
 
-const SearchResult = ({ id, result, setResults, setInput }) => {
-  const router = useRouter();
-
-  const clickHandler = (_id) => {
-    setInput('');
-    setResults([]);
-
-    id === 'products'
-      ? router.push(`/products/${_id}`)
-      : router.push(`/products/category/${_id}`);
-  };
-
+const SearchResult = ({ id, result, onClickHandler }) => {
   return (
     <div
       className={classes['search-result']}
-      onClick={(e) => clickHandler(result._id)}
+      onClick={(e) => onClickHandler(result._id)}
     >
       {id === 'categories' ? result.name : result.title}
     </div>

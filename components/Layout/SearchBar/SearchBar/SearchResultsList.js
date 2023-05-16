@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './Search.module.css';
+import classes from './SearchBar.module.css';
 import SearchResult from './SearchResult';
 
-const SearchResultsList = ({ id, results, setResults, setInput }) => {
+const SearchResultsList = ({ id, results, onClickHandler }) => {
   return (
     <div className={classes['results-list']}>
       {results &&
@@ -11,8 +11,7 @@ const SearchResultsList = ({ id, results, setResults, setInput }) => {
             <SearchResult
               key={i}
               result={result}
-              setResults={setResults}
-              setInput={setInput}
+              onClickHandler={onClickHandler}
               id={id}
             />
           );

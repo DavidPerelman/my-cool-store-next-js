@@ -172,7 +172,11 @@ const AuthForm = ({ onCloseUserModal }) => {
               {!isLoading && !authCtx.error && (
                 <button>{isLogin ? 'Login' : 'Create Account'}</button>
               )}
-              {isLoading && <p>Loading...</p>}
+              {isLoading && (
+                <div class='spinner-border text-light' role='status'>
+                  <span class='visually-hidden'>Loading...</span>
+                </div>
+              )}
               <button
                 type='button'
                 className={classes.toggle}

@@ -33,11 +33,10 @@ const AuthForm = ({ onCloseUserModal }) => {
   const isLoggedIn = session && status === 'authenticated';
   const [error, setError] = useState(null);
 
-  console.log(usernameInputRef);
-  console.log(emailInputRef);
-  console.log(passwordInputRef);
-
   const switchAuthModeHandler = () => {
+    usernameInputRef.current.value = '';
+    emailInputRef.current.value = '';
+    passwordInputRef.current.value = '';
     setIsLogin((prevState) => !prevState);
   };
 
@@ -85,12 +84,18 @@ const AuthForm = ({ onCloseUserModal }) => {
           password: enteredPassword,
         });
 
-        console.log(result);
+        if (result.error) {
+          setIsLoading(false);
+          setError('Login failed!');
+          clearError();
+        } else {
+          setIsLoading(false);
+          onCloseUserModal();
+        }
       } catch (error) {
         console.log(error);
       }
     } else {
-      console.log('check');
       try {
         const result = await createUser(
           enteredUserName,
@@ -98,13 +103,41 @@ const AuthForm = ({ onCloseUserModal }) => {
           enteredPassword
         );
 
-        console.log(result);
+        if (result.message === 'Created user!') {
+          try {
+            const result = await signIn('credentials', {
+              redirect: false,
+              email: enteredEmail,
+              password: enteredPassword,
+            });
+
+            if (result.error) {
+              setIsLoading(false);
+              setError('Login failed!');
+              clearError();
+            } else {
+              setIsLoading(false);
+              onCloseUserModal();
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
+        // if (result.error) {
+        //   setIsLoading(false);
+        //   setError('Sign Up failed!');
+        //   clearError();
+        // } else {
+        //   setIsLoading(false);
+        //   onCloseUserModal();
+        // }
       } catch (error) {
-        console.log(error);
+        setIsLoading(false);
+        setError(error.message);
+        clearError();
       }
     }
-    setIsLoading(false);
-    onCloseUserModal();
   };
 
   return (
@@ -134,7 +167,7 @@ const AuthForm = ({ onCloseUserModal }) => {
               />
             </div>
             {authCtx.error && <p className={classes.error}>{authCtx.error}</p>}
-            {/* {error && <p className={classes.error}>{error}</p>} */}
+            {error && <p className={classes.error}>{error}</p>}
             <div className={classes.actions}>
               {!isLoading && !authCtx.error && (
                 <button>{isLogin ? 'Login' : 'Create Account'}</button>
